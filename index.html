@@ -4849,7 +4849,9 @@ function readBackup(file) {
     try {
       const d = JSON.parse(r.result);
       if (!d || d.app !== 'WDMMG' || !d.state || typeof d.state.months !== 'object' || !d.state.settings) throw new Error('not a backup');
-      pendingRestore = d; render();
+      pendingRestore = d;
+      if (view === 'onboard') return applyRestore(); // nothing to lose yet, so no second tap that could be missed
+      render();
       const el = document.getElementById('restoreBox'); if (el) el.scrollIntoView({ block: 'center' });
     } catch (e) { pendingRestore = null; toast('That file is not a WDMMG backup'); }
   };
