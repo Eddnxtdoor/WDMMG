@@ -1,5 +1,5 @@
 // Offline support for the installed app. Built by tools/build.js: do not edit by hand.
-const CACHE = 'wdmmg-511dd7974e28';
+const CACHE = 'wdmmg-8671df32fea5';
 const FILES = ["./","index.html","fonts.css","manifest.webmanifest","fonts/DMMono-400-latin-ext.woff2","fonts/DMMono-400-latin.woff2","fonts/DMMono-500-latin-ext.woff2","fonts/DMMono-500-latin.woff2","fonts/Doto-600-latin-ext.woff2","fonts/Doto-600-latin.woff2","fonts/Manrope-400-latin-ext.woff2","fonts/Manrope-400-latin.woff2","icons/apple-touch-icon.png","icons/icon-192.png","icons/icon-512.png","icons/maskable-512.png"];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => {
