@@ -877,7 +877,12 @@ function allocate(total, weights) {
 
 // Percent values are held in basis points (35% = 3500).
 const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun'];
-const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
+// Two editions come out of this one file: Edd's own app, and the everyone version (a planet beside the name).
+// tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
+const GLOBAL = false;
+const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
+const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
+const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
 const SUB_ORDER = ['emergency', 'travel', 'general', 'big'];
 const SUB_NAMES = { emergency: 'Emergency fund', travel: 'Travel', general: 'General savings', big: 'Big purchases' };
 
@@ -1521,7 +1526,7 @@ invPerf = memoize(invPerf, (st) => (isS(st) ? 'IP' : null));
 
 // ---------- storage (kept in this browser for stage 1) ----------
 // v1 is the clean start after testing: the old 'wdmmg.stage1' copy (test data) is removed on every device.
-const KEY = 'wdmmg.v1';
+const KEY = GLOBAL ? 'wdmmg.world.v1' : 'wdmmg.v1'; // the everyone version keeps its own copy, even on the same phone
 try { localStorage.removeItem('wdmmg.stage1'); } catch (e) {}
 let memoryState = null;
 function freshState() { return { pin: null, salt: null, settings: defaultSettings(), months: {}, openingSub: null, openingInvest: 0, invest: [], itx: [], setup: false }; }
@@ -1798,7 +1803,7 @@ const potColor = { subs: 'var(--pot-1)', buffer: '#5E7F92', yearly: '#A08D5E', d
 const subColor = { emergency: 'var(--pot-1)', travel: 'var(--pot-3)', general: 'var(--pot-5)', big: 'var(--pot-7)' };
 const fmtN = (g) => (g / 100).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-const SHORT = { subs: 'Bills', buffer: 'Buffer', yearly: 'Yearly', debt: 'Debt', lent: 'nxtdoor', rent: 'Rent', groceries: 'Groceries', savings: 'Savings', investing: 'Invest', everyday: 'Everyday', fun: 'Fun', emergency: 'Emergency', travel: 'Travel', general: 'General', big: 'Big purchases' };
+const SHORT = { subs: 'Bills', buffer: 'Buffer', yearly: 'Yearly', debt: 'Debt', lent: GLOBAL ? 'Lent' : 'nxtdoor', rent: 'Rent', groceries: 'Groceries', savings: 'Savings', investing: 'Invest', everyday: 'Everyday', fun: 'Fun', emergency: 'Emergency', travel: 'Travel', general: 'General', big: 'Big purchases' };
 const fmtS = (g) => (g >= 100000 ? Math.round(g / 100).toLocaleString('en-GB') : fmtN(g));
 
 // ---------- charts ----------
@@ -2378,7 +2383,7 @@ async function hashPin(pin, salt) {
 let entry = '', first = '', lockMsg = '';
 function renderLock() {
   if (!state.pin && !sync.settled) {
-    $app.innerHTML = `<div class="lock"><div class="mark">WDMMG</div><div><h1>Loading your data</h1><p>Checking your private Claude storage.</p></div></div>`;
+    $app.innerHTML = `<div class="lock"><div class="mark">${MARK}</div><div><h1>Loading your data</h1><p>Checking your private Claude storage.</p></div></div>`;
     return;
   }
   const setting = !state.pin;
@@ -2386,7 +2391,7 @@ function renderLock() {
   const hint = setting ? 'This PIN keeps casual snoopers out of the app on this device.' : 'Where did my money go?';
   $app.innerHTML = `
     <div class="lock">
-      <div class="mark">WDMMG</div>
+      <div class="mark">${MARK}</div>
       <div><h1>${title}</h1><p>${hint}</p></div>
       <div class="dots${tap.shake ? ' shake' : ''}" aria-label="${entry.length} of 4 digits entered">${[0, 1, 2, 3].map((i) => `<i class="${i < entry.length ? 'on' : ''}${i === tap.idx && i < entry.length ? ' pop' : ''}"></i>`).join('')}</div>
       <div class="err" role="status">${esc(lockMsg)}</div>
@@ -2396,8 +2401,18 @@ function renderLock() {
         <button class="key${tap.key === '0' ? ' hit' : ''}" data-k="0">0</button>
         <button class="key ghost${tap.key === 'back' ? ' hit' : ''}" data-k="back" aria-label="Delete last digit">Del</button>
       </div>
+      ${GLOBAL && !setting ? forgotPinHtml() : ''}
     </div>`;
   tap = { key: null, idx: -1, digit: '', shake: false };
+}
+// Everyone version: a forgotten PIN must not lock people out of their own money for good. The PIN only keeps
+// others out of the app on this phone (it does not encrypt anything), so resetting it keeps every entry.
+let forgotArm = false;
+function forgotPinHtml() {
+  return forgotArm
+    ? `<div class="note" style="margin-top:14px;text-align:left">Your PIN only keeps other people out of the app on this phone. Resetting it keeps all your entries, and you choose a new PIN next.</div>
+      <div class="ppbtns" style="margin-top:10px;justify-content:center"><button class="btn sm" data-act="forgotYes">Reset my PIN</button><button class="btn plain sm" data-act="forgotNo">Cancel</button></div>`
+    : `<button class="btn plain sm" data-act="forgotArm" style="margin-top:14px">Forgot PIN?</button>`;
 }
 // What the last key press was, so the lock screen can flash that key and pop the new dot. The digit is never shown.
 let tap = { key: null, idx: -1, digit: '', shake: false };
@@ -3188,7 +3203,7 @@ function renderGoals() {
   }
   const bal = savingsBalances();
   $app.innerHTML = `
-    <div class="top"><div class="mark">WDMMG</div><div class="label">Goals</div></div>
+    <div class="top"><div class="mark">${MARK}</div><div class="label">Goals</div></div>
     ${(() => { const Ld = ladder(); return `<section class="card fgcard">
       ${freedomGauge(Ld)}
       <p class="hint" style="text-align:center;margin:0">${!Ld.ess ? 'Add a month of income to see your stages.' : Ld.idx < Ld.st.length ? `Stage ${Ld.idx + 1} of ${Ld.st.length} · ${Ld.st[Ld.idx].n} · ${fmtN(Ld.st[Ld.idx].t - Ld.st[Ld.idx].have)} to go · ${Ld.when(Ld.st[Ld.idx])}` : 'Every stage reached. Money covers your life.'}</p>
@@ -3340,7 +3355,7 @@ function invTidy(B, R, d) {
   return hero + btns + review + cyc + perf + recent;
 }
 function renderInvest() {
-  $app.innerHTML = `<div class="top"><div class="mark">WDMMG</div><div class="label">Investing</div></div>${invBody(0, true)}`;
+  $app.innerHTML = `<div class="top"><div class="mark">${MARK}</div><div class="label">Investing</div></div>${invBody(0, true)}`;
 }
 // By investment: every name with what is locked in and on paper, then what no name explains. Tap a name to see its entries.
 let itxFilter = null;
@@ -3804,7 +3819,7 @@ function rentRows(row) {
     + (t.keep ? row('Added this month', 'kept in this pot', '+' + fmtN(t.keep)) : '')
     + (t.over ? row('Sent to Emergency', 'the cushion is full', '+' + fmtN(t.over)) : '')
     + (R.cap ? row('Cushion', `${R.months} month${R.months === 1 ? '' : 's'} of ${fmtN(s.rentTarget)} rent`, fmtN(R.cap)) : '')
-    + row(s.graduated ? 'Paying your own rent' : 'Why this pot', s.graduated ? 'since ' + monLong(s.graduated) + ', rent is a bill and this pot is your cushion' : 'Practice paying rent now so it is a habit when you graduate. It counts toward your months covered.', '');
+    + row(s.graduated ? 'Paying your own rent' : 'Why this pot', s.graduated ? 'since ' + monLong(s.graduated) + ', rent is a bill and this pot is your cushion' : (GLOBAL ? 'Practise paying rent now so it is a habit before you start renting.' : 'Practice paying rent now so it is a habit when you graduate.') + ' It counts toward your months covered.', '');
 }
 // What went into savings this cycle and which pot got it: the split, last cycle's swept leftovers,
 // investment gains, rent cushion overflow, minus anything spent from savings or moved out.
@@ -4212,9 +4227,9 @@ function renderBreakdown() {
       <span class="sw" style="background:${potColor.yearly}"></span>
       <span class="dc-t"><span class="pp-name">Yearly costs</span><span class="hint">${Y.n ? `${fmt(Y.saved)} saved · nothing set aside this month` : 'Insurance, a phone plan, anything once a year'}</span></span>
       <span class="chev" aria-hidden="true">›</span></button>`; })()}
-    ${(() => { const L = loanSummary(); return `<button class="card debtcard${selPot === 'lent' ? ' on' : ''}" data-sel="lent" aria-label="Open nxtdoor Bank">
+    ${(() => { const L = loanSummary(); return `<button class="card debtcard${selPot === 'lent' ? ' on' : ''}" data-sel="lent" aria-label="Open ${POT_NAMES.lent}k">
       <span class="sw" style="background:${potColor.lent}"></span>
-      <span class="dc-t"><span class="pp-name">nxtdoor Bank</span><span class="hint">${L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything'}</span></span>
+      <span class="dc-t"><span class="pp-name">${POT_NAMES.lent}</span><span class="hint">${L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything'}</span></span>
       <span class="chev" aria-hidden="true">›</span></button>`; })()}
     <div class="psheet ${psState}" id="psheet" role="region" aria-label="Pot details">
       <div class="psin"><div class="pshead" id="psHead">${selPot ? psHeadHtml(selPot) : ''}</div>
@@ -4563,7 +4578,7 @@ function renderHome() {
         return `<div class="label">Income this month</div><div class="big num">${fmt(c.total)}</div>
           <div class="sub num">${c.total ? `${fmt(c.toSplit)} left to split after ${offTop(c)}` : 'Add a payment below to split it into your pots.'}</div>`; })()}
     </section>`;
-  const noteHtml = `${c.short ? `<div class="note">Income is below your fixed costs${c.debtTotal || (state.settings.debts || []).length ? ', debt payments' : ''}${openYearly().length ? ' and yearly costs' : ''}. Nothing is left to split this month.${c.fixedTotal > c.splitTotal ? ' Cover the bills below.' : ''}</div>` : ''}`;
+  const noteHtml = `${backupNudge()}${c.short ? `<div class="note">Income is below your fixed costs${c.debtTotal || (state.settings.debts || []).length ? ', debt payments' : ''}${openYearly().length ? ' and yearly costs' : ''}. Nothing is left to split this month.${c.fixedTotal > c.splitTotal ? ' Cover the bills below.' : ''}</div>` : ''}`;
   const ringHtml = desk
     ? `<section class="card dring"><h2 style="margin:0">Where it goes</h2><p class="hint" style="margin:4px 0 0">Click a slice or a tag to open that pot</p>
       ${tagChart(items, { select: true, selected: deskPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: 'PLN' })}</section>`
@@ -4621,7 +4636,7 @@ function renderHome() {
   })();
   $app.innerHTML = `
     <div class="top">
-      <div class="mark">WDMMG</div>
+      <div class="mark">${MARK}</div>
       <div class="monthnav"><button data-act="prev" aria-label="Previous month">‹</button><span>${monthLabelShort(cursor)}</span><button data-act="next" aria-label="Next month">›</button></div>
     </div>
     ${homeTilesTop(key, MP)}
@@ -4771,7 +4786,7 @@ function renderOnboard() {
     bills: `<h2>Your fixed bills</h2>
       <p class="hint">Things that leave every month no matter what: phone, subscriptions, a transport pass. They come off the top before the split. You can skip this and add them later.</p>
       ${billsEditor()}`,
-    rent: `<h2>Rent after you graduate</h2>
+    rent: GLOBAL ? obRentBody() : `<h2>Rent after you graduate</h2>
       <p class="hint">What you expect to pay a month once you rent on your own. It is used for Rent practice and to work out how many months your savings cover. Put 0 if you are not sure yet.</p>
       <div class="field"><label for="rentT">Expected rent (PLN a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>`,
     have: `<h2>What you already have</h2>
@@ -4780,12 +4795,12 @@ function renderOnboard() {
       <div class="field"><label for="obInvested">Already invested (PLN)</label><input id="obInvested" type="number" inputmode="decimal" min="0" step="0.01" value="${((state.openingInvest || 0) / 100).toFixed(2)}"></div>
       <p class="hint" style="margin-top:10px">Debts and money you have lent can be added any time from the pots page.</p>`,
     split: `<h2>Your split</h2>
-      <p class="hint">How each payment is shared after bills. This is the split we planned; change any number if you like. It must add up to 100%.</p>
+      <p class="hint">How each payment is shared after bills. ${GLOBAL ? 'This is a starting point: change any number to fit your life.' : 'This is the split we planned; change any number if you like.'} It must add up to 100%.</p>
       ${POT_ORDER.map((k) => `<div class="field"><label for="p_${k}">${POT_NAMES[k]}</label><input id="p_${k}" data-pct="${k}" type="number" inputmode="decimal" step="0.01" min="0" value="${s.percents[k] / 100}"></div>`).join('')}
       <div class="sum num ${pSum === 10000 ? '' : 'bad'}">Total ${pct(pSum)}${pSum === 10000 ? '' : ' (needs to be 100%)'}</div>`,
   };
   $app.innerHTML = `
-    <div class="top"><div class="mark">WDMMG</div><div class="label">Setting up · ${obStep + 1} of ${OB_STEPS.length}</div></div>
+    <div class="top"><div class="mark">${MARK}</div><div class="label">Setting up · ${obStep + 1} of ${OB_STEPS.length}</div></div>
     <div class="obdots" aria-hidden="true">${OB_STEPS.map((_, i) => `<i class="${i < obStep ? 'done' : i === obStep ? 'on' : ''}"></i>`).join('')}</div>
     <section class="card obcard">${bodies[st]}</section>
     ${obStep === 0 ? obRestoreCard() : ''}
@@ -4801,8 +4816,37 @@ function obRestoreCard() {
       <label class="btn plain sm filebtn" style="margin-top:10px">Restore from backup<input type="file" id="restoreFile" accept=".json,application/json" hidden></label>`}
   </section>`;
 }
+// Everyone version: not everyone is a student who will rent later. Ask whether they pay rent now, will later, or not
+// at all. "Now" makes rent a bill (like switching to paying your own rent in Setup); "none" moves the Rent practice
+// share to Savings. Going back and answering again undoes the earlier answer first.
+let obRent = null, obRentDone = null;
+function obRentBody() {
+  const s = state.settings, m = obRent;
+  const opt = (k, t) => `<button class="btn ${m === k ? '' : 'plain '}sm" data-obrent="${k}" aria-pressed="${m === k}">${t}</button>`;
+  return `<h2>Rent</h2>
+      <p class="hint">Do you pay rent? You can change this later in Setup.</p>
+      <div class="ppbtns" style="flex-direction:column;align-items:stretch">${opt('now', 'Yes, I pay rent now')}${opt('later', 'Not yet, but I will')}${opt('none', 'No, I don\'t pay rent')}</div>
+      ${m === 'now' || m === 'later' ? `<p class="hint" style="margin-top:12px">${m === 'now' ? 'Your rent becomes one of your monthly bills.' : 'Part of each payment goes to Rent practice, so paying rent is already a habit when it starts.'}</p>
+      <div class="field"><label for="obRentAmt">${m === 'now' ? 'Rent' : 'Expected rent'} (PLN a month)</label><input id="obRentAmt" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget ? s.rentTarget / 100 : ''}"></div>` : ''}`;
+}
+function obRentApply() {
+  const s = state.settings;
+  if (!obRent) { toast('Pick one answer to go on'); return false; }
+  const el = document.getElementById('obRentAmt'), g = obRent === 'none' ? 0 : (el && toG(el.value)) || 0;
+  if (obRent !== 'none' && !(g > 0)) { toast(obRent === 'now' ? 'Enter your monthly rent' : 'Enter the rent you expect, or a rough guess'); return false; }
+  if (obRentDone) { // undo the earlier answer
+    s.percents.rent += obRentDone.moved; s.percents.savings -= obRentDone.moved;
+    s.fixed = s.fixed.filter((f) => f.id !== obRentDone.bill); delete s.graduated;
+  }
+  obRentDone = { moved: 0, bill: null };
+  s.rentTarget = g;
+  if (obRent !== 'later') { obRentDone.moved = s.percents.rent; s.percents.savings += s.percents.rent; s.percents.rent = 0; }
+  if (obRent === 'now') { obRentDone.bill = uid(); s.fixed.push({ id: obRentDone.bill, name: 'Rent', g }); s.graduated = nowCycle(); }
+  save(); return true;
+}
 function obNext() {
   const st = OB_STEPS[obStep], s = state.settings;
+  if (GLOBAL && st === 'rent' && !obRentApply()) return;
   if (st === 'have') {
     const sv = toG(document.getElementById('obSaved').value) || 0, iv = toG(document.getElementById('obInvested').value) || 0;
     if (sv > 0) { const parts = allocate(sv, SUB_ORDER.map((k) => s.sub[k])); state.openingSub = {}; SUB_ORDER.forEach((k, i) => (state.openingSub[k] = parts[i])); } else state.openingSub = null;
@@ -4829,6 +4873,7 @@ async function offerFile(filename, text) {
 }
 const stamp = () => isoOf(new Date());
 function exportBackup() {
+  if (GLOBAL) { state.settings.lastBackup = isoOf(new Date()); state.settings.backupSnooze = null; save(); render(); }
   const data = { app: 'WDMMG', kind: 'backup', version: 1, exportedAt: new Date().toISOString(), state };
   offerFile(`wdmmg-backup-${stamp()}.json`, JSON.stringify(data, null, 1));
 }
@@ -4865,6 +4910,20 @@ function applyRestore() {
   markRewrite(g); // the backup replaces what every device has
   if (view === 'onboard') { obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0); }
   pendingRestore = null; save(); toast('Backup restored'); render();
+}
+// Everyone version: the data lives only on this phone, so once someone has used the app for two weeks Home asks
+// for a backup, then again a month after the last one. "Later" waits a week.
+function backupNudge() {
+  if (!GLOBAL) return '';
+  const s = state.settings, keys = Object.keys(state.months).filter((k) => (state.months[k].income || []).length || (state.months[k].expenses || []).length).sort();
+  if (!keys.length) return '';
+  const today = isoOf(new Date()), daysSince = (iso) => Math.floor((new Date(today) - new Date(iso)) / 864e5);
+  if (s.backupSnooze && daysSince(s.backupSnooze) < 7) return '';
+  const used = daysSince(isoOf(cycleRange(keys[0])[0]));
+  const due = s.lastBackup ? daysSince(s.lastBackup) >= 30 : used >= 14;
+  if (!due) return '';
+  return `<div class="note" id="backupNudge">${s.lastBackup ? `Your last backup was ${daysSince(s.lastBackup)} days ago.` : 'You have not saved a backup yet.'} Everything lives only on this phone, so a backup file is the only way to get it back if the phone is lost or Chrome is cleared.
+    <div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-act="backup">Download backup</button><button class="btn plain sm" data-act="backupLater">Later</button></div></div>`;
 }
 function backupCard() {
   const n = Object.keys(state.months).length;
@@ -4905,7 +4964,7 @@ function renderSetup() {
   const sSum = SUB_ORDER.reduce((a, k) => a + s.sub[k], 0);
   const opening = state.openingSub;
   $app.innerHTML = `
-    <div class="top"><div class="mark">WDMMG</div><div class="label">Setup</div></div>
+    <div class="top"><div class="mark">${MARK}</div><div class="label">Setup</div></div>
 
     <section class="card">
       <h2>Pay cycle</h2>
@@ -4938,7 +4997,7 @@ function renderSetup() {
     <section class="card">
       <h2>Bills</h2>
       ${billsEditor()}
-      <div class="field" style="margin-top:12px"><label for="rentT">Expected rent after graduation (PLN a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>
+      <div class="field" style="margin-top:12px"><label for="rentT">${GLOBAL ? 'Expected rent' : 'Expected rent after graduation'} (PLN a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>
       <div class="field"><label for="rentCush">Rent cushion (months of rent)</label><input id="rentCush" type="number" inputmode="numeric" min="0" max="12" step="1" value="${s.rentCushion == null ? 3 : s.rentCushion}"></div>
       <p class="hint" style="margin:6px 0 0">Rent practice fills this cushion first. Once it is full, new rent practice goes to your Emergency fund.</p>
       ${s.graduated ? `<p class="hint" style="margin:10px 0 0">Paying your own rent since ${monLong(s.graduated)}.</p>`
@@ -5216,7 +5275,7 @@ function deskPotCards(c) {
     <span class="dc-t"><span class="pp-name">${name}</span><span class="hint">${hint}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
   return card('yearly', 'Yearly costs', Y.n ? `${fmt(Y.saved)} saved · ${fmt(c.yearlyTotal || 0)} this month` : 'Insurance, a phone plan, anything once a year')
     + card('debt', 'Debt', (owed ? `${fmt(owed)} owed${c.debtTotal ? ' · ' + fmt(c.debtTotal) + ' this month' : ''}` : 'Nothing owed') + (ov ? ` · ${fmt(ov)} overspent last cycle` : ''))
-    + card('lent', 'nxtdoor Bank', L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything')
+    + card('lent', POT_NAMES.lent, L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything')
     + (S.B && S.B.start ? card('buffer', 'Income buffer', S.live ? `paying you ${fmt(S.pay)} a month` : `${fmt(S.BP.bal)} of ${fmt(S.pay)}`) : '');
 }
 function deskPanelHtml(k) {
@@ -5257,7 +5316,7 @@ function deskWrap() {
   const bar = document.createElement('header'); bar.className = 'dbar';
   const tb = (t, n) => `<button data-tab="${t}" ${tab === t ? 'aria-current="page"' : ''}>${n}</button>`;
   const ti = ['home', 'goals', 'setup'].indexOf(tab);
-  bar.innerHTML = `<div class="dbar-in"><div class="mark">WDMMG</div><div class="dtabs"><i class="dind" style="--i:${ti}" aria-hidden="true"></i>${tb('home', 'Home')}${tb('goals', 'Goals')}${tb('setup', 'Setup')}</div>
+  bar.innerHTML = `<div class="dbar-in"><div class="mark">${MARK}</div><div class="dtabs"><i class="dind" style="--i:${ti}" aria-hidden="true"></i>${tb('home', 'Home')}${tb('goals', 'Goals')}${tb('setup', 'Setup')}</div>
     <div class="dright">${tab === 'home' && !detail ? `<div class="monthnav"><button data-act="prev" aria-label="Previous month">‹</button><span>${monthLabelShort(cursor)}</span><button data-act="next" aria-label="Next month">›</button></div>` : ''}
       <button class="btn sm" data-act="addPick">${PLUS.replace('width="24" height="24"', 'width="16" height="16"')} Add</button><button class="btn plain sm" data-act="lock">Lock</button></div></div>`;
   const wrap = document.createElement('div'); wrap.className = 'dwrap' + (deskPot ? ' open' : '');
@@ -5361,6 +5420,8 @@ document.addEventListener('click', (e) => {
     });
     armedExp = null; save(); toast('Expense deleted'); return rerenderKeepingPanel();
   }
+  const orb = e.target.closest('[data-obrent]');
+  if (orb) { obRent = orb.dataset.obrent; return render(); }
   const ob = e.target.closest('[data-ob]');
   if (ob) { if (ob.dataset.ob === 'back') return pageSlide(-1, () => { obStep = Math.max(0, obStep - 1); }); return obNext(); }
   const ln = e.target.closest('[data-lend]');
@@ -5478,6 +5539,10 @@ document.addEventListener('click', (e) => {
     case 'prev': return monthGo(-1);
     case 'next': return monthGo(1);
     case 'lock': view = 'lock'; entry = ''; homeLTS = null; return render();
+    case 'forgotArm': forgotArm = true; return render();
+    case 'forgotNo': forgotArm = false; return render();
+    case 'forgotYes': forgotArm = false; state.pin = null; state.salt = null; save(); view = 'lock'; entry = ''; first = ''; lockMsg = ''; toast('Choose a new PIN. Your entries are all still here.'); return render();
+    case 'backupLater': state.settings.backupSnooze = isoOf(new Date()); save(); return render();
     case 'resetPin': state.pin = null; state.salt = null; save(); view = 'lock'; entry = ''; first = ''; return render();
     case 'clearOpening': state.openingSub = null; save(); return render();
     case 'wipeAsk':
