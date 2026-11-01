@@ -17,7 +17,7 @@
   --bg: #F2F5F3;
   --surface: #FFFFFF;
   --ink: #15231C;
-  --muted: #62736A;
+  --muted: #52625A;
   --line: #DCE3DE;
   --green: #1B4D3E;
   --green-ink: #FFFFFF;
@@ -70,7 +70,7 @@ input { font: inherit; color: inherit; }
 .dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--green); display: block; }
 .dots i.on { background: var(--green); }
 .keypad { display: grid; grid-template-columns: repeat(3, 76px); gap: 14px; }
-.key { width: 76px; height: 76px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-family: "Doto", var(--mono); font-size: 30px; font-weight: 800; }
+.key { width: 76px; height: 76px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-family: var(--font); font-size: 30px; font-weight: 800; }
 .key:active { background: var(--bg); }
 .key.ghost { border-color: transparent; background: transparent; font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--muted); }
 .err { color: var(--warn); min-height: 20px; font-weight: 600; }
@@ -86,7 +86,7 @@ input { font: inherit; color: inherit; }
 .hero { background-color: var(--green); background-image: radial-gradient(rgba(255,255,255,.22) 1px, transparent 1.5px); background-size: 14px 14px; color: var(--green-ink); border: 0; }
 .hero .label { color: #BFD6CB; }
 .label { font-family: var(--mono); font-size: 12px; color: var(--muted); font-weight: 500; }
-.big { font-family: "Doto", var(--mono); font-size: 38px; font-weight: 800; letter-spacing: 0; line-height: 1.1; margin: 6px 0 8px; }
+.big { font-family: var(--font); font-size: 38px; font-weight: 800; letter-spacing: 0; line-height: 1.1; margin: 6px 0 8px; }
 .sub { font-size: 13px; color: #BFD6CB; }
 h2 { font-size: 16px; margin: 0 0 12px; font-weight: 700; }
 
@@ -113,7 +113,7 @@ h2 { font-size: 16px; margin: 0 0 12px; font-weight: 700; }
 .tagchart { width: calc(100% + 28px); margin: 0 -14px; }
 .emptyring { fill: none; stroke: var(--line); }
 .slice { fill: none; }
-.cb { font-family: "Doto", var(--mono); font-weight: 800; fill: var(--ink); }
+.cb { font-family: var(--font); font-weight: 800; fill: var(--ink); }
 .cl, .cs { font-family: var(--mono); font-size: 11.5px; fill: var(--muted); }
 .ringcard { cursor: pointer; }
 /* PIN feedback: the pressed key flashes and the new dot pops. The digit itself is never shown. */
@@ -137,7 +137,7 @@ nav button[data-tab="home"] { touch-action: none; -webkit-touch-callout: none; u
 .hpop .sl.hot { transform: translate(var(--dx), var(--dy)); }
 .hpop.dimmed .sl:not(.hot) { opacity: .45; }
 .hpop .hc1 { font-family: var(--mono); font-size: 10px; fill: var(--muted); }
-.hpop .hc2 { font-family: "Doto", var(--mono); font-weight: 800; font-size: 16px; fill: var(--ink); }
+.hpop .hc2 { font-family: var(--font); font-weight: 800; font-size: 16px; fill: var(--ink); }
 .hcap { text-align: center; font-weight: 800; font-size: 13px; margin-top: 4px; min-height: 18px; }
 @media (prefers-reduced-motion: reduce) { .hpop, .hscrim { animation: none; } .hpop .sl { transition: none; } }
 .cur { height: 44px; border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; background: var(--surface); font: inherit; font-family: var(--mono); color: var(--ink); }
@@ -150,7 +150,7 @@ nav button[data-tab="home"] { touch-action: none; -webkit-touch-callout: none; u
 .syncdot.error, .syncdot.full { background: var(--warn); }
 /* Grade */
 .gradecard { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 14px; align-items: center; cursor: pointer; }
-.gtile { width: 76px; height: 76px; border-radius: 20px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: "Doto", var(--mono); font-weight: 800; font-size: 46px; line-height: 1; }
+.gtile { width: 76px; height: 76px; border-radius: 20px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: var(--font); font-weight: 800; font-size: 46px; line-height: 1; }
 .gtile.big { width: 104px; height: 104px; border-radius: 26px; font-size: 64px; }
 .gtile.g-A, .gtile.g-B { background: var(--green); }
 .gtile.g-D, .gtile.g-E { background: var(--amber); }
@@ -175,7 +175,7 @@ nav button[data-tab="home"] { touch-action: none; -webkit-touch-callout: none; u
 .hist .gtile { width: 40px; height: 40px; border-radius: 12px; font-size: 22px; margin-bottom: 4px; }
 /* Line charts */
 .lc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 6px; }
-.lc-val { font-family: "Doto", var(--mono); font-weight: 800; font-size: 30px; }
+.lc-val { font-family: var(--font); font-weight: 800; font-size: 30px; }
 .delta { font-family: var(--mono); font-size: 12px; padding: 3px 9px; border-radius: 999px; }
 .delta.up { background: #E6F1EB; color: var(--green); }
 .delta.down { background: var(--warn-bg); color: var(--warn); }
@@ -215,6 +215,13 @@ input[type="date"] { min-height: 44px; }
 .lc-lab { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .goalbar { height: 14px; border-radius: 7px; background: rgba(255, 255, 255, .18); overflow: hidden; margin-top: 12px; }
 .goalbar i { display: block; height: 100%; background: #fff; border-radius: 7px; }
+.swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.swatch { display: grid; justify-items: center; gap: 6px; padding: 10px 4px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); font-size: 12px; font-weight: 600; }
+.swatch i { width: 28px; height: 28px; border-radius: 50%; display: block; }
+.swatch[aria-pressed=true] { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); }
+.imrow { align-items: center; }
+.imcols { margin: 0 0 10px; }
+.imcols .field { margin-top: 8px; }
 .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 10px 0; border-top: 1px dashed var(--line); }
 .kv:first-of-type { border-top: 0; }
 .kv .n { font-weight: 600; font-size: 14px; }
@@ -256,7 +263,7 @@ input[type="date"] { min-height: 44px; }
 .sheet-in { max-width: 480px; margin: 0 auto; }
 .grab { width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: 0 auto 14px; }
 .sheet h3 { margin: 0; font-size: 17px; font-weight: 800; }
-.amt-in { width: 100%; border: 0; border-bottom: 2px solid var(--line); padding: 8px 0; margin: 10px 0 14px; font-family: "Doto", var(--mono); font-weight: 800; font-size: 40px; background: transparent; }
+.amt-in { width: 100%; border: 0; border-bottom: 2px solid var(--line); padding: 8px 0; margin: 10px 0 14px; font-family: var(--font); font-weight: 800; font-size: 40px; background: transparent; }
 .amt-in:focus { outline: none; border-bottom-color: var(--green); }
 .amt-in::-webkit-inner-spin-button, .amt-in::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .amt-in { -moz-appearance: textfield; appearance: textfield; }
@@ -336,7 +343,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .ughost-in { max-width: 480px; margin: 0 auto; }
 .navfx { position: fixed; left: 0; top: 0; z-index: 61; pointer-events: none; overflow: visible; }
 .navfx .nfl { font-family: var(--mono); font-size: 10px; fill: var(--muted); }
-.navfx .nfn { font-family: "Doto", var(--mono); font-weight: 900; fill: var(--ink); }
+.navfx .nfn { font-family: var(--font); font-weight: 900; fill: var(--ink); }
 .navghost { background: var(--bg); background-image: var(--dots); }
 .udot { position: fixed; z-index: 61; border-radius: 50%; background: var(--warn); pointer-events: none; display: none; }
 .upulse { position: fixed; z-index: 61; border-radius: 50%; border: 2px solid var(--warn); pointer-events: none; display: none; }
@@ -346,11 +353,11 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .sring .stk { fill: none; stroke: rgba(255, 255, 255, .15); }
 .sring .sarc { fill: none; stroke: #fff; stroke-linecap: round; }
 .sring .sl1 { font-family: var(--mono); font-size: 10px; letter-spacing: 1.2px; fill: #FF8A8A; }
-.sring .sv { font-family: "Doto", var(--mono); font-weight: 900; fill: #fff; }
+.sring .sv { font-family: var(--font); font-weight: 900; fill: #fff; }
 .sring .sl2 { font-family: var(--mono); font-size: 10px; fill: #BFD6CB; }
 .hpair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid rgba(255, 255, 255, .2); padding-top: 12px; margin-top: 10px; }
 .hpair > div + div { border-left: 1px solid rgba(255, 255, 255, .2); padding-left: 12px; }
-.hpair .v { font-family: "Doto", var(--mono); font-weight: 800; font-size: 22px; margin-top: 5px; line-height: 1; }
+.hpair .v { font-family: var(--font); font-weight: 800; font-size: 22px; margin-top: 5px; line-height: 1; }
 .dhero > .hnote { font-size: 12px; color: #BFD6CB; margin-top: 10px; }
 .ring .band { fill: none; stroke: rgba(255, 255, 255, .8); pointer-events: none; }
 .ringcard:active { background: #FAFCFB; }
@@ -442,7 +449,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .dhome .dband { display: grid; grid-template-columns: clamp(200px, 19vw, 290px) minmax(0, 1fr) clamp(260px, 24vw, 360px); gap: clamp(20px, 2.4vw, 36px); align-items: center; padding: 22px 30px; margin: 0; }
 .dband .sring { max-width: 290px; }
 .fixedc .sl1 { fill: var(--mint); }
-.dlts { display: block; font-family: "Doto", var(--mono); font-weight: 900; font-size: clamp(48px, 5.8vw, 88px); line-height: 1; margin: 16px 0 16px; color: #fff; white-space: nowrap; }
+.dlts { display: block; font-family: var(--font); font-weight: 900; font-size: clamp(48px, 5.8vw, 88px); line-height: 1; margin: 16px 0 16px; color: #fff; white-space: nowrap; }
 .dband .meter { display: block; background: rgba(255, 255, 255, .18); margin-top: 0; }
 .dband .meter i { background: #fff; }
 .dband .meter::after { background: var(--green); }
@@ -452,7 +459,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .dbrow { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 11.5px; color: var(--mint); margin-top: 10px; }
 .dbstats { display: flex; gap: clamp(20px, 3vw, 44px); margin-top: 26px; }
 .dbstats .label { color: var(--mint); }
-.dbstats .v { font-family: "Doto", var(--mono); font-weight: 800; font-size: 22px; margin-top: 8px; color: #fff; }
+.dbstats .v { font-family: var(--font); font-weight: 800; font-size: 22px; margin-top: 8px; color: #fff; }
 .dbpots { border-left: 1px solid rgba(255, 255, 255, .2); padding-left: clamp(20px, 2.2vw, 30px); display: grid; gap: 18px; }
 .dpl { all: unset; display: grid; gap: 8px; cursor: pointer; border-radius: 10px; }
 .dpl:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
@@ -460,7 +467,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .dpl .n { font-weight: 700; font-size: 14px; color: #fff; }
 .dpl:hover .n { text-decoration: underline; text-underline-offset: 3px; }
 .dpl .u { font-family: var(--mono); font-size: 11px; color: var(--mint); }
-.dpl .v { font-family: "Doto", var(--mono); font-weight: 800; font-size: 30px; color: #fff; line-height: 1; }
+.dpl .v { font-family: var(--font); font-weight: 800; font-size: 30px; color: #fff; line-height: 1; }
 .dhome .dcols2 { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, .8fr); gap: 0 18px; align-items: start; }
 .dhome .dc3 .tiles4 { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 12px; }
 .dnotes h2 { margin-bottom: 4px; }
@@ -553,7 +560,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .tiles4 .tile { margin: 0; padding: 14px 16px; min-height: 112px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; text-align: left; font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .tiles4 .tile:active { transform: scale(.98); }
 .tiles4 .tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: .02em; }
-.tiles4 .tv { font-family: "Doto", var(--mono); font-weight: 800; font-size: 30px; line-height: 1.1; }
+.tiles4 .tv { font-family: var(--font); font-weight: 800; font-size: 30px; line-height: 1.1; }
 .tiles4 .tn { font-weight: 800; font-size: 16px; line-height: 1.2; }
 .tiles4 .ts { font-size: 12px; color: var(--muted); }
 .tiles4 .hero .ts { color: #CFE1D8; }
@@ -563,7 +570,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 /* freedom gauge + ladder */
 .fgauge { display: block; width: 100%; height: auto; }
 .fg-tk { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
-.fg-v { font-family: "Doto", var(--mono); font-weight: 800; font-size: 46px; fill: var(--green); }
+.fg-v { font-family: var(--font); font-weight: 800; font-size: 46px; fill: var(--green); }
 .fg-l { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
 .fg-fill path { animation: fgIn .9s cubic-bezier(.2, .8, .2, 1) both; stroke-dasharray: 400; stroke-dashoffset: 0; }
 @keyframes fgIn { from { stroke-dashoffset: 400; } }
@@ -589,7 +596,7 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .gtl .gl { stroke: var(--line); stroke-dasharray: 2 4; }
 .gtl .axis { font-family: var(--mono); font-size: 10px; fill: var(--muted); }
 .gtl .axis.now { fill: var(--ink); font-weight: 500; }
-.gtl .glt { font-family: "Doto", var(--mono); font-weight: 800; font-size: 15px; fill: #fff; }
+.gtl .glt { font-family: var(--font); font-weight: 800; font-size: 15px; fill: #fff; }
 .gtl .gbar { transition: opacity .2s; }
 .gtl.active .gbar:not(.hot) { opacity: .35; }
 .gtile.sm { width: 48px; height: 48px; border-radius: 14px; font-size: 28px; flex: none; }
@@ -623,13 +630,13 @@ details.hist summary { font-family: var(--mono); font-size: 12px; color: var(--m
 .minibtn { border: 0; background: transparent; padding: 0; width: 76px; height: 76px; flex: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .miniring { width: 76px; height: 76px; display: block; overflow: visible; }
 .mhtxt .pp-name { font-size: 16px; }
-.mhv { font-family: "Doto", var(--mono); font-weight: 800; font-size: 24px; color: var(--green); line-height: 1.15; }
+.mhv { font-family: var(--font); font-weight: 800; font-size: 24px; color: var(--green); line-height: 1.15; }
 @media (prefers-reduced-motion: reduce) { .psheet, .psbody, .pshint, .psdots i { transition: none; } }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .pp-head { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 10px; align-items: center; }
 .pp-head .sw { width: 12px; height: 12px; border-radius: 50%; display: block; }
 .pp-name { font-weight: 800; font-size: 17px; }
-.pp-amt { font-family: "Doto", var(--mono); font-weight: 800; font-size: 24px; text-align: right; }
+.pp-amt { font-family: var(--font); font-weight: 800; font-size: 24px; text-align: right; }
 .pp-rows { margin-top: 12px; }
 .pp-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px dashed var(--line); }
 .pp-row .n { font-weight: 600; font-size: 14px; }
@@ -703,6 +710,8 @@ nav div { position: relative; }
 nav button { position: relative; z-index: 1; transition: color .2s; }
 nav button[aria-current=page] { background: transparent; color: var(--ink); }
 /* the white pill under the current tab; it glides when you change tab */
+nav div.three { grid-template-columns: 1fr 1fr 1fr; }
+nav div.three .npill { width: calc((100% - 18px) / 3); }
 .npill { position: absolute; left: 5px; top: 5px; width: calc((100% - 22px) / 4); height: 42px; border-radius: 999px; background: #fff; transform: translateX(calc(var(--i) * (100% + 4px))); }
 /* page moves: still copies of the two pages slide over each other under the tab bar */
 #app { touch-action: pan-y; }
@@ -747,7 +756,7 @@ nav button[aria-current=page] { background: transparent; color: var(--ink); }
 .hp1 + .hp1 { border-top: 1px dashed var(--line); }
 .hrow2 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .hrow2 .n { font-weight: 700; font-size: 14px; }
-.hbig { font-family: "Doto", var(--mono); font-weight: 800; font-size: 22px; }
+.hbig { font-family: var(--font); font-weight: 800; font-size: 22px; }
 .hbig small { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--muted); }
 .hbar { display: block; margin-top: 8px; }
 .hbar::after { display: none; }
@@ -814,7 +823,7 @@ nav button[aria-current=page] { background: transparent; color: var(--ink); }
 .p2empty { font-size: 13px; color: var(--muted); padding: 8px 0 2px; }
 /* The payment sheet (flow B): after the amount, choose the split or one pot */
 .wlab { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-.wamt { font-family: "Doto", var(--mono); font-weight: 800; font-size: 34px; line-height: 1.1; margin-bottom: 4px; }
+.wamt { font-family: var(--font); font-weight: 800; font-size: 34px; line-height: 1.1; margin-bottom: 4px; }
 .wopt { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--line); border-radius: 18px; padding: 14px; margin-top: 12px; cursor: pointer; }
 .wopt.on { border: 2px solid var(--green); padding: 13px; }
 .wopt .wh { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
@@ -850,6 +859,197 @@ nav button[aria-current=page] { background: transparent; color: var(--ink); }
 .ivform h3 { margin: 0; font-size: 15px; font-weight: 700; }
 .ivch { margin-top: 14px; }
 .p2cov .a, .p2cov .n { color: var(--muted); }
+/* Look B (Edd's pick, 28 Oct 2026): Nothing x Apple. Kept from Nothing: dot-matrix numbers, the red dot, the dotted
+   hero and mono labels. From Apple: a frosted top bar, big page titles, soft shadows instead of outlines, filled
+   fields, a floating glass tab bar with icons and larger sheets with a blurred backdrop. Phone layout only where noted. */
+:root { --glass: color-mix(in srgb, var(--surface) 72%, transparent); --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 6px 20px rgba(0, 0, 0, .06); }
+body { background-image: none; }
+.top { background: color-mix(in srgb, var(--bg) 80%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); padding: 14px 0 10px; border-bottom: .5px solid color-mix(in srgb, var(--line) 70%, transparent); }
+.ltop { margin: 6px 2px 2px; }
+.ltitle { font-size: 34px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin: 0; }
+.lsub { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; margin-top: 4px; }
+.desk .ltop { display: none; }
+.card { border: 0; box-shadow: var(--shadow); border-radius: 22px; }
+.hero { box-shadow: 0 10px 30px color-mix(in srgb, var(--green) 30%, transparent); }
+.card h2 { font-size: 13px; font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.kv { border-top: .5px solid var(--line); padding: 13px 0; }
+.label { letter-spacing: .04em; }
+.monthnav { background: color-mix(in srgb, var(--ink) 7%, var(--surface)); border-radius: 999px; padding: 3px; gap: 0; }
+.monthnav button { border: 0; background: transparent; box-shadow: none; }
+.monthnav span { font-size: 13px; padding: 0 6px; }
+nav div { max-width: 360px; padding: 6px; background: var(--glass); -webkit-backdrop-filter: saturate(180%) blur(24px); backdrop-filter: saturate(180%) blur(24px); box-shadow: 0 8px 28px rgba(0, 0, 0, .14), inset 0 0 0 .5px rgba(255, 255, 255, .4); }
+nav button { height: 54px; display: grid; place-items: center; align-content: center; gap: 2px; font-family: var(--font); font-size: 10.5px; font-weight: 600; color: var(--muted); }
+nav button svg { width: 22px; height: 22px; display: block; }
+nav button[aria-current=page] { color: var(--green); }
+.npill { height: 54px; top: 6px; left: 6px; width: calc((100% - 24px) / 4); background: color-mix(in srgb, var(--green) 14%, var(--surface)); }
+nav div.three .npill { width: calc((100% - 20px) / 3); }
+.fab { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 10px 26px color-mix(in srgb, var(--green) 45%, transparent); }
+#app { padding-bottom: 120px; }
+.btn.plain { border: 0; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); }
+.sheet { border-radius: 34px 34px 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, .18); }
+.scrim { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); background: rgba(0, 0, 0, .25); }
+.grab { width: 40px; height: 5px; border-radius: 3px; }
+.mch, .choice span { border-radius: 18px; }
+.field input, .cur, input[type=text], input[type=number], input[type=search], input[type=date] { border: 0; background: color-mix(in srgb, var(--ink) 6%, var(--surface)); border-radius: 12px; }
+.alert { border-radius: 18px; }
+/* Home's dial card: frosted white over a soft glow (31 Oct 2026) */
+.dglow { position: relative; isolation: isolate; }
+.dglow::before, .dglow::after { content: ""; position: absolute; border-radius: 50%; z-index: -1; pointer-events: none; }
+.dglow::before { width: 240px; height: 240px; left: -40px; top: 10px; background: color-mix(in srgb, var(--green) 45%, transparent); filter: blur(50px); }
+.dglow::after { width: 200px; height: 200px; right: -30px; bottom: 60px; background: color-mix(in srgb, var(--green) 25%, #7FD0FF); opacity: .45; filter: blur(55px); }
+.dialcard.dhero { position: relative; padding: 20px; border-radius: 26px; color: var(--ink); background: color-mix(in srgb, var(--surface) 60%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  border: .5px solid color-mix(in srgb, var(--ink) 10%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 24px rgba(0, 0, 0, .06); font-family: var(--font); }
+.dg { position: relative; width: 230px; height: 230px; margin: 0 auto 4px; }
+.dial { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dial path { fill: none; stroke-width: 12; stroke-linecap: round; }
+.dial .dtrack { stroke: color-mix(in srgb, var(--ink) 8%, transparent); }
+.dial .darc { stroke: url(#dgrad); }
+.dial .dgs0 { stop-color: var(--green); } .dial .dgs1 { stop-color: color-mix(in srgb, var(--green) 55%, #fff); }
+.dialover .dial .darc { stroke: var(--warn); }
+.dial .dtoday { fill: var(--surface); stroke: #D71921; stroke-width: 3; }
+.dmid { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 0 30px; }
+.dl1 { font-size: 13px; font-weight: 600; color: var(--muted); }
+.dbig { font-size: 36px; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 6px 0 4px; font-variant-numeric: tabular-nums; }
+.dialover .dbig { color: var(--warn); }
+.dl2 { font-size: 13px; font-weight: 500; color: var(--muted); }
+.dsegs { display: grid; gap: 12px; margin-top: 10px; }
+.drow { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; font-size: 14px; font-weight: 600; }
+.drow em { font-style: normal; } .drow b { font-variant-numeric: tabular-nums; } .drow small { color: var(--muted); font-weight: 500; }
+.drow u { grid-column: 1 / -1; height: 6px; border-radius: 6px; background: color-mix(in srgb, var(--ink) 8%, transparent); text-decoration: none; overflow: hidden; }
+.drow i { display: block; height: 100%; border-radius: 6px; background: var(--green); }
+.drow i.dover { width: 100% !important; background: var(--warn); }
+.dstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; padding-top: 14px; border-top: .5px solid var(--line); }
+.dstats div { font-size: 12px; color: var(--muted); font-weight: 500; }
+.dstats b { display: block; color: var(--ink); font-size: 16px; margin-top: 2px; font-weight: 700; }
+.dglow .dialcard > .hnote { font-size: 12px; color: var(--muted); margin-top: 10px; }
+/* Home's lists: an icon tile on each card, like a settings list */
+.ccic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; background: var(--ic); }
+.ccic svg { width: 17px; height: 17px; }
+.cch .cct { flex: 1; }
+
+/* Home: one slim glass bar */
+.hbar { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 8px); margin: 8px 0 12px; padding: 8px 8px 8px 16px; border-radius: 22px; border: .5px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent); -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 6px 20px rgba(0,0,0,.06); }
+.hrow { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.hbar .mark { font-size: 20px; }
+.hmid { border: 0; background: none; color: var(--ink); text-align: center; padding: 2px 6px; font: 700 17px/1.2 var(--font); cursor: pointer; }
+.hmid span { display: block; } .hmid i { font-style: normal; display: inline-block; transition: transform .25s; color: var(--muted); }
+.hbar.open .hmid i { transform: rotate(180deg); }
+.hrange { font-size: 12px; font-weight: 500; color: var(--muted); }
+.hdays { justify-self: end; background: var(--green); color: var(--surface); border-radius: 999px; padding: 6px 11px; font: 700 13px/1 var(--font); white-space: nowrap; }
+.hdays.off { background: color-mix(in srgb, var(--ink) 9%, transparent); color: var(--muted); }
+.hbar .hnav { display: none; justify-content: center; margin-top: 8px; background: none; }
+.hbar.open .hnav { display: flex; }
+.hbar .hnav { gap: 8px; }
+.hbar .hnav button { width: auto; height: 34px; border-radius: 999px; padding: 0 14px; font: 600 14px/1 var(--font); color: var(--ink); background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.hnav .hnow { width: auto; border-radius: 999px; padding: 0 12px; font: 600 13px/1 var(--font); color: var(--green); }
+.desk .hbar { display: none; }
+/* The same bar on the other tabs and pages */
+.pbar { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 8px); margin: 8px 0 14px; padding: 8px 16px; min-height: 52px; border-radius: 22px; border: .5px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent); -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 6px 20px rgba(0,0,0,.06); }
+.pbar::after { display: none; }
+.pbar .hrow { min-height: 36px; }
+.pbar .mark { font-size: 20px; }
+.pmid { margin: 0; text-align: center; font: 700 17px/1.2 var(--font); color: var(--ink); text-transform: none; letter-spacing: 0; white-space: nowrap; }
+.pbar .back { justify-self: start; height: 32px; padding: 0 12px 0 10px; margin-left: -8px; border: 0; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--ink); font: 600 14px/1 var(--font); }
+.desk .pbar { position: static; }
+.pbar .pmid.label { font-size: 15px; }
+/* A soft frosted strip above the bars, so text scrolling past never shows in the gap over them */
+body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 22px); z-index: 4; pointer-events: none;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); background: color-mix(in srgb, var(--bg) 55%, transparent);
+  -webkit-mask: linear-gradient(#000 45%, transparent); mask: linear-gradient(#000 45%, transparent); }
+body:has(#app.desk)::after { display: none; }
+
+/* Home tiles: frosted widgets that match the dial (31 Oct 2026) */
+.htiles .tile { background: color-mix(in srgb, var(--surface) 60%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); border: .5px solid color-mix(in srgb, var(--ink) 10%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 24px rgba(0, 0, 0, .05); border-radius: 22px; }
+.htiles .tv { font-family: var(--font); font-weight: 800; font-size: 28px; letter-spacing: -.03em; }
+.tiles4.htiles .tile .label { font: 600 13px/1.2 var(--font); text-transform: none; letter-spacing: 0; color: var(--muted); }
+.htiles .gtile { font-family: var(--font); font-weight: 800; font-size: 20px; border-radius: 12px; }
+.htiles .ts { font: 500 12.5px/1.3 var(--font); }
+/* Home cards: one grouped list with hairlines, like iPhone Settings; rows kept tight */
+#app > .cc { margin: 0; border-radius: 0; box-shadow: none; border: 0; background: var(--surface); }
+#app > .cc:not(.cc + .cc) { border-top-left-radius: 22px; border-top-right-radius: 22px; margin-top: 12px; }
+#app > .cc:not(:has(+ .cc)) { border-bottom-left-radius: 22px; border-bottom-right-radius: 22px; }
+#app > .cc + .cc .cch { border-top: .5px solid var(--line); margin-left: 62px; padding-left: 0; width: calc(100% - 62px); }
+#app > .cc + .cc .cch .ccic { margin-left: -42px; }
+#app > .cc .cch { min-height: 0; padding-top: 10px; padding-bottom: 10px; }
+#app > .cc .cct { gap: 2px; }
+#app > .cc .cct b { font: 600 16px/1.25 var(--font); }
+#app > .cc .ccl { font: 500 13px/1.3 var(--font); letter-spacing: 0; }
+#app > .cc .ccchev { opacity: .5; }
+
+/* Phase 4 (31 Oct 2026): one calm, glassy look everywhere. Plain text instead of the typewriter font, plain numbers
+   instead of the dotted one (the WDMMG logo keeps it), frosted cards and sheets, and a soft glow behind the page so the glass shows. */
+:root { --mono: var(--font); }
+body { font-variant-numeric: tabular-nums; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 40% at 10% 0%, color-mix(in srgb, var(--green) 16%, transparent), transparent 70%), radial-gradient(50% 35% at 100% 30%, color-mix(in srgb, var(--green) 10%, transparent), transparent 70%); }
+.big, .cb, .hpop .hc2, .gtile, .lc-val, .amt-in, .navfx .nfn, .key, .tiles4 .tv { font-family: var(--font); font-weight: 800; letter-spacing: -.02em; }
+.big { font-size: 34px; } .key { font-size: 28px; font-weight: 600; }
+.card h2, .label, .lsub { letter-spacing: .03em; }
+.card { background: color-mix(in srgb, var(--surface) 68%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); border: .5px solid color-mix(in srgb, var(--ink) 9%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 20px rgba(0, 0, 0, .04); }
+#app > .cc { background: color-mix(in srgb, var(--surface) 68%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); border: .5px solid color-mix(in srgb, var(--ink) 9%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 20px rgba(0, 0, 0, .04); }
+#app > .cc + .cc { border-top: 0; }
+.sheet { background: color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter: blur(34px) saturate(180%); backdrop-filter: blur(34px) saturate(180%); border-top: .5px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+.scrim { -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); background: color-mix(in srgb, var(--bg) 35%, rgba(0, 0, 0, .18)); }
+.key { background: color-mix(in srgb, var(--surface) 68%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); border: .5px solid color-mix(in srgb, var(--ink) 9%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 20px rgba(0, 0, 0, .04); border-radius: 50%; }
+/* Phase 9, motion: the dial draws with a dash, today's dot grows from its centre, bars fill from the left,
+   things you can tap give a little when pressed, and sheets slide up on the iPhone curve. */
+.dial :is(.dtoday, .dtick) { transform-box: fill-box; transform-origin: center; }
+.dial .dtick { stroke: color-mix(in srgb, var(--ink) 45%, transparent); stroke-width: 3; }
+.drow i { transform-origin: left; }
+.dialcard, #app > .cc .cch, .htiles .tile, .btn, .chip { transition: transform .2s cubic-bezier(.2, .8, .2, 1), filter .2s; }
+.dialcard:active { transform: scale(.985); }
+#app > .cc .cch:active { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.htiles .tile:active, .btn:active { transform: scale(.97); }
+.sheet { animation: sheetUp .44s cubic-bezier(.32, .72, 0, 1); }
+@keyframes sheetUp { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) { .dialcard, #app > .cc .cch, .htiles .tile, .btn, .chip { transition: none; } .dialcard:active, .htiles .tile:active, .btn:active { transform: none; } .sheet { animation: none; } }
+/* Readiness: small text on the coloured Investing card passes contrast (WCAG AA) */
+.hero .label, .ivhero .hnote { color: rgba(255, 255, 255, .86); }
+/* Send feedback (everyone app) */
+.fbcard textarea { box-sizing: border-box; font: 500 15px/1.4 var(--font); color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); border: .5px solid color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 14px; padding: 10px 12px; resize: vertical; }
+.fbcard textarea:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+/* Phase 8, lock screen A (iPhone style): a stronger glow, big glass keys with thin digits, Clear and Del as plain words */
+.lock { gap: 28px; }
+.lock::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(55% 35% at 20% 12%, color-mix(in srgb, var(--green) 30%, transparent), transparent 70%), radial-gradient(50% 30% at 90% 70%, color-mix(in srgb, var(--warn) 14%, transparent), transparent 70%); }
+.lock h1 { font-size: 22px; font-weight: 600; }
+.keypad { grid-template-columns: repeat(3, 80px); gap: 16px 26px; }
+.key:not(.ghost) { width: 80px; height: 80px; background: color-mix(in srgb, var(--surface) 55%, transparent); font-size: 34px; font-weight: 400; }
+.key.ghost { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-family: var(--font); font-size: 16px; font-weight: 500; color: var(--ink); }
+.dots i { width: 13px; height: 13px; border-width: 1.5px; border-color: var(--ink); }
+.dots i.on { background: var(--ink); }
+
+/* The Investing card keeps its colour with a light touch of frost (Edd: "2% frost", 31 Oct 2026) */
+.card.hero.ivhero { background: linear-gradient(160deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 45%), color-mix(in srgb, var(--fill, var(--green)) 96%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%); border: .5px solid rgba(255, 255, 255, .22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 10px 30px color-mix(in srgb, var(--fill, var(--green)) 22%, transparent); }
+
+/* Setup: the version, engraved */
+.engrave { display: grid; justify-items: center; gap: 2px; width: 100%; margin: 36px 0 8px; padding: 12px; background: none; border: 0; cursor: default; -webkit-tap-highlight-color: transparent;
+  font-family: "Doto", var(--font); font-weight: 800; color: color-mix(in srgb, var(--ink) 16%, var(--bg)); text-shadow: 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 -1px 0 color-mix(in srgb, #000 10%, transparent); user-select: none; }
+.engrave span { font-size: 13px; letter-spacing: .3em; }
+.engrave b { font-size: 26px; letter-spacing: .12em; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .engrave { text-shadow: 0 1px 0 rgba(255, 255, 255, .06), 0 -1px 0 rgba(0, 0, 0, .6); } }
+:root[data-theme="dark"] .engrave { text-shadow: 0 1px 0 rgba(255, 255, 255, .06), 0 -1px 0 rgba(0, 0, 0, .6); }
+
+/* First-time setup and tour: one plain question per screen (31 Oct 2026) */
+.obbar { height: 4px; border-radius: 4px; background: color-mix(in srgb, var(--ink) 8%, transparent); margin: 2px 2px 0; overflow: hidden; }
+.obbar i { display: block; height: 100%; border-radius: 4px; background: var(--green); transition: width .35s; }
+.obhead { margin: 26px 2px 6px; }
+.obic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--ic); }
+.obic svg { width: 26px; height: 26px; }
+.obt { font-size: 28px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15; margin: 16px 0 8px; }
+.obsub { font-size: 16px; line-height: 1.45; color: var(--muted); margin: 0; max-width: 34ch; }
+.obcard { margin-top: 18px; }
+.obcard .field label { font-size: 15px; }
+.obnav { margin-top: 22px; }
+.obnav .btn { min-width: 120px; min-height: 48px; font-size: 16px; }
+.tourbody { text-align: center; display: grid; justify-items: center; padding: 8px 6px 4px; }
+.tourbody .obic { width: 56px; height: 56px; border-radius: 16px; }
+.tourbody h3 { font-size: 22px; margin: 16px 0 8px; letter-spacing: -.02em; }
+.tourbody p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); max-width: 32ch; }
 </style>
 
 <div id="app"></div>
@@ -860,7 +1060,10 @@ nav button[aria-current=page] { background: transparent; color: var(--ink); }
 // Anything that is not a real, sane amount (text, Infinity, 1e308) becomes NaN, which every form refuses.
 const MAX_G = 1e13; // 100 billion PLN
 const toG = (pln) => { const g = Math.round(Number(pln) * 100); return Number.isFinite(g) && Math.abs(g) <= MAX_G ? g : NaN; };
-const fmt = (g) => 'PLN ' + (g / 100).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+// HOME: the user's own currency. Always PLN in Edd's app; the everyone version asks in setup (settings.currency).
+let HOME = 'PLN';
+const homeCur = () => (GLOBAL && state && state.settings && /^[A-Z]{3}$/.test(state.settings.currency || '') ? state.settings.currency : 'PLN');
+const fmt = (g) => HOME + ' ' + (g / 100).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 // Splits `total` grosze by integer weights. The leftover grosze go to the largest remainders,
 // so the parts always add back up to the total exactly.
@@ -880,6 +1083,8 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // Two editions come out of this one file: Edd's own app, and the everyone version (a planet beside the name).
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
+// Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
+const APP_VERSION = ["v74","1 Nov 2026","f58d4f4"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -1138,7 +1343,7 @@ const ITX_TYPES = {
   divr: { n: 'Dividend reinvested', m: 'Income that bought more of the investment' },
   fee: { n: 'Fee', m: 'Charged by the broker or a fund' },
 };
-const ITX_CUR = ['PLN', 'EUR', 'USD', 'GBP', 'CHF', 'ZAR'];
+const itxCurs = () => [HOME, ...['PLN', 'EUR', 'USD', 'GBP', 'CHF', 'ZAR'].filter((c) => c !== HOME)];
 const dOf = (iso) => new Date(iso + 'T12:00:00');
 const isIso = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(dOf(v)) && isoOf(dOf(v)) === v;
 const todayIso = () => isoOf(new Date());
@@ -1152,13 +1357,13 @@ function itxProblem(x) {
   if (x.date > todayIso()) return 'date is in the future';
   if (!Number.isInteger(x.amt) || Math.abs(x.amt) > MAX_G) return 'amount is not valid';
   if (x.t === 'adj' ? x.amt === 0 && !nameKey(x.inv) : x.t === 'val' ? x.amt < 0 : x.amt <= 0) return 'amount is not valid';
-  if (x.cur != null && x.cur !== '' && !ITX_CUR.includes(x.cur)) return 'unknown currency';
-  if (x.cur && x.cur !== 'PLN' && x.rate != null && x.rate !== '' && !(Number.isFinite(x.rate) && x.rate > 0 && x.rate < 10000)) return 'exchange rate is not valid';
-  if (x.cur && x.cur !== 'PLN' && x.rate > 0 && x.rateDate && !isIso(x.rateDate)) return 'rate date is not valid';
+  if (x.cur != null && x.cur !== '' && !itxCurs().includes(x.cur)) return 'unknown currency';
+  if (x.cur && x.cur !== HOME && x.rate != null && x.rate !== '' && !(Number.isFinite(x.rate) && x.rate > 0 && x.rate < 10000)) return 'exchange rate is not valid';
+  if (x.cur && x.cur !== HOME && x.rate > 0 && x.rateDate && !isIso(x.rateDate)) return 'rate date is not valid';
   return '';
 }
 // PLN amount of an entry, or null while a foreign amount has no exchange rate (never assumed 1:1).
-function itxPln(x) { if (!x.cur || x.cur === 'PLN') return x.amt; return x.rate > 0 ? Math.round(x.amt * x.rate) : null; }
+function itxPln(x) { if (!x.cur || x.cur === HOME) return x.amt; return x.rate > 0 ? Math.round(x.amt * x.rate) : null; }
 // Every investment entry, old and new, in date order. Older entries only know their cycle: they sit at its first
 // day. On one day, money moved in or out comes before a portfolio value (the value includes that day's moves).
 function itxEvents(st) {
@@ -1563,6 +1768,7 @@ function load() {
   return memoryState || freshState();
 }
 let state = load();
+HOME = homeCur();
 function saveLocal() { memoryState = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} lastIds = idSnapshot(state); }
 function save() { noteDeletions(); saveLocal(); schedulePush(); }
 
@@ -1583,7 +1789,7 @@ sync.dev = Math.random().toString(36).slice(2, 10); sync.seq = 0;
 const newTag = () => sync.dev + ':' + ++sync.seq;
 const markSent = (doc, w) => { const s = sync.sent.get(doc) || []; s.push(w); if (s.length > 12) s.shift(); sync.sent.set(doc, s); };
 const wasSent = (doc, w) => !!w && (sync.sent.get(doc) || []).includes(w);
-const coreOf = (s) => Object.assign({ pin: s.pin, salt: s.salt, settings: s.settings, openingSub: s.openingSub, openingInvest: s.openingInvest || 0, invest: s.invest || [], itx: s.itx || [], lastCur: s.lastCur || 'PLN', setup: !!s.setup }, s.gone && s.gone.length ? { gone: s.gone } : {}, s.gen ? { gen: s.gen } : {});
+const coreOf = (s) => Object.assign({ pin: s.pin, salt: s.salt, settings: s.settings, openingSub: s.openingSub, openingInvest: s.openingInvest || 0, invest: s.invest || [], itx: s.itx || [], lastCur: s.lastCur || HOME, setup: !!s.setup }, s.gone && s.gone.length ? { gone: s.gone } : {}, s.gen ? { gen: s.gen } : {});
 const CLOUD = (id) => 'data/users/' + id + '/main';
 const SYNC_TEXT = {
   local: 'Saved on this device only. Open the app while signed in to Claude to sync it.',
@@ -1859,6 +2065,37 @@ function leftToSpend(key) {
   const r = ledgerRow(key); if (!r) return { left: 0, budget: 0, over: [] };
   return { left: SPEND.reduce((a, p) => a + r.pots[p].left, 0), budget: SPEND.reduce((a, p) => a + Math.max(0, r.pots[p].budget), 0), over: SPEND.filter((p) => r.pots[p].left < 0).map((p) => ({ p, g: -r.pots[p].left })) };
 }
+// Home's top card (Edd's pick, 28 Oct 2026): a full dial inside the coloured card. The white ring is what is left
+// of the spending pots, starting at the top and going clockwise; the red dot is today's place in the cycle. Below
+// it, a bar per spending pot, then income, after bills and per day. Tapping it opens the breakdown, as before.
+const DIAL = { C: 115, r: 100, a0: Math.PI * 0.667, span: Math.PI * 1.667 };
+const dialP = (a) => `${(DIAL.C + DIAL.r * Math.cos(a)).toFixed(2)} ${(DIAL.C + DIAL.r * Math.sin(a)).toFixed(2)}`;
+const dialArcD = (fr) => `M${dialP(DIAL.a0)} A${DIAL.r} ${DIAL.r} 0 ${DIAL.span * fr > Math.PI ? 1 : 0} 1 ${dialP(DIAL.a0 + DIAL.span * fr)}`;
+function dialCard(key, ls, c, o) {
+  // Frosted white card over a soft glow (Edd's pick, 31 Oct 2026): an open dial, the number in the middle, a row per pot.
+  const { a0, span } = DIAL, P = dialP, arc = dialArcD;
+  const f = ls.budget ? Math.max(0, Math.min(1, ls.left / ls.budget)) : 0, over = ls.left < 0, pct = ls.budget ? Math.floor((ls.left / ls.budget) * 100) : 0;
+  // The red dot sits at the end of the arc: what is left. With DIAL_DOT 'pace', a small grey mark shows how much of
+  // the pay month is still to go, so an arc that ends past the mark means money is lasting longer than the month.
+  let dot = '';
+  if (DIAL_DOT === 'pace' && key === o.now && c.total && ls.budget) { const [s0, e0] = cycleRange(key), all = (e0 - s0) / 86400000 + 1, gone = Math.round((new Date(new Date().toDateString()) - s0) / 86400000) + 0.5;
+    const at = a0 + span * Math.max(0, Math.min(1, 1 - gone / all)), q = (rr) => `${(DIAL.C + rr * Math.cos(at)).toFixed(2)} ${(DIAL.C + rr * Math.sin(at)).toFixed(2)}`;
+    dot = `<path d="M${q(DIAL.r - 11)} L${q(DIAL.r + 11)}" class="dtick"/>`; }
+  if (c.total && f > 0 && !over) { const [x, y] = P(a0 + span * f).split(' '); dot += `<circle cx="${x}" cy="${y}" r="7" class="dtoday dend"/>`; }
+  const head = !c.total ? 'No income yet' : over ? 'Over budget' : key < o.now ? 'Left over' : key > o.now ? 'To spend' : 'Left to spend';
+  const big = !c.total ? 'Add income' : fmtN(ls.left), l2 = !c.total ? 'to start the split' : ls.budget ? `${over ? 'over' : pct + '% of'} ${fmtN(ls.budget)}`.replace(/^over (.*)$/, 'budget was $1') : '';
+  const row = ledgerRow(key), rows = row && ls.budget ? `<div class="dsegs">${SPEND.map((p) => { const x = row.pots[p]; return x && x.budget > 0 ? `<span class="drow"><em>${esc(SHORT[p])}</em><b class="num">${fmtN(Math.abs(x.left))} <small>${x.left < 0 ? 'over' : 'left'}</small></b><u><i style="width:${Math.max(0, Math.min(100, (x.left / x.budget) * 100)).toFixed(1)}%"${x.left < 0 ? ' class="dover"' : ''}></i></u></span>` : ''; }).join('')}</div>` : '';
+  const inc = o.live ? c.total - c.oneTotal : c.total;
+  return `<div class="dglow"><section class="card dhero dialcard${over ? ' dialover' : ''}" data-open="breakdown" role="button" tabindex="0" aria-label="${esc(head)} ${fmtN(ls.left)}. Open the breakdown">
+      <div class="dg"><svg class="dial" viewBox="0 0 230 230" aria-hidden="true"><defs><linearGradient id="dgrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" class="dgs0"/><stop offset="1" class="dgs1"/></linearGradient></defs>
+        <path d="${arc(1)}" class="dtrack"/>${c.total && (f > 0 || over) ? `<path d="${arc(over ? 1 : f)}" class="darc" pathLength="1"/>` : ''}${dot}</svg>
+        <div class="dmid"><div class="dl1">${esc(head)}</div><div class="dbig num">${esc(big)}</div><div class="dl2">${esc(l2)}</div></div></div>
+      ${rows}
+      <div class="dstats"><div>${o.live ? 'Your pay' : 'Income'}<b class="num">${fmtN(inc)}</b></div><div>After bills<b class="num">${fmtN(Math.max(0, c.total - c.fixedTotal))}</b></div>${o.pd ? `<div>Per day<b class="num">${fmtN(o.pd)}</b></div>` : ''}</div>
+      ${o.live && splitInc({ income: o.income }).length ? `<div class="hnote">${fmt(splitInc({ income: o.income }).reduce((a, e) => a + e.g, 0))} earned this cycle went into your buffer.</div>` : ''}
+      ${overNote(ls) ? `<div class="hnote">${overNote(ls)}</div>` : ''}
+    </section></div>`;
+}
 const overNote = (ls) => (ls.over && ls.over.length ? `${ls.over.map((o) => `${POT_NAMES[o.p]} is ${fmtN(o.g)} over`).join(', ')}. That is counted here and comes off next cycle.` : '');
 function spendArcD(f) {
   const { C, AR } = SG, P = (a) => `${(C + AR * Math.cos(a)).toFixed(2)} ${(C + AR * Math.sin(a)).toFixed(2)}`;
@@ -1885,7 +2122,7 @@ function spendRing(items, ls, o) {
 // Logging an expense: the number and the outer line move from the old amount to the new one.
 let homeLTS = null;
 function homeRingFx(key, ls, intro) {
-  const svg = document.querySelector('svg.sring'); if (!svg) return;
+  const svg = document.querySelector('svg.sring'); if (!svg) return dialFx(key, ls, intro || unlockFx);
   const f1 = ls.budget ? ls.left / ls.budget : 0, prev = homeLTS && (homeLTS.key === key || monthFx) ? homeLTS : null;
   homeLTS = { key, v: ls.left, f: f1 };
   if (!ls.budget || reduceMotion()) return;
@@ -1912,6 +2149,46 @@ function homeRingFx(key, ls, intro) {
     });
     tween(0, 0, 350, 1000);
   } else if (prev && (prev.v !== ls.left || prev.f !== f1)) tween(prev.v, prev.f, monthFx ? 0 : 120, monthFx ? 550 : 600);
+}
+// The frosted dial (phase 9): on opening Home or unlocking, the arc sweeps round, the number counts up, the pot
+// bars fill one after another and today's dot appears. After an expense or a month change, the arc and the number
+// move from the old amount to the new one.
+// How Home's dial moves (Edd picks): 'full' sweep, 'quick' sweep, or 'calm' fade. And where its red dot sits.
+let DIAL_FX = 'quick', DIAL_DOT = 'pace';
+function dialFx(key, ls, intro) {
+  const card = document.querySelector('.dialcard'); if (!card) return;
+  const cl = (x) => Math.max(0, Math.min(1, x)), f1 = ls.budget ? cl(ls.left / ls.budget) : 0;
+  const prev = homeLTS && (homeLTS.key === key || monthFx) ? homeLTS : null;
+  homeLTS = { key, v: ls.left, f: f1 };
+  if (!ls.budget || reduceMotion() || !card.animate) return;
+  const arc = card.querySelector('.darc'), num = card.querySelector('.dbig'), end = card.querySelector('.dend'), today = card.querySelector('.dtoday:not(.dend), .dtick');
+  const ease = 'cubic-bezier(.2, .8, .2, 1)', over = ls.left < 0, quick = DIAL_FX === 'quick';
+  // One clock moves the arc, the end dot and the number together, so they never drift apart.
+  const run = (v0, f0, delay, dur) => {
+    const t0 = performance.now() + delay;
+    const set = (v, f) => {
+      if (num) num.textContent = fmtN(Math.round(v));
+      if (arc && !over) arc.setAttribute('d', dialArcD(Math.max(f, 0.0001)));
+      if (end) { const [x, y] = dialP(DIAL.a0 + DIAL.span * f).split(' '); end.setAttribute('cx', x); end.setAttribute('cy', y); }
+    };
+    set(v0, f0);
+    const tick = (now) => { if (num && !document.body.contains(num)) return; const k = cl((now - t0) / dur), q = 1 - Math.pow(1 - k, 3);
+      set(v0 + (ls.left - v0) * q, f0 + (f1 - f0) * q); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  if (intro && DIAL_FX === 'calm') {
+    card.querySelectorAll('.dg, .dsegs, .dstats').forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: 80 + i * 90, easing: 'ease-out', fill: 'backwards' }));
+  } else if (intro) {
+    const D = quick ? 450 : 900, d0 = quick ? 60 : 150;
+    if (over && arc) arc.animate([{ opacity: 0 }, { opacity: 1 }], { duration: D, delay: d0, easing: ease, fill: 'backwards' });
+    if (end) end.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, delay: d0, fill: 'backwards' });
+    if (today) today.animate([{ opacity: 0, transform: 'scale(.3)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: d0 + D * .8, easing: 'cubic-bezier(.2, .9, .3, 1.4)', fill: 'backwards' });
+    card.querySelectorAll('.drow i').forEach((b, i) => b.animate([{ transform: 'scaleX(0)' }, { transform: 'none' }], { duration: quick ? 380 : 650, delay: (quick ? 120 : 300) + i * (quick ? 40 : 80), easing: ease, fill: 'backwards' }));
+    run(0, 0, d0, D);
+  } else if (prev && prev.v !== ls.left) {
+    card.querySelectorAll('.drow i').forEach((b) => b.animate([{ opacity: .55 }, { opacity: 1 }], { duration: 500, easing: ease }));
+    run(prev.v, prev.f, monthFx ? 0 : 120, DIAL_FX === 'calm' ? 300 : monthFx ? 550 : 600);
+  }
 }
 // Tap animation on the home ring: a band of light sweeps once around the ring (like Nothing's Glyph lights)
 // and each slice pops out as the band passes over it. Then the breakdown page opens.
@@ -2042,7 +2319,7 @@ function tagChart(items, o) {
   sl.forEach((x) => {
     const on = o.selected === x.i.key ? ' on' : '';
     const dx = (Math.cos(x.mid) * 9).toFixed(2), dy = (Math.sin(x.mid) * 9).toFixed(2);
-    const act = o.select ? ` pick${on}" data-sel="${x.i.key}" tabindex="0" role="button" aria-label="${esc(x.i.name)}, PLN ${esc(x.i.amtText)}, ${esc(x.i.pctText)}` : '';
+    const act = o.select ? ` pick${on}" data-sel="${x.i.key}" tabindex="0" role="button" aria-label="${esc(x.i.name)}, ${HOME} ${esc(x.i.amtText)}, ${esc(x.i.pctText)}` : '';
     arcs += `<path class="slice${act}" style="--dx:${dx};--dy:${dy}" d="${arcD(CX, CY, R, x)}" stroke="${x.i.color}" stroke-width="${SW}"/>`;
     const sd = Math.cos(x.mid) >= 0 ? 1 : -1;
     const P = pt(x.mid, outer + 11), E = pt(x.mid, outer + 22);
@@ -2113,8 +2390,8 @@ function debtsEditor() {
     <form id="debtForm" style="margin-top:12px">
       <input id="dName" type="text" placeholder="Who or what you owe" aria-label="Debt name" required style="width:100%;margin-bottom:8px">
       <div class="row">
-        <input id="dOwed" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Owed" aria-label="Amount owed in PLN" required>
-        <input id="dPay" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Monthly" aria-label="Monthly payment in PLN" required>
+        <input id="dOwed" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Owed" aria-label="Amount owed in ${HOME}" required>
+        <input id="dPay" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Monthly" aria-label="Monthly payment in ${HOME}" required>
         <button class="btn" type="submit">Add</button>
       </div>
     </form>
@@ -2163,7 +2440,7 @@ function yearlyEditor() {
       return `<div class="spx${yIn(y, 'ask')}" data-yid="${y.id}">
         <div class="spx-top"><div><div class="n">${esc(y.name)}<span class="chip">Paid</span></div><div class="m num">${lp ? `paid ${fmtN(lp.g)} on ${esc(lp.date)}` : 'paid'}${bal > 0 ? ` · ${fmtN(bal)} left over` : ''}</div></div></div>
         <p class="hint" style="margin:8px 0 0">Same time next year?${bal > 0 ? ' What is left over counts toward it.' : ''}</p>
-        <div class="row" style="margin-top:8px"><input id="yNextAmt" class="f1" type="number" inputmode="decimal" min="1" step="0.01" value="${((lp ? lp.g : g) / 100).toFixed(2)}" aria-label="Next year's cost in PLN">
+        <div class="row" style="margin-top:8px"><input id="yNextAmt" class="f1" type="number" inputmode="decimal" min="1" step="0.01" value="${((lp ? lp.g : g) / 100).toFixed(2)}" aria-label="Next year's cost in ${HOME}">
           <input id="yNextDue" class="f1" type="month" min="${nextMonthKey(now)}" value="${nd}" aria-label="Next due date"></div>
         <div class="ppbtns" style="margin-top:8px"><button class="btn sm" data-yrep="${y.id}">Repeat next year</button><button class="btn plain sm" data-yend="${y.id}">Remove it${bal > 0 ? ', move ' + fmtN(bal) + ' to General' : ''}</button></div>
       </div>`;
@@ -2178,7 +2455,7 @@ function yearlyEditor() {
       <div class="meter" style="margin-top:8px"><i style="width:${pc}%"></i></div>
       <div style="margin-top:6px">${status}</div>
       ${payingYearly === y.id ? `<form id="yPayForm" data-id="${y.id}" style="margin-top:10px">
-          <div class="row"><input id="yPayAmt" class="f1" type="number" inputmode="decimal" min="0.01" step="0.01" value="${(g / 100).toFixed(2)}" aria-label="What it cost in PLN" required>
+          <div class="row"><input id="yPayAmt" class="f1" type="number" inputmode="decimal" min="0.01" step="0.01" value="${(g / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
             <button class="btn" type="submit">Save</button><button class="btn plain" type="button" data-ypaycancel="1">Cancel</button></div>
           <div class="row" style="margin-top:8px"><label class="hint" for="yRest" style="margin:0;align-self:center;flex:2">If it cost more than the ${fmtN(Math.max(0, bal))} saved, take the rest from</label>
             <select id="yRest" class="f1">${['everyday', 'general', 'emergency', 'fun'].map((k) => `<option value="${k}">${potName(k)}</option>`).join('')}</select></div>
@@ -2191,7 +2468,7 @@ function yearlyEditor() {
   return `${open.length ? open.map(one).join('') + `<div class="sum num">${fmt(S.saved)} saved · about ${fmt(S.rate)} a month</div>` : '<div class="empty">No yearly costs yet.</div>'}
     <form id="yForm" style="margin-top:14px">
       <input id="yName" type="text" placeholder="What is it? Insurance, a phone plan…" aria-label="Name" required style="width:100%;margin-bottom:8px">
-      <div class="row"><input id="yAmt" class="f1" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Cost a year" aria-label="Cost a year in PLN" required>
+      <div class="row"><input id="yAmt" class="f1" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Cost a year" aria-label="Cost a year in ${HOME}" required>
         <input id="yDue" class="f1" type="month" min="${now}" value="${addMonths(now, 12)}" aria-label="When it is next due" required></div>
       <div class="row" style="margin-top:8px"><button class="btn" type="submit" style="flex:1">Add yearly cost</button></div>
     </form>
@@ -2264,7 +2541,7 @@ function billsEditor() {
     <div class="sum num">${fmt(total)} a month from ${active.length} active bill${active.length === 1 ? '' : 's'}${bills.length > active.length ? `, ${bills.length - active.length} paused` : ''}</div>
     <form id="billForm" class="row" style="margin-top:12px">
       <input id="bName" class="f2" type="text" placeholder="Bill name" aria-label="Bill name" required>
-      <input id="bAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="PLN" aria-label="Monthly amount in PLN" required>
+      <input id="bAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="${HOME}" aria-label="Monthly amount in ${HOME}" required>
       <button class="btn" type="submit">Add bill</button>
     </form>
     <p class="hint" style="margin-top:10px">Changes count from this month on. Past months keep the bills they had.</p>`;
@@ -2273,6 +2550,15 @@ function billsEditor() {
 let billOpen = null;
 const billState = (m, id) => ((m && m.bills) || {})[id] || null;
 const cycleBillList = (key) => { const m = state.months[key]; return (m && m.fixed) || state.settings.fixed; };
+// Bills to pay (Edd's pick, 28 Oct 2026): a bill's money is set aside on pay day but is still in the bank until the
+// bill is paid, so this cycle's set-aside bills not yet ticked paid count in net worth. Never more than the pay
+// actually set aside (a short month covers only part of the bills).
+function billsWaiting(key = nowCycle()) {
+  const m = state.months[key] || { income: [] }, ticks = m.bills || {}, c = monthCalc(key);
+  const live = billsOf(state, m).filter((f) => !f.paused), open = live.filter((f) => !ticks[f.id]), paidL = live.filter((f) => ticks[f.id]);
+  const setAside = Math.min(c.splitTotal, c.fixedTotal), paid = Math.min(setAside, paidL.reduce((a, f) => a + f.g, 0));
+  return { key, open, paid, waiting: Math.max(0, Math.min(setAside - paid, open.reduce((a, f) => a + f.g, 0))) };
+}
 // Due soon (read-only): this cycle's bills not yet ticked paid or skipped (bills have no due day, so they are due
 // "this cycle"), and yearly costs whose due cycle starts within 30 days (or already started) and are not paid yet,
 // with what is still to save. Cycle dates follow the reset-day history, like every other cycle date.
@@ -2319,14 +2605,17 @@ function billsTicker() {
   return `${rows || '<div class="empty">No bills yet.</div>'}
     ${isPast ? '' : `<form id="billForm" class="row" style="margin-top:12px">
       <input id="bName" class="f2" type="text" placeholder="Bill name" aria-label="Bill name" required>
-      <input id="bAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="PLN" aria-label="Monthly amount in PLN" required>
+      <input id="bAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="${HOME}" aria-label="Monthly amount in ${HOME}" required>
       <button class="btn" type="submit">Add bill</button>
     </form>`}
-    <p class="hint" style="margin-top:10px">${isPast ? 'A past cycle. You can still tick its bills or undo a tick.' : 'Tap Mark paid once a bill leaves your account, or the green tick to undo. Tap a bill\u2019s name to pause or delete it. Any bill not ticked by reset day gets a question on Home.'}</p>`;
+    <p class="hint" style="margin-top:10px">${isPast ? 'A past cycle. You can still tick its bills or undo a tick.' : 'Bills come off the top of your pay before it is split, so their money is already set aside. Tap Mark paid once a bill leaves your account: no money is taken twice, and the bill stops counting in your net worth. Tap the green tick to undo. Tap a bill\u2019s name to pause or delete it. Any bill not ticked by reset day gets a question on Home.'}</p>`;
 }
 let view = 'lock';
 let tab = 'home';
 const TABS = ['home', 'invest', 'goals', 'setup'];
+// Everyone version: the Invest tab shows only for people who invest (a share of the split, or investing entries).
+const investUsed = () => !GLOBAL || state.settings.percents.investing > 0 || (state.itx || []).length > 0 || (state.openingInvest || 0) > 0;
+const tabsNow = () => TABS.filter((t) => t !== 'invest' || investUsed());
 // ---------- pay cycles ----------
 // A cycle is named after the month it starts in and runs from the reset day to the day before the next one,
 // e.g. with the 13th: "2026-10" is 13 Oct to 12 Nov.
@@ -2459,12 +2748,14 @@ function unlockAnim() {
   if (!dots || reduceMotion() || !document.body.animate) { view = 'app'; unlocking = false; return render(); }
   // The slide runs through the animation engine rather than a CSS transition, so it always plays in full even on
   // a lock screen drawn a moment ago. The last dot's pop and any shake are cleared first so nothing fights it.
-  // Dots are 12px wide with 14px gaps, so 26px apart: sliding by 26 per step lands them exactly on one spot.
+  // Sliding each dot by the real distance between two dots lands them exactly on one spot.
   dots.classList.remove('shake');
+  const step = dots.children[1] ? dots.children[1].offsetLeft - dots.children[0].offsetLeft : 26;
   [...dots.children].forEach((d, i) => {
     d.classList.remove('pop'); d.style.animation = 'none';
-    d.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${(1.5 - i) * 26}px)` }], { duration: 300, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
-    d.animate([{ backgroundColor: '#1B4D3E', borderColor: '#1B4D3E' }, { backgroundColor: '#D71921', borderColor: '#D71921' }], { duration: 160, delay: 190, easing: 'ease-out', fill: 'forwards' });
+    d.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${(1.5 - i) * step}px)` }], { duration: 300, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
+    const css = getComputedStyle(document.documentElement), gc = css.getPropertyValue('--green').trim() || '#1B4D3E', rc = css.getPropertyValue('--warn').trim() || '#D71921';
+    d.animate([{ backgroundColor: gc, borderColor: gc }, { backgroundColor: rc, borderColor: rc }], { duration: 160, delay: 190, easing: 'ease-out', fill: 'forwards' });
   });
   setTimeout(() => {
     const r = dots.getBoundingClientRect(), from = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
@@ -2684,7 +2975,7 @@ function renderReport() {
   const best = graded.slice().sort((a, b) => b.score - a.score)[0], worst = graded.slice().sort((a, b) => a.score - b.score)[0];
   const tile = (x, word) => x ? `<div class="mtile">${gradeTile(x)}<div><div class="n">${word}: ${monLong(x.key)}</div><div class="m">${x.score}/100 · ${word === 'Best' ? 'strongest at ' + x.best.name.toLowerCase() : 'weakest at ' + x.worst.name.toLowerCase()}</div></div></div>` : '';
   $app.innerHTML = `
-    <div class="top"><button class="back" data-act="back" aria-label="Back to home">‹ Home</button><div class="label">${monthLabel(cursor)}</div></div>
+    <div class="top pbar"><div class="hrow"><button class="back" data-act="back" aria-label="Back to home">‹ Home</button><div class="pmid label">${monthLabel(cursor)}</div><div></div></div></div>
     <section class="card">
       <div style="display:flex;gap:16px;align-items:center">${gradeTile(g, 'big')}
         <div><div class="label">${key === nowCycle() ? 'This cycle so far' : 'Cycle grade'}</div>
@@ -2858,9 +3149,10 @@ function moneyPicture() {
   const debt = (state.settings.debts || []).filter((d) => d.start <= nk).reduce((a, d) => a + (DP.left[d.id] || 0), 0);
   const cash = { emergency: sb.emergency, other: sb.general + sb.travel + sb.big + specials, rent: rp.bal, buffer: BP.bal, waiting: B.waiting, income: B.incomeCash };
   const cashTotal = Object.values(cash).reduce((a, b) => a + b, 0);
-  const assets = spending + sum(sb) + specials + rp.bal + yearly + BP.bal + lent + B.total;
+  const billsDue = billsWaiting(nk).waiting;
+  const assets = spending + sum(sb) + specials + rp.bal + yearly + BP.bal + lent + B.total + billsDue;
   const essNoDebt = E.total - E.debt;
-  return { cash, cashTotal, spending, yearly, lent, brokerage: B.brokerage, brokerageEst: B.estimated, lastVal: B.lastVal, debt, assets, netWorth: assets - debt,
+  return { cash, cashTotal, spending, yearly, lent, billsDue, brokerage: B.brokerage, brokerageEst: B.estimated, lastVal: B.lastVal, debt, assets, netWorth: assets - debt,
     ess: E.total, essNoDebt, emergencyMonths: E.total ? sb.emergency / E.total : 0, cashMonths: E.total ? cashTotal / E.total : 0, fi: B.brokerage, fiTarget: essNoDebt * 12 * 25, B };
 }
 const growthRate = () => { const g = state.settings.growthBp; return Number.isFinite(g) && g >= 0 && g <= 2000 ? g / 10000 : 0.05; };
@@ -2871,7 +3163,7 @@ function ladder() {
     { n: 'One month ahead', t: ess, why: 'Next month is already paid for', mk: '1m', have },
     { n: '3 months covered', t: ess * 3, why: 'A job gap or a big bill won’t hurt', mk: '3m', have },
     { n: '6 months covered', t: ess * 6, why: 'A full safety net', mk: '6m', have },
-    { n: 'PLN 100,000', t: GOAL, why: 'Your first big milestone', mk: '100k', have },
+    { n: HOME + ' 100,000', t: GOAL, why: 'Your first big milestone', mk: '100k', have },
     { n: 'Money covers your life', t: MP.fiTarget, why: 'Investments big enough to pay your costs (counts only what is in your brokerage)', mk: 'free', have: fiHave, fi: true },
   ].sort((a, b) => a.t - b.t);
   const cur = ess ? st.findIndex((x) => x.have < x.t) : 0;
@@ -2905,7 +3197,7 @@ function freedomGauge(Ld) {
     g += arc(a, b, 'var(--line)');
     if (f > 0) g += `<g class="fg-fill">${arc(a, a + (b - a) * f, 'var(--green)')}</g>`;
     const [mx, my] = P((i + 1) / n), [tx, ty] = P((i + 1) / n, r + 24);
-    g += `<circle cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="3.5" fill="${i < Ld.idx ? '#fff' : 'var(--muted)'}"/><text class="fg-tk" x="${tx.toFixed(1)}" y="${(ty + 4).toFixed(1)}" text-anchor="middle">${x.mk}</text>`;
+    g += `<circle cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="3.5" fill="${i < Ld.idx ? 'var(--surface)' : 'var(--muted)'}"/><text class="fg-tk" x="${tx.toFixed(1)}" y="${(ty + 4).toFixed(1)}" text-anchor="middle">${x.mk}</text>`;
   });
   g += `<text class="fg-v" x="${cx}" y="${cy - 26}" text-anchor="middle">${Ld.ess ? monthsTxt(Ld.months) : '–'}</text><text class="fg-l" x="${cx}" y="${cy - 4}" text-anchor="middle">months covered</text>`;
   return g + '</svg>';
@@ -2958,7 +3250,7 @@ function standRows(MP) {
   const rows = [
     { k: 'Savings', at: 'data-pot="savings"', v: sgnN(sav), tag: 'calculated', neg: sav < 0 || MP.cash.emergency < 0 || MP.cash.rent < 0, m: `Emergency ${sgnN(MP.cash.emergency)} · other pots ${sgnN(MP.cash.other)} · rent ${sgnN(MP.cash.rent)}` },
     { k: 'Investing', at: 'data-pot="investing"', v: sgnN(MP.B.total), m: `brokerage ${fmtN(MP.brokerage)} ${brok}${MP.B.waiting ? ` · ${sgnN(MP.B.waiting)} waiting to move` : ''}${MP.B.incomeCash ? ` · ${fmtN(MP.B.incomeCash)} income in your bank` : ''}` },
-    { k: 'Debt', at: 'data-pot="debt"', v: MP.debt ? '−' + fmtN(MP.debt) : fmtN(0), tag: 'calculated', m: MP.debt ? 'still to pay' : 'nothing owed' },
+    { k: potName('debt'), at: 'data-pot="debt"', v: MP.debt ? '−' + fmtN(MP.debt) : fmtN(0), tag: 'calculated', m: MP.debt ? 'still to pay' : 'nothing owed' },
   ];
   return { sav, neg: rows.some((r) => r.neg), html: rows.map((x) => `<button class="kv hkv${x.neg ? ' negv' : ''}" ${x.at}><div><div class="n">${x.k}${x.tag ? tagPill(x.tag) : ''}</div><div class="m">${x.m}</div></div><div class="a">${x.v}</div></button>`).join('') };
 }
@@ -2982,9 +3274,44 @@ function netSavedRow(key) {
 // A compact card: a title, one short line and a chevron. Tapping opens it in place. Open or closed lasts while you
 // stay in the app (not saved).
 const CHEV = '<svg class="ccchev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+// Icon tiles for Home's cards: [colour, icon]
+const CC_ICONS = { spend: ['var(--fill, var(--green))', '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.5L22 8H6"/>'],
+  places: ['#AF52DE', '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'], p2flow: ['#34C759', '<path d="M7 17V7m0 0L3 11m4-4l4 4M17 7v10m0 0l-4-4m4 4l4-4"/>'],
+  p2due: ['#FF9500', '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/>'], cycle: ['#30B0C7', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
+  where: ['#5856D6', '<path d="M3 7h18v12H3zM3 7l2-3h14l2 3M16 13h2"/>'], prog: ['#FF2D55', '<path d="M5 21V4m0 0h11l-2 4 2 4H5"/>'], worth: ['#FFCC00', '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/>'],
+  byinv: ['#007AFF', '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'] };
 function compactCard(id, title, line, body, warn) {
   const open = !!homeOpen[id];
-  return `<section class="card cc${warn ? ' ccwarn' : ''}"><button class="cch" data-cc="${id}" aria-expanded="${open}" aria-controls="cc-${id}"><span class="cct"><b>${title}</b><span class="ccl">${line}</span></span>${CHEV}</button><div class="ccb" id="cc-${id}"${open ? '' : ' hidden'}>${body}</div></section>`;
+  return `<section class="card cc${warn ? ' ccwarn' : ''}"><button class="cch" data-cc="${id}" aria-expanded="${open}" aria-controls="cc-${id}">${CC_ICONS[id] ? `<span class="ccic" style="--ic:${CC_ICONS[id][0]}">${navIcon(CC_ICONS[id][1])}</span>` : ''}<span class="cct"><b>${title}</b><span class="ccl">${line}</span></span>${CHEV}</button><div class="ccb" id="cc-${id}"${open ? '' : ' hidden'}>${body}</div></section>`;
+}
+// Everyone version: where the money goes by place (an expense's note, e.g. the shop), and a search over every
+// expense ever logged. Notes are grouped ignoring case and spaces at the ends.
+const noteKey = (t) => String(t || '').trim().toLowerCase();
+function topPlaces(key) {
+  const by = new Map();
+  ((state.months[key] || {}).expenses || []).forEach((e) => { const k = noteKey(e.note); if (!k || e.cover || !(e.g > 0)) return;
+    const o = by.get(k) || { name: String(e.note).trim(), g: 0, n: 0 }; o.g += e.g; o.n++; by.set(k, o); });
+  return [...by.values()].sort((a, b) => b.g - a.g);
+}
+function shopResults(q) {
+  const want = noteKey(q); if (want.length < 2) return '<p class="hint" style="margin:8px 0 0">Type at least two letters of a shop or note.</p>';
+  const hits = [];
+  Object.keys(state.months).sort().reverse().forEach((k) => ((state.months[k] || {}).expenses || []).forEach((e) => { if (noteKey(e.note).includes(want)) hits.push(e); }));
+  if (!hits.length) return '<p class="hint" style="margin:8px 0 0">Nothing found.</p>';
+  hits.sort((a, b) => String(b.iso || '').localeCompare(String(a.iso || '')));
+  const tot = hits.reduce((a, e) => a + e.g, 0);
+  return `<p class="hint" style="margin:8px 0 6px">${hits.length} found · ${fmt(tot)} in all</p>`
+    + hits.slice(0, 30).map((e) => `<div class="kv"><span>${esc(e.note)}<span class="hint"> · ${esc(e.date || e.iso || '')} · ${esc(potName(e.pot))}</span></span><span class="num">${fmtN(e.g)}</span></div>`).join('')
+    + (hits.length > 30 ? `<p class="hint" style="margin:6px 0 0">Showing the newest 30.</p>` : '');
+}
+function placesCard(key) {
+  if (!GLOBAL) return '';
+  const top = topPlaces(key), line = top.length ? `Most at ${esc(top[0].name)} · ${fmtN(top[0].g)}` : 'Add a note like the shop name to see this';
+  const body = `${top.length ? top.slice(0, 5).map((o) => `<div class="kv"><span>${esc(o.name)}<span class="hint"> · ${o.n} time${o.n === 1 ? '' : 's'}</span></span><span class="num">${fmtN(o.g)}</span></div>`).join('')
+      : '<p class="hint" style="margin:0">When you add an expense, write where it was in the note. This card then shows where your money goes most.</p>'}
+    <div class="field" style="margin-top:12px"><label for="shopQ">Search all spending</label><input id="shopQ" type="search" placeholder="Shop or note" autocomplete="off"></div>
+    <div id="shopRes"></div>`;
+  return compactCard('places', 'Where you spend', line, body);
 }
 function cycleCard(key, incomeHtml) {
   const inc = (state.months[key] || {}).income || [], got = inc.reduce((a, e) => a + e.g, 0), N = netSavedRow(key);
@@ -3009,7 +3336,7 @@ function flowBits(key) {
   const cover = live && f.surplus < 0 ? Math.min(-f.surplus, bp.release) : 0, rest = f.surplus < 0 ? -f.surplus - cover : 0;
   const subs = ((state.months[key] || {}).income || []).filter(isOnePot).map((e) => `<div class="kv hkv p2sub"><div><div class="n">${esc(e.label || 'Payment')}, ${esc(shortName(e.pot))}</div></div><div class="a num">${fmtN(e.g)}</div></div>`).join('');
   const rows = p2row('Money in', 'income logged this cycle', fmtN(f.inc)) + subs
-    + p2row('Bills', 'set aside this cycle' + (f.billsUnticked ? ` · ${f.billsUnticked} not ticked yet` : ''), p2minus(f.bills))
+    + p2row('Bills', 'set aside this cycle' + (key === nowCycle() ? (() => { const W = billsWaiting(key); return W.waiting ? ` · ${fmtN(W.waiting)} waiting, ${fmtN(W.paid)} paid` : W.paid ? ' · all paid' : ''; })() : f.billsUnticked ? ` · ${f.billsUnticked} not ticked yet` : ''), p2minus(f.bills))
     + (f.debt ? p2row('Debt payments', 'paid this cycle', p2minus(f.debt)) : '')
     + p2row('Spent', 'from every pot, less refunds', p2minus(f.spent))
     + p2row(word, 'money in less money out', p2plus(f.surplus), ' p2tot' + (f.surplus < 0 ? (rest ? ' negv' : ' p2cov') : ''))
@@ -3185,6 +3512,7 @@ function moneyCard(MP) {
     ${kv('Brokerage', MP.lastVal ? (MP.brokerageEst ? `your value on ${dLong(MP.lastVal.date)} plus what you logged since` : `as you entered it on ${dLong(MP.lastVal.date)}`) : 'no portfolio value entered yet', fmtN(MP.brokerage), MP.lastVal && !MP.brokerageEst ? 'entered' : 'estimate')}
     ${kv('Spending pots', 'what is left of this cycle’s budget', fmtN(MP.spending), 'calculated')}
     ${MP.yearly ? kv('Yearly costs', 'set aside for bills you know are coming', fmtN(MP.yearly), 'calculated') : ''}
+    ${MP.billsDue ? kv('Bills to pay', 'set aside from your pay, counted until you mark them paid', fmtN(MP.billsDue), 'calculated') : ''}
     ${MP.lent ? kv('Lent out', 'owed to you, not in your hands', fmtN(MP.lent), 'calculated') : ''}
     <div class="label" style="margin:14px 0 2px">Owed and overall</div>
     ${kv('Debt you owe', MP.debt ? '' : 'nothing owed', MP.debt ? '−' + fmtN(MP.debt) : fmtN(0), 'calculated')}
@@ -3203,7 +3531,7 @@ function renderGoals() {
   }
   const bal = savingsBalances();
   $app.innerHTML = `
-    <div class="top"><div class="mark">${MARK}</div><div class="label">Goals</div></div>
+    ${pageBar('Goals')}
     ${(() => { const Ld = ladder(); return `<section class="card fgcard">
       ${freedomGauge(Ld)}
       <p class="hint" style="text-align:center;margin:0">${!Ld.ess ? 'Add a month of income to see your stages.' : Ld.idx < Ld.st.length ? `Stage ${Ld.idx + 1} of ${Ld.st.length} · ${Ld.st[Ld.idx].n} · ${fmtN(Ld.st[Ld.idx].t - Ld.st[Ld.idx].have)} to go · ${Ld.when(Ld.st[Ld.idx])}` : 'Every stage reached. Money covers your life.'}</p>
@@ -3284,16 +3612,16 @@ function invBody(g, tidy) {
       <p class="hint" style="margin:8px 0 0">${none ? noneTxt + ' ' : ''}Your grade counts the investing share once it is moved, or in full if you choose to keep it as cash, for example while you build your emergency savings.</p></section>
     <section class="card">
       <h2>Log a change</h2>
-      <p class="hint" style="margin:6px 0 10px">Record money you move in or out, and what your portfolio is worth now and then. A gain, loss or value entered here is dated today, in PLN. Use More for other dates, currencies or types.</p>
+      <p class="hint" style="margin:6px 0 10px">Record money you move in or out, and what your portfolio is worth now and then. A gain, loss or value entered here is dated today, in ${HOME}. Use More for other dates, currencies or types.</p>
       <div class="ppbtns" style="margin-bottom:10px"><button class="btn sm" data-itx="dep">Deposit</button><button class="btn plain sm" data-itx="wd">Withdrawal</button><button class="btn plain sm" data-itx="div">Dividend</button><button class="btn plain sm" data-itx="fee">Fee</button><button class="btn plain sm" data-itx="">More</button></div>
       <form id="gainForm">
         <div class="choices" role="radiogroup" aria-label="Gain or loss" style="grid-template-columns:1fr 1fr;margin-bottom:8px">
           <label class="choice"><input type="radio" name="gainSign" value="1" checked><span>Gain<small>money went up</small></span></label>
           <label class="choice"><input type="radio" name="gainSign" value="-1"><span>Loss<small>money went down</small></span></label>
         </div>
-        <div class="row"><input id="gainAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="PLN" aria-label="Amount in PLN" required><button class="btn" type="submit">Log it</button></div>
+        <div class="row"><input id="gainAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="${HOME}" aria-label="Amount in ${HOME}" required><button class="btn" type="submit">Log it</button></div>
       </form>
-      <form id="valForm" class="row" style="margin-top:8px"><input id="valAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Portfolio value" aria-label="Portfolio value in PLN" required><button class="btn plain" type="submit">Update value</button></form>
+      <form id="valForm" class="row" style="margin-top:8px"><input id="valAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Portfolio value" aria-label="Portfolio value in ${HOME}" required><button class="btn plain" type="submit">Update value</button></form>
       ${pendingVal != null ? `<div class="alert info" role="alert" style="margin-top:12px"><div>Before saving a value of ${fmtN(pendingVal)}: ${fmtN(B.waiting)} has been set aside for investing, but none of it is marked as moved to your brokerage. Was it moved?
         <div class="abt"><button class="btn sm" data-invmig="all">Yes, all of it</button><button class="btn plain sm" data-invmig="some">Some of it</button><button class="btn plain sm" data-invmig="no">No, it is in my bank</button><button class="btn plain sm" data-invmig="cancel">Cancel</button></div>
         <div class="hint" style="margin-top:8px">"Yes" records one deposit for each cycle's share, dated the first day of that cycle and marked as estimated. You can edit them.</div></div></div>` : ''}
@@ -3328,15 +3656,15 @@ function invTidy(B, R, d) {
       <div class="pp-rows">${row('Locked in (sold)', 'from gains and losses you named', pmN(B.lockedAll))}${row('On paper (still holding)', 'from gains and losses you named', pmN(B.paperAll))}</div>
       ${byInvCard(B)}
       <div class="ivform"><h3>Log a gain, loss or value</h3>
-      <p class="hint" style="margin:6px 0 10px">A gain, loss or value entered here is dated today, in PLN. Use the Deposit and Value buttons above for other dates, currencies or types.</p>
+      <p class="hint" style="margin:6px 0 10px">A gain, loss or value entered here is dated today, in ${HOME}. Use the Deposit and Value buttons above for other dates, currencies or types.</p>
       <form id="gainForm">
         <div class="choices" role="radiogroup" aria-label="Gain or loss" style="grid-template-columns:1fr 1fr;margin-bottom:8px">
           <label class="choice"><input type="radio" name="gainSign" value="1" checked><span>Gain<small>money went up</small></span></label>
           <label class="choice"><input type="radio" name="gainSign" value="-1"><span>Loss<small>money went down</small></span></label>
         </div>
-        <div class="row"><input id="gainAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="PLN" aria-label="Amount in PLN" required><button class="btn" type="submit">Log it</button></div>
+        <div class="row"><input id="gainAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="${HOME}" aria-label="Amount in ${HOME}" required><button class="btn" type="submit">Log it</button></div>
       </form>
-      <form id="valForm" class="row" style="margin-top:8px"><input id="valAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Portfolio value" aria-label="Portfolio value in PLN" required><button class="btn plain" type="submit">Update value</button></form>
+      <form id="valForm" class="row" style="margin-top:8px"><input id="valAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Portfolio value" aria-label="Portfolio value in ${HOME}" required><button class="btn plain" type="submit">Update value</button></form>
       ${pendingVal != null ? `<div class="alert info" role="alert" style="margin-top:12px"><div>Before saving a value of ${fmtN(pendingVal)}: ${fmtN(B.waiting)} has been set aside for investing, but none of it is marked as moved to your brokerage. Was it moved?
         <div class="abt"><button class="btn sm" data-invmig="all">Yes, all of it</button><button class="btn plain sm" data-invmig="some">Some of it</button><button class="btn plain sm" data-invmig="no">No, it is in my bank</button><button class="btn plain sm" data-invmig="cancel">Cancel</button></div>
         <div class="hint" style="margin-top:8px">"Yes" records one deposit for each cycle's share, dated the first day of that cycle and marked as estimated. You can edit them.</div></div></div>` : ''}</div>
@@ -3355,7 +3683,7 @@ function invTidy(B, R, d) {
   return hero + btns + review + cyc + perf + recent;
 }
 function renderInvest() {
-  $app.innerHTML = `<div class="top"><div class="mark">${MARK}</div><div class="label">Investing</div></div>${invBody(0, true)}`;
+  $app.innerHTML = `${pageBar('Investing')}${invBody(0, true)}`;
 }
 // By investment: every name with what is locked in and on paper, then what no name explains. Tap a name to see its entries.
 let itxFilter = null;
@@ -3389,8 +3717,8 @@ function itxHistory(limit) {
       n = (named ? `${esc(x.inv.trim())} · ${{ hold: 'still holding', sold: 'sold', part: 'sold part' }[ST_OF(x)]}` : esc(itxLabel(x))) + (bad ? '<span class="pill weak">needs a look</span>' : pln == null ? '<span class="pill weak">rate missing</span>' : '') + (x.est ? '<span class="pill weak">date estimated</span>' : '');
       m = [isIso(x.date) ? dLong(x.date) : 'no date', x.acct ? esc(x.acct) : '', x.note ? esc(x.note) : ''].filter(Boolean).join(' · ');
       const sg = T === 'wd' || T === 'fee' ? '−' : T === 'val' ? '' : x.amt < 0 ? '−' : '+';
-      amt = Number.isFinite(x.amt) ? `${sg}${fmtN(Math.abs(x.amt))}${x.cur && x.cur !== 'PLN' ? ' ' + esc(x.cur) : ''}` : '–';
-      if (!bad && x.cur && x.cur !== 'PLN') sub = pln == null ? 'PLN pending' : `= ${fmtN(Math.abs(pln))} PLN at ${x.rate}${x.rateDate ? ' on ' + dLong(x.rateDate) : ''}`;
+      amt = Number.isFinite(x.amt) ? `${sg}${fmtN(Math.abs(x.amt))}${x.cur && x.cur !== HOME ? ' ' + esc(x.cur) : ''}` : '–';
+      if (!bad && x.cur && x.cur !== HOME) sub = pln == null ? HOME + ' pending' : `= ${fmtN(Math.abs(pln))} ${HOME} at ${x.rate}${x.rateDate ? ' on ' + dLong(x.rateDate) : ''}`;
       if (named && P.addedBy[x.id] != null) add = P.addedBy[x.id] === 0 ? 'added nothing new' : `added ${pmN(P.addedBy[x.id])}`;
     }
     if (armedTx === r.id) return `<div class="exp itxrow armed"><div><div class="n">Delete this entry?</div><div class="m">${n.replace(/<span[^>]*>.*?<\/span>/g, '')} · ${amt}. Every total that used it is worked out again.</div></div>
@@ -3410,6 +3738,51 @@ const yItem = (k) => (state.settings.yearly || []).find((y) => y.id === k);
 const openYearly = () => (state.settings.yearly || []).filter((y) => !y.end);
 const potName = (k) => POT_NAMES[k] || SUB_NAMES[k] || (specialOf(k) || yItem(k) || {}).name || k;
 const openSpecials = () => (state.settings.specials || []).filter((x) => !x.end);
+// Pot names people can change in Setup (settings.potNames). Empty means the original name.
+// Plainer names, picked by Edd on 31 Oct 2026, in both apps. Pot names change at the source; the other labels
+// are swapped in whatever the app draws (a watcher on the page).
+{
+  // Edd's own app keeps his name for money lent (nxtdoor Bank).
+  Object.assign(POT_NAMES, { rent: 'Rent fund', everyday: 'Day-to-day', fun: 'Treat yourself', buffer: 'Steady pay', yearly: 'Yearly bills', debt: 'Money you owe' }, GLOBAL ? { lent: 'Owed to you' } : {});
+  Object.assign(SUB_NAMES, { general: 'Other savings', big: 'Saving up for' });
+  Object.assign(SHORT, { rent: 'Rent fund', everyday: 'Day-to-day', fun: 'Treat yourself', buffer: 'Steady pay', yearly: 'Yearly bills', debt: 'You owe', general: 'Other savings', big: 'Saving up for' });
+  if (GLOBAL) SHORT.lent = 'Owed to you';
+}
+const PLAIN = [['Rent practice', 'Rent fund'], ['Everyday spending', 'Day-to-day'], ['Fun money', 'Treat yourself'], ['Income buffer', 'Steady pay'], ['Yearly costs', 'Yearly bills'],
+  ['Money lent', 'Owed to you'], ['General savings', 'Other savings'], ['Big purchases', 'Saving up for'], ['This cycle', 'This pay month'], ['Where you stand', 'What you have'],
+  ['Grade so far', 'Month score'], ['Months covered', 'Months you could cover'], ['Money covers your life', 'Free to choose'], ['Brokerage', 'Investment account'],
+  ['Profit and loss', 'Gained or lost'], ['Special pots', 'Extra pots']];
+const PLAIN_RE = (() => { const all = []; PLAIN.forEach(([a, b]) => { all.push([a, b]); all.push([a[0].toLowerCase() + a.slice(1), b[0].toLowerCase() + b.slice(1)]); });
+  const map = new Map(all); return { map, re: new RegExp('\\b(' + all.map(([a]) => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'g') }; })();
+function plainWords(root) {
+  if (!root) return;
+  if (root.nodeType === 3) { const v = root.nodeValue; if (PLAIN_RE.re.test(v)) { PLAIN_RE.re.lastIndex = 0; root.nodeValue = v.replace(PLAIN_RE.re, (m) => PLAIN_RE.map.get(m)); } PLAIN_RE.re.lastIndex = 0; return; }
+  if (root.nodeType !== 1 || root.matches('input, textarea, script, style')) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) plainWords(n);
+  root.querySelectorAll('[aria-label], [placeholder]').forEach((e) => ['aria-label', 'placeholder'].forEach((a) => { const v = e.getAttribute(a); if (v && PLAIN_RE.re.test(v)) { PLAIN_RE.re.lastIndex = 0; e.setAttribute(a, v.replace(PLAIN_RE.re, (m) => PLAIN_RE.map.get(m))); } PLAIN_RE.re.lastIndex = 0; }));
+}
+if (typeof MutationObserver !== 'undefined') new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach(plainWords))).observe(document.documentElement, { childList: true, subtree: true });
+const RENAMABLE = ['groceries', 'everyday', 'fun', 'savings', 'investing', 'emergency', 'travel', 'general', 'big'];
+const NAME0 = {}, SHORT0 = {};
+RENAMABLE.forEach((k) => { NAME0[k] = POT_NAMES[k] || SUB_NAMES[k]; SHORT0[k] = SHORT[k]; });
+function applyPotNames() {
+  const own = (state && state.settings && state.settings.potNames) || {};
+  RENAMABLE.forEach((k) => {
+    const n = String(own[k] || '').trim(), name = n || NAME0[k];
+    if (k in POT_NAMES) POT_NAMES[k] = name; else SUB_NAMES[k] = name;
+    SHORT[k] = n ? n.slice(0, 12) : SHORT0[k];
+  });
+}
+function potNamesCard() {
+  const own = state.settings.potNames || {};
+  const row = (k) => `<div class="field"><label for="pn_${k}">${esc(NAME0[k])}</label><input id="pn_${k}" type="text" maxlength="24" data-potname="${k}" value="${esc(own[k] || '')}" placeholder="${esc(NAME0[k])}" autocomplete="off"></div>`;
+  return `<section class="card">
+      <h2>Pot names</h2>
+      <p class="hint">Call your pots what makes sense to you. Leave a name empty to go back to the original. Only the name changes: the money and history stay as they are.</p>
+      <div class="label" style="margin-top:12px">Spending</div>${['groceries', 'everyday', 'fun'].map(row).join('')}
+      <div class="label" style="margin-top:12px">Saving</div>${['savings', 'emergency', 'travel', 'general', 'big', 'investing'].map(row).join('')}
+    </section>`;
+}
 const shortName = (k) => SHORT[k] || ((specialOf(k) || yItem(k) || {}).name || k).slice(0, 11);
 // What a pot can give right now: a spending pot's money left this cycle, or a savings sub pot's balance.
 function available(k) {
@@ -3447,6 +3820,17 @@ function negPots() {
   return out;
 }
 const negText = (n) => `${esc(n.name)} is ${fmtN(n.g)} below zero. A pot cannot hold less than nothing, so more was spent or moved out of it than it had, or income was removed later. Move money in to cover it, or check its entries.`;
+// Everyone version: a warning before a spending pot runs out, not only at 80%. From day 3 of the cycle, if spending
+// at the rate so far would empty the pot two or more days before reset, say roughly when.
+function paceWarn(key, x) {
+  if (!(x.budget > 0 && x.spent > 0)) return null;
+  const [a, b] = cycleRange(key), day = 864e5, today = new Date(new Date().setHours(12, 0, 0, 0));
+  const gone = Math.floor((today - a) / day) + 1, total = Math.round((b - a) / day) + 1;
+  if (gone < 3 || gone >= total) return null;
+  const lasts = (x.budget / x.spent) * gone, early = Math.floor(total - lasts);
+  if (early < 2) return null;
+  return { day: dShort(new Date(a.getTime() + (Math.max(gone, Math.ceil(lasts)) - 1) * day)), early };
+}
 function alertList(key) {
   const r = ledgerRow(key); if (!r) return [];
   const out = [];
@@ -3459,6 +3843,7 @@ function alertList(key) {
     const st = potStatus(x);
     if (st === 'over') out.push(['over', `${POT_NAMES[p]} is over budget by ${fmt(x.spent - x.budget)}.`]);
     else if (st === 'warn' && x.spent > 0) out.push(['warn', `${POT_NAMES[p]} is at ${Math.round(x.used * 100)}% of its budget. ${fmt(x.left)} left.`]);
+    else if (GLOBAL && key === nowCycle()) { const w = paceWarn(key, x); if (w) out.push(['warn', `${POT_NAMES[p]} is going fast. At this pace it runs out around ${w.day}, ${w.early} day${w.early === 1 ? '' : 's'} before reset.`]); }
   });
   // Underspending is judged on the cycle that just closed, once this one has started.
   const prevK = addMonths(key, -1), L2 = buildLedger(state, key, nowCycle()), pr = L2[prevK];
@@ -3587,7 +3972,7 @@ function specialsCard() {
       <div class="meter" style="margin-top:8px"><i style="width:${p}%"></i></div>
       <div style="margin-top:6px">${status}</div>
       ${buyingSpecial === x.id ? `<form id="buyForm" data-id="${x.id}" class="row" style="margin-top:10px">
-          <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(bal / 100).toFixed(2)}" aria-label="What it cost in PLN" required>
+          <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(bal / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
           <button class="btn" type="submit">Save</button><button class="btn plain" type="button" data-buycancel="1">Cancel</button></form>
           <p class="hint" style="margin:6px 0 0">What did it cost? It comes out of this pot, anything left goes back to Big purchases.</p>`
         : `<div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-buy="${x.id}">Bought it</button>
@@ -3599,7 +3984,7 @@ function specialsCard() {
     ${open.map(one).join('')}
     <form id="specForm" style="margin-top:14px">
       <input id="spName" type="text" placeholder="What are you saving for?" aria-label="Name" required style="width:100%;margin-bottom:8px">
-      <div class="row"><input id="spTarget" class="f1" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Target" aria-label="Target in PLN" required>
+      <div class="row"><input id="spTarget" class="f1" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Target" aria-label="Target in ${HOME}" required>
         <input id="spBy" class="f1" type="month" min="${addMonths(now, 1)}" value="${addMonths(now, 6)}" aria-label="Target date" required></div>
       <div class="row" style="margin-top:8px"><label class="hint" for="spShare" style="margin:0;align-self:center;flex:2">% of Big purchases</label>
         <input id="spShare" class="f1" type="number" inputmode="decimal" min="1" max="${Math.max(1, 100 - usedShare / 100)}" step="1" value="${Math.min(25, Math.max(1, 100 - usedShare / 100))}" aria-label="Share of Big purchases in %" required><button class="btn" type="submit">Add</button></div>
@@ -3686,7 +4071,7 @@ function lendSheetHtml() {
     <div class="grab"></div>
     <div class="h2row"><h3 id="sheetTitle">${repay ? 'Paid back' : 'Lend money'}</h3><span class="label">${monthLabel(cursor)}</span></div>
     <form id="lendForm">
-      <input id="lnAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${moveAmt}" aria-label="Amount in PLN" required>
+      <input id="lnAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${moveAmt}" aria-label="Amount in ${HOME}" required>
       <input id="lnName" type="text" list="peopleList" placeholder="${repay ? 'Who paid you back?' : 'Who are you lending to?'}" value="${esc(lendWho)}" aria-label="Name" required autocomplete="off" style="width:100%">
       <datalist id="peopleList">${names.map((n) => `<option value="${esc(n)}">`).join('')}</datalist>
       <div class="label" style="margin:12px 0 6px">${repay ? 'Put it back into' : 'Take it from'}</div>
@@ -3715,17 +4100,17 @@ function itxSheetHtml() {
     if (!o) return head + '<p class="hint">This entry no longer exists.</p></div></div>';
     return head + `<div class="h2row"><h3 id="sheetTitle">Edit older entry</h3><span class="label">${monLong(o.key)}</span></div>
       <form id="itxOldForm" novalidate>${signs(o.g < 0)}
-        <input id="ixAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${(Math.abs(o.g) / 100).toFixed(2)}" aria-label="Amount in PLN">
+        <input id="ixAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${(Math.abs(o.g) / 100).toFixed(2)}" aria-label="Amount in ${HOME}">
         <div class="row"><input id="ixNote" class="f2" type="text" maxlength="120" placeholder="Note (optional)" value="${esc(o.note || '')}" aria-label="Note"></div>
         <p class="hint">An older entry only knows its month. It keeps that month and the rule it was logged under.</p>${err}
         <div class="row"><button class="btn" type="submit" style="flex:1">Save changes</button></div>${delRow(itxEdit)}</form></div></div>`;
   }
   const x = itxEdit ? (state.itx || []).find((y) => y.id === itxEdit) || {} : {};
-  const t = itxType, cur = ITX_CUR.includes(x.cur) ? x.cur : 'PLN';
+  const t = itxType, cur = itxCurs().includes(x.cur) ? x.cur : HOME;
   const accts = [...new Set((state.itx || []).map((y) => y.acct).filter(Boolean))];
   const named = x.t === 'adj' && !!nameKey(x.inv), ixSt = named ? ST_OF(x) : 'hold';
   return head + `<div class="h2row"><h3 id="sheetTitle">${itxEdit ? 'Edit entry' : 'Investment entry'}</h3>${x.est ? '<span class="pill weak">date estimated</span>' : ''}</div>
-    <form id="itxForm" data-t="${t}" data-fx="${cur !== 'PLN'}" data-named="${named}" novalidate>
+    <form id="itxForm" data-t="${t}" data-fx="${cur !== HOME}" data-named="${named}" novalidate>
       <div class="choices ixtypes" role="radiogroup" aria-label="Type of entry">${Object.keys(ITX_TYPES).map((k) => `<label class="choice"><input type="radio" name="ixT" value="${k}" ${k === t ? 'checked' : ''}><span>${ITX_TYPES[k].n}</span></label>`).join('')}</div>
       <p class="hint" id="ixMean" style="margin:8px 0 0">${ITX_TYPES[t].m}.</p>
       <div class="ix-adj"><label class="label ixinvlab" for="ixInv">What was it?</label>
@@ -3734,10 +4119,10 @@ function itxSheetHtml() {
         ${signs(x.amt < 0)}<label class="label ix-named ixamtlab" id="ixAmtLab" for="ixAmt">${ixSt === 'hold' ? IX_LAB.hold : IX_LAB.sold}</label></div>
       <input id="ixAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${Number.isFinite(x.amt) ? (Math.abs(x.amt) / 100).toFixed(2) : ''}" aria-label="Amount"><p class="hint ix-named" id="ixWill" aria-live="polite">${named ? esc(itxWill(x)) : ''}</p>
       <div class="row"><label class="ratelab" for="ixDate">Date</label><input id="ixDate" class="f1" type="date" max="${todayIso()}" value="${isIso(x.date) ? x.date : todayIso()}">
-        <select id="ixCur" class="cur" aria-label="Currency">${ITX_CUR.map((c) => `<option ${c === cur ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
-      <div class="ix-fx"><div class="row"><label class="ratelab" for="ixRate">1 <span id="ixRc">${cur}</span> =</label><input id="ixRate" class="f1" type="number" inputmode="decimal" min="0" step="0.0001" placeholder="rate" value="${x.rate > 0 ? x.rate : ''}"><span class="ratelab">PLN on</span>
+        <select id="ixCur" class="cur" aria-label="Currency">${itxCurs().map((c) => `<option ${c === cur ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+      <div class="ix-fx"><div class="row"><label class="ratelab" for="ixRate">1 <span id="ixRc">${cur}</span> =</label><input id="ixRate" class="f1" type="number" inputmode="decimal" min="0" step="0.0001" placeholder="rate" value="${x.rate > 0 ? x.rate : ''}"><span class="ratelab">${HOME} on</span>
         <input id="ixRateDate" class="f1" type="date" max="${todayIso()}" value="${isIso(x.rateDate) ? x.rateDate : ''}" aria-label="Date of the rate"></div>
-        <p class="hint" style="margin:6px 0 0">Use the rate you really got, or the bank's rate for that day. Leave it empty if you do not have it yet: the entry is saved but is not counted in PLN until you add it. The rate date defaults to the entry's date.</p></div>
+        <p class="hint" style="margin:6px 0 0">Use the rate you really got, or the bank's rate for that day. Leave it empty if you do not have it yet: the entry is saved but is not counted in ${HOME} until you add it. The rate date defaults to the entry's date.</p></div>
       <div class="ix-flow"><div class="label" style="margin:12px 0 6px">Counts for</div>
         <div class="choices" role="radiogroup" aria-label="Which cycle it counts for" style="grid-template-columns:1fr 1fr"><label class="choice"><input type="radio" name="ixFor" value="" ${x.forKey ? '' : 'checked'}><span>The cycle of its date</span></label><label class="choice"><input type="radio" name="ixFor" value="prev" ${x.forKey ? 'checked' : ''}><span>The cycle before<small>a late transfer</small></span></label></div>
         <p class="hint" style="margin:6px 0 0">Your grade counts each cycle's investing share once it is moved. If this is last cycle's share sent a few days late, pick the cycle before. The date stays as it is.</p></div>
@@ -3779,22 +4164,23 @@ function itxLive(f) {
   amtEl.setAttribute('aria-label', named && f.dataset.t === 'adj' ? lab.textContent : 'Amount');
   if (!will) return;
   const raw = amtEl.value, g = raw === '' ? NaN : toG(raw), sign = (f.querySelector('input[name="ixSign"]:checked') || {}).value === '-1' ? -1 : 1;
-  const cur = (document.getElementById('ixCur') || {}).value || 'PLN', rr = cur !== 'PLN' ? Number((document.getElementById('ixRate') || {}).value || '') : null;
+  const cur = (document.getElementById('ixCur') || {}).value || HOME, rr = cur !== HOME ? Number((document.getElementById('ixRate') || {}).value || '') : null;
   const old = itxEdit ? (state.itx || []).find((y) => y.id === itxEdit) : null;
   const c = { id: old ? old.id : '__new__', at: old ? old.at : Date.now(), t: f.dataset.t, date: (document.getElementById('ixDate') || {}).value, amt: Number.isFinite(g) && g >= 0 ? sign * g : NaN, cur, rate: rr > 0 ? rr : null, inv: inv.value, st };
   will.textContent = named && Number.isFinite(c.amt) ? itxWill(c) : '';
 }
+document.addEventListener('input', (e) => { if (e.target.id === 'shopQ') { const r = document.getElementById('shopRes'); if (r) r.innerHTML = shopResults(e.target.value); } });
 document.addEventListener('input', (e) => { const f = e.target.closest && e.target.closest('#itxForm'); if (f) itxLive(f); });
 document.addEventListener('change', (e) => {
   const f = e.target.closest && e.target.closest('#itxForm'); if (!f) return;
   if (e.target.name === 'ixT' && ITX_TYPES[e.target.value]) { f.dataset.t = e.target.value; itxType = e.target.value; const m = document.getElementById('ixMean'); if (m) m.textContent = ITX_TYPES[e.target.value].m + '.'; }
-  if (e.target.id === 'ixCur') { f.dataset.fx = String(e.target.value !== 'PLN'); const r = document.getElementById('ixRc'); if (r) r.textContent = e.target.value; }
+  if (e.target.id === 'ixCur') { f.dataset.fx = String(e.target.value !== HOME); const r = document.getElementById('ixRc'); if (r) r.textContent = e.target.value; }
   itxLive(f);
 });
 // a portfolio value typed in the quick form, dated today in PLN
 function saveValue(v) {
   const before = invPerf(state).acct;
-  (state.itx = state.itx || []).push({ id: uid(), at: Date.now(), t: 'val', date: todayIso(), amt: v, cur: 'PLN' });
+  (state.itx = state.itx || []).push({ id: uid(), at: Date.now(), t: 'val', date: todayIso(), amt: v, cur: HOME });
   pendingVal = null; save();
   const d = v - before;
   toast(d === 0 ? 'Portfolio value saved. It matches the estimate' : `Portfolio value saved, ${d > 0 ? 'up' : 'down'} ${fmtN(Math.abs(d))} on the estimate`);
@@ -3803,8 +4189,8 @@ function saveValue(v) {
 function exportInvCsv() {
   const q = (v) => { const t = String(v == null ? '' : v); return /[",\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
   const rows = [], n2 = (g) => (Number.isFinite(g) ? (g / 100).toFixed(2) : ''), P = invPerf(state);
-  (state.invest || []).forEach((o) => { const sp = gainSplit(state, o.g, o); rows.push([okKey(o.key) ? isoOf(cycleRange(o.key)[0]) : '', 'month only', o.g >= 0 ? 'gain (older entry)' : 'loss (older entry)', n2(o.g), 'PLN', '', '', n2(o.g), '', '', sp.sav || sp.fun ? `older rule: ${n2(sp.inv)} investing, ${n2(sp.sav)} savings, ${n2(sp.fun)} fun` + (o.note ? '; ' + o.note : '') : o.note || '', '', o.id, '', '', '']); });
-  (state.itx || []).forEach((x) => { const bad = itxProblem(x), pln = bad ? null : itxPln(x); rows.push([x.date || '', x.est ? 'estimated' : '', ITX_TYPES[x.t] ? itxLabel(x).toLowerCase() : 'unknown', n2(x.amt), x.cur || 'PLN', x.rate > 0 ? x.rate : '', x.rate > 0 ? x.rateDate || x.date || '' : '', bad ? 'needs review' : pln == null ? 'pending: no rate' : n2(pln), x.acct || '', x.t === 'div' ? (x.paidOut ? 'yes' : 'no') : '', x.note || '', (x.t === 'dep' || x.t === 'wd') && !bad ? itxCycle(x) : '', x.id,
+  (state.invest || []).forEach((o) => { const sp = gainSplit(state, o.g, o); rows.push([okKey(o.key) ? isoOf(cycleRange(o.key)[0]) : '', 'month only', o.g >= 0 ? 'gain (older entry)' : 'loss (older entry)', n2(o.g), HOME, '', '', n2(o.g), '', '', sp.sav || sp.fun ? `older rule: ${n2(sp.inv)} investing, ${n2(sp.sav)} savings, ${n2(sp.fun)} fun` + (o.note ? '; ' + o.note : '') : o.note || '', '', o.id, '', '', '']); });
+  (state.itx || []).forEach((x) => { const bad = itxProblem(x), pln = bad ? null : itxPln(x); rows.push([x.date || '', x.est ? 'estimated' : '', ITX_TYPES[x.t] ? itxLabel(x).toLowerCase() : 'unknown', n2(x.amt), x.cur || HOME, x.rate > 0 ? x.rate : '', x.rate > 0 ? x.rateDate || x.date || '' : '', bad ? 'needs review' : pln == null ? 'pending: no rate' : n2(pln), x.acct || '', x.t === 'div' ? (x.paidOut ? 'yes' : 'no') : '', x.note || '', (x.t === 'dep' || x.t === 'wd') && !bad ? itxCycle(x) : '', x.id,
     ...(x.t === 'adj' && nameKey(x.inv) ? [x.inv.trim(), ST_OF(x), n2(P.addedBy[x.id])] : ['', '', ''])]); });
   rows.sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
   rows.unshift(['date', 'date_note', 'type', 'amount', 'currency', 'rate_to_pln', 'rate_date', 'amount_pln', 'account', 'paid_to_bank', 'note', 'counts_for_cycle', 'id', 'investment', 'status', 'added_pln']);
@@ -3881,12 +4267,12 @@ function bufferCard() {
   const S = bufferStatus(), { B, BP } = S, sug = bufferSuggest();
   if (!B || !B.on) return `<section class="card"><h2>Income buffer</h2>
     <p class="hint">Pay yourself the same amount every month, whatever comes in. 10% of each payment fills the buffer until it holds one month's pay. From then on your income goes into the buffer and the buffer pays you.</p>
-    <div class="field"><label for="bufPay">Your monthly pay (PLN)</label><input id="bufPay" type="number" inputmode="decimal" min="0" step="50" value="${(sug || 0) / 100}"></div>
+    <div class="field"><label for="bufPay">Your monthly pay (${HOME})</label><input id="bufPay" type="number" inputmode="decimal" min="0" step="50" value="${(sug || 0) / 100}"></div>
     ${sug ? `<p class="hint" style="margin:4px 0 0">Suggested from your last months: ${fmt(sug)}.</p>` : ''}
     <button class="btn sm" data-act="bufStart" style="margin-top:12px">Start the buffer</button></section>`;
   return `<section class="card"><h2>Income buffer</h2>
     <p class="hint">${S.live ? `Live since ${monLong(BP.live)}. The buffer pays you every cycle and your income refills it.` : `Filling since ${monLong(B.start)}: ${fmtN(BP.bal)} of ${fmtN(S.pay)}.`}</p>
-    <div class="field"><label for="bufPay">Monthly pay (PLN), from this cycle</label><input id="bufPay" type="number" inputmode="decimal" min="0" step="50" value="${S.pay / 100}"></div>
+    <div class="field"><label for="bufPay">Monthly pay (${HOME}), from this cycle</label><input id="bufPay" type="number" inputmode="decimal" min="0" step="50" value="${S.pay / 100}"></div>
     <div class="ppbtns" style="margin-top:10px"><button class="btn plain sm" data-pot="buffer">Open buffer</button>
       ${armedBufStop ? `<button class="btn plain sm warnbtn" data-act="bufStop">Stop from this cycle</button>` : `<button class="btn plain sm" data-act="bufStopArm">Stop the buffer</button>`}</div>
     ${armedBufStop ? `<p class="hint" style="margin:8px 0 0">Your income splits as normal again from this cycle. What is in the buffer stays there for you to move with Move money.</p>` : ''}
@@ -3929,6 +4315,26 @@ function spendingCard(key, bare) {
     ${inner}
   </section>`;
 }
+// Everyone version: four short cards after setup (and from Setup any time) on how the app thinks.
+let tourStep = 0;
+const TOUR = [
+  ['Your pay goes into pots', 'When you get paid, add it here. The app puts your bills aside first, then shares the rest into pots, like envelopes.', 'p2flow'],
+  ['Spend from three pots', () => `${POT_NAMES.groceries}, ${POT_NAMES.everyday} and ${POT_NAMES.fun} are for spending. Home shows how much is left until payday. The grey line on the dial is how much of the month is left: if your money reaches past it, you are on track. On payday, 20% of what is left goes to your savings.`, 'spend'],
+  ['A grade every month', 'You get a score out of 100. It goes up when you stay in budget, save something and stay out of debt.', 'prog'],
+  ['Your money stays with you', 'Everything is saved on this phone only. Nobody else can see it. Save a backup now and then, so you never lose it.', 'where'],
+];
+function tourHtml() {
+  const [t, d0, ic] = TOUR[tourStep], d = typeof d0 === 'function' ? d0() : d0, last = tourStep === TOUR.length - 1;
+  return `<div class="scrim" data-act="tourSkip"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="tourTitle"><div class="sheet-in"><div class="grab"></div>
+    <div class="obdots" aria-hidden="true" style="margin:4px 0 10px">${TOUR.map((_, i) => `<i class="${i < tourStep ? 'done' : i === tourStep ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="tourbody"><span class="obic" style="--ic:${CC_ICONS[ic][0]}">${navIcon(CC_ICONS[ic][1])}</span>
+    <h3 id="tourTitle">${t}</h3>
+    <p>${d}</p></div>
+    <div class="row"><button class="btn" type="button" data-act="tourNext" style="flex:1">${last ? 'Start' : 'Next'}</button></div>
+    ${last ? '' : '<div class="row"><button class="btn plain" type="button" data-act="tourSkip" style="flex:1">Skip</button></div>'}
+  </div></div>`;
+}
 function sheetHtml() {
   if (sheetMode === 'add') return `<div class="scrim" data-act="closeSheet"></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="addTitle"><div class="sheet-in"><div class="grab"></div>
@@ -3936,6 +4342,8 @@ function sheetHtml() {
     <button class="mch big" data-act="addExp"><b>Expense</b><small>money you spent</small></button>
     <div class="mchg"><button class="mch" data-act="addInc"><b>Income</b><small>money paid to you</small></button><button class="mch" data-act="addMove"><b>Move money</b><small>from one pot to another</small></button><button class="mch" data-act="addInv"><b>Investment</b><small>deposit, dividend or portfolio value</small></button></div>
   </div></div>`;
+  if (sheetMode === 'tour') return tourHtml();
+  if (sheetMode === 'import' && imp) return importHtml();
   if (sheetMode === 'move') return moveSheetHtml();
   if (sheetMode === 'lend') return lendSheetHtml();
   if (sheetMode === 'itx') return itxSheetHtml();
@@ -3952,7 +4360,7 @@ function sheetHtml() {
         <label class="choice"><input type="radio" name="expSign" value="1" ${back ? '' : 'checked'}><span>Spent<small>money went out</small></span></label>
         <label class="choice"><input type="radio" name="expSign" value="-1" ${back ? 'checked' : ''}><span>Money back<small>refund or paid back</small></span></label>
       </div>
-      <input id="expAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${ed ? (Math.abs(ed.g) / 100).toFixed(2) : ''}" aria-label="Amount in PLN" required>
+      <input id="expAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${ed ? (Math.abs(ed.g) / 100).toFixed(2) : ''}" aria-label="Amount in ${HOME}" required>
       <div class="choices" role="radiogroup" aria-label="Pot">
         ${SPEND.map((p) => `<label class="choice"><input type="radio" name="expPot" value="${p}" ${p === sheetPot ? 'checked' : ''}><span>${SHORT[p]}<small class="num">${r ? fmtS(r.pots[p].left) : '0.00'} left</small></span></label>`).join('')}
       </div>
@@ -3980,6 +4388,18 @@ function incPreview(sh) {
   const first = d.length ? `${fmtN(d.reduce((a, x) => a + x[1], 0))} goes to ${d.map((x) => x[0]).join(', ').replace(/, ([^,]*)$/, ' and $1')} first` : '';
   return { live: false, lines, first };
 }
+// Everyone version: the newest earlier payment with the same label (any cycle), and the labels used so far.
+function lastFromPayer(label) {
+  const want = String(label || '').trim().toLowerCase(); if (!want) return null;
+  let hit = null;
+  Object.keys(state.months).sort().forEach((k) => (state.months[k].income || []).forEach((e) => { if (String(e.label || '').trim().toLowerCase() === want) hit = e; }));
+  return hit;
+}
+function payerLabels() {
+  const seen = new Map();
+  Object.keys(state.months).sort().reverse().forEach((k) => (state.months[k].income || []).forEach((e) => { const t = String(e.label || '').trim(); if (t && !seen.has(t.toLowerCase())) seen.set(t.toLowerCase(), t); }));
+  return [...seen.values()].slice(0, 20);
+}
 const pickLine = (s) => `All ${fmtN(s.g)} goes to ${potName(s.pot)}. Nothing comes off the top.`;
 function incSheetHtml() {
   const s = incSheet, pv = s.prev, one = s.choice === 'one', pn = (k) => (k === 'rent' ? 'Rent practice' : potName(k));
@@ -3991,6 +4411,7 @@ function incSheetHtml() {
     <div class="wlab">${esc(s.label || 'Payment')}${s.extra.cur ? ` · ${esc(s.extra.cur)} ${fmtN(s.extra.amt)}` : ''}</div>
     <div class="wamt num">${fmtN(s.g)}</div>
     <h3 id="incTitle">Where should it go?</h3>
+    ${s.remembered ? `<p class="hint" style="margin:-4px 0 8px">Picked like your last payment from ${esc(s.label)}. Change it if this one is different.</p>` : ''}
     <div role="radiogroup" aria-label="Where it goes">
       <label class="wopt${one ? '' : ' on'}" id="wSplit"><span class="wh"><input type="radio" name="incWhere" value="split" ${one ? '' : 'checked'}>Split like your salary</span>
         <span class="wd">Same percentages as your salary.</span><span class="wpv" ${one ? 'hidden' : ''}>${prevHtml}</span></label>
@@ -4041,7 +4462,7 @@ function moveSheetHtml() {
     <div class="grab"></div>
     <div class="h2row"><h3 id="sheetTitle">Move money</h3><span class="label">${monthLabel(cursor)}</span></div>
     <form id="moveForm">
-      <input id="mvAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${moveAmt}" aria-label="Amount in PLN" required>
+      <input id="mvAmt" class="amt-in num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" value="${moveAmt}" aria-label="Amount in ${HOME}" required>
       <div class="label" style="margin-bottom:6px">From</div>
       <div class="choices four" role="radiogroup" aria-label="From pot">${opt('mvFrom', moveFrom)}</div>
       <div class="label" style="margin:12px 0 6px">To</div>
@@ -4212,12 +4633,12 @@ function renderBreakdown() {
   const debtG = c.debtTotal, debts = state.settings.debts || [], DP = debtPlan(state);
   const owed = debts.reduce((a, d) => a + (DP.left[d.id] || 0), 0), ov = overspends().reduce((a, o) => a + o.g, 0);
   $app.innerHTML = `
-    <div class="top"><button class="back" data-act="back" aria-label="Back to home">‹ Home</button><div class="label">${monthLabel(cursor)}</div></div>
+    <div class="top pbar"><div class="hrow"><button class="back" data-act="back" aria-label="Back to home">‹ Home</button><div class="pmid label">${monthLabel(cursor)}</div><div></div></div></div>
     <div class="minihead" id="miniHead">${selPot ? miniHeadHtml(selPot) : ''}</div>
     <section class="card bdcard">
       <h2 style="margin:0">Where it goes</h2>
       <p class="hint" style="margin:4px 0 0">Tap a tag, or run your finger round the ring</p>
-      ${tagChart(items, { select: true, selected: selPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: 'PLN' })}
+      ${tagChart(items, { select: true, selected: selPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: HOME })}
     </section>
     ${debtG ? '' : `<button class="card debtcard${selPot === 'debt' ? ' on' : ''}" data-sel="debt" aria-label="Open the debt pot">
       <span class="sw" style="background:${potColor.debt}"></span>
@@ -4530,7 +4951,7 @@ function hpMark(key) {
   const sl = hpSlices.find((x) => x.key === key), c2 = pop.querySelector('.hc2'), c1 = pop.querySelector('.hc1');
   pop.querySelector('.hcap').textContent = sl ? sl.name : 'Slide to a pot';
   if (sl) {
-    c1.textContent = 'PLN';
+    c1.textContent = HOME;
     cancelAnimationFrame(c2._r); const t0 = performance.now();
     const st = (n) => { const k = Math.min(1, (n - t0) / 320); c2.textContent = fmtS(Math.round(sl.g * (1 - Math.pow(1 - k, 3)))); if (k < 1) c2._r = requestAnimationFrame(st); };
     c2._r = requestAnimationFrame(st);
@@ -4581,7 +5002,7 @@ function renderHome() {
   const noteHtml = `${backupNudge()}${c.short ? `<div class="note">Income is below your fixed costs${c.debtTotal || (state.settings.debts || []).length ? ', debt payments' : ''}${openYearly().length ? ' and yearly costs' : ''}. Nothing is left to split this month.${c.fixedTotal > c.splitTotal ? ' Cover the bills below.' : ''}</div>` : ''}`;
   const ringHtml = desk
     ? `<section class="card dring"><h2 style="margin:0">Where it goes</h2><p class="hint" style="margin:4px 0 0">Click a slice or a tag to open that pot</p>
-      ${tagChart(items, { select: true, selected: deskPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: 'PLN' })}</section>`
+      ${tagChart(items, { select: true, selected: deskPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: HOME })}</section>`
     : `<section class="card ringcard" data-open="breakdown" role="button" tabindex="0" aria-label="Where it goes. Open the breakdown">
       <div class="h2row"><h2>Where it goes</h2><span class="chev" aria-hidden="true">›</span></div>
       ${plainRing(items, { label: 'Income split by pot', cn: 'Split', cb: fmtN(c.toSplit), cs: 'Tap for breakdown' })}
@@ -4595,15 +5016,15 @@ function renderHome() {
       <form id="addIncome" style="margin-top:8px">
         <div class="row">
           <input id="inAmount" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Amount" aria-label="Amount" value="${incDraft ? esc(incDraft.amt) : ''}" required>
-          <select id="inCur" class="cur" aria-label="Currency">${['PLN', 'EUR', 'USD', 'GBP', 'ZAR'].map((c) => `<option ${c === (state.lastCur || 'PLN') ? 'selected' : ''}>${c}</option>`).join('')}</select>
+          <select id="inCur" class="cur" aria-label="Currency">${itxCurs().filter((c) => c !== 'CHF').map((c) => `<option ${c === (state.lastCur || HOME) ? 'selected' : ''}>${c}</option>`).join('')}</select>
         </div>
-        <div class="row" id="rateRow" ${(state.lastCur || 'PLN') === 'PLN' ? 'hidden' : ''}>
+        <div class="row" id="rateRow" ${(state.lastCur || HOME) === HOME ? 'hidden' : ''}>
           <label class="ratelab" for="inRate">1 <span id="rateCur">${state.lastCur || 'EUR'}</span> =</label>
-          <input id="inRate" class="f1" type="number" inputmode="decimal" min="0" step="0.0001" placeholder="rate" aria-label="Exchange rate to PLN" value="${incDraft ? esc(incDraft.rate) : ''}">
-          <span class="ratelab">PLN</span>
+          <input id="inRate" class="f1" type="number" inputmode="decimal" min="0" step="0.0001" placeholder="rate" aria-label="Exchange rate to ${HOME}" value="${incDraft ? esc(incDraft.rate) : ''}">
+          <span class="ratelab">${HOME}</span>
         </div>
         <div class="row">
-          <input id="inLabel" class="f2" type="text" placeholder="Label (optional)" aria-label="Label" value="${incDraft ? esc(incDraft.label) : ''}">
+          <input id="inLabel" class="f2" type="text" placeholder="${GLOBAL ? 'From (optional)' : 'Label (optional)'}" aria-label="${GLOBAL ? 'Who paid you' : 'Label'}" value="${incDraft ? esc(incDraft.label) : ''}"${GLOBAL ? ' list="payerList" autocomplete="off"' : ''}>${GLOBAL ? `<datalist id="payerList">${payerLabels().map((t) => `<option value="${esc(t)}">`).join('')}</datalist>` : ''}
           <button class="btn" type="submit">Add payment</button>
         </div>
       </form>
@@ -4620,13 +5041,7 @@ function renderHome() {
     : { l1: key < now ? 'LEFT OVER' : key > now ? 'TO SPEND' : 'LEFT TO SPEND', big: fmtN(ls.left),
         l2: ls.budget ? `<tspan class="spc">${pctL}</tspan>% of ${esc(fmtN(ls.budget))}` : 'nothing in the spending pots', l3: ls.budget && key === now ? `${days} day${days === 1 ? '' : 's'} left` : '' };
   const pd = perDayOf(key, ls);
-  const dHero = `<section class="card hero dhero ringcard" data-open="breakdown" role="button" tabindex="0" aria-label="Left to spend ${fmtN(ls.left)}. Open the breakdown">
-      ${spendRing(items, ls, Object.assign({ label: 'Where your income goes, and what is left to spend' }, ringO))}
-      <div class="hpair${pd ? ' m3' : ''}"><div><div class="label">${live ? 'Your pay' : 'Income'}</div><div class="v num">${fmtN(live ? c.total - c.oneTotal : c.total)}</div></div>
-        <div><div class="label">After bills</div><div class="v num">${fmtN(Math.max(0, c.total - c.fixedTotal))}</div></div>${pd ? `<div><div class="label">Per day</div><div class="v num">${fmtN(pd)}</div></div>` : ''}</div>
-      ${live && splitInc({ income }).length ? `<div class="hnote">${fmt(splitInc({ income }).reduce((a, e) => a + e.g, 0))} earned this cycle went into your buffer.</div>` : ''}
-      ${overNote(ls) ? `<div class="hnote">${overNote(ls)}</div>` : ''}
-    </section>`;
+  const dHero = dialCard(key, ls, c, { now, days, pd, live, income });
   const intro = (returning || !homeLTS) && !unlockFx;
   const MP = moneyPicture(), SR = standRows(MP), PB = progressBits(ladder(), MP);
   const spendLine = (() => {
@@ -4635,19 +5050,17 @@ function renderHome() {
     return `${sgnN(ls.left)} left · resets ${dShort(next)}`;
   })();
   $app.innerHTML = `
-    <div class="top">
-      <div class="mark">${MARK}</div>
-      <div class="monthnav"><button data-act="prev" aria-label="Previous month">‹</button><span>${monthLabelShort(cursor)}</span><button data-act="next" aria-label="Next month">›</button></div>
-    </div>
-    ${homeTilesTop(key, MP)}
+    ${homeBar(key, now, days)}
     ${dHero}
+    ${homeTilesTop(key, MP)}
     ${noteHtml}
     ${alertsFor(key, 'red')}
     ${compactCard('spend', 'Spending', spendLine, spendingCard(key, true), ls.left < 0)}
+    ${placesCard(key)}
     ${flowCards(key)}
     ${compactCard('where', 'Where you stand', `Savings ${sgnN(SR.sav)} · Investing ${sgnN(MP.B.total)}`, SR.html, SR.neg)}
     ${cycleCard(key, incomeHtml)}
-    ${compactCard('prog', 'Progress', PB.line, PB.html)}
+    ${compactCard('prog', 'Your safety net', PB.line, PB.html)}
     ${worthCard(key)}
     <div class="hspacer"></div>`;
   fitRingText();
@@ -4687,7 +5100,7 @@ function renderDeskHome(key, c, items, income, ringHtml, incomeHtml, noteHtml) {
         ${list.length ? expRows(list.slice(0, 8)) : '<div class="empty" style="padding-top:6px">Nothing logged yet. Use Add to log your first expense.</div>'}</section>${cycleCard(key, incomeHtml)}</div>
       <div class="dc3">${reds ? `<section class="card dnotes"><h2>Needs you</h2>${reds}</section>` : ''}
         <section class="card hstand"><div class="h2row"><h2>Where you stand</h2><span class="label">today</span></div>${SR.html}</section>${deskFlowCards(key)}
-        <section class="card hprog"><div class="h2row"><h2>Progress</h2></div>${PB.html}</section>${worthCard(key)}</div>
+        <section class="card hprog"><div class="h2row"><h2>Your safety net</h2></div>${PB.html}</section>${worthCard(key)}</div>
     </div></div>`;
   homeRingFx(key, ls, returning || !homeLTS);
 }
@@ -4718,7 +5131,7 @@ function potBody(key, inSheet) {
     const it = (k, g, color, name, short) => ({ key: k, g, color, name, short, amtText: fmtN(g), pctText: (totAll ? Math.round((g / totAll) * 100) : 0) + '%', labText: (totAll ? Math.round((g / totAll) * 100) : 0) + '% · ' + fmtS(g) });
     const items = SUB_ORDER.map((k) => it(k, bal[k], subColor[k], SUB_NAMES[k], SHORT[k])).concat(spOpen.map((x, i) => it(x.id, sb[x.id], ['var(--pot-6)', 'var(--pot-2)', 'var(--pot-4)'][i % 3], x.name, shortName(x.id))));
     body = savingsMonthCard() + `<section class="card"><h2>All your savings</h2>
-      ${tagChart(items, { select: false, label: 'Savings split across sub pots', cn: 'Total saved', cb: fmtN(totAll), cs: 'PLN' })}
+      ${tagChart(items, { select: false, label: 'Savings split across sub pots', cn: 'Total saved', cb: fmtN(totAll), cs: HOME })}
       <div class="tags">${SUB_ORDER.map((k, n) => `<div class="tag" style="grid-template-columns:12px minmax(0,1fr) auto"><span class="sw" style="background:${subColor[k]}"></span><span class="tn">${SUB_NAMES[k]}<span class="meta" style="display:block;font-weight:500;color:var(--muted);font-size:12px">${pct(s.sub[k])} of transfers · +${fmtN(c.sub[k])} this month</span></span><span class="ta num">${fmtN(bal[k])}</span></div>`).join('')}</div>
     </section>
     ${specialsCard()}
@@ -4764,7 +5177,7 @@ function renderDetail() {
   const share = c.total ? Math.round((g / c.total) * 100) : 0;
   const body = potBody(key, false);
   $app.innerHTML = `
-    <div class="top"><button class="back" data-act="back" aria-label="Back to ${backTo === 'goals' ? 'goals' : 'home'}">‹ ${backTo === 'goals' ? 'Goals' : 'Home'}</button><div class="label">${monthLabel(cursor)}</div></div>
+    <div class="top pbar"><div class="hrow"><button class="back" data-act="back" aria-label="Back to ${backTo === 'goals' ? 'goals' : 'home'}">‹ ${backTo === 'goals' ? 'Goals' : 'Home'}</button><div class="pmid label">${monthLabel(cursor)}</div><div></div></div></div>
     ${key === 'subs' ? (() => { const B = billsSummary(monthKey(cursor)); return `<section class="card"><div class="label">Bills this cycle</div><div class="big num">${fmt(B.total)}</div>
       <div class="hint" style="margin:0">${B.n ? `${B.paid} of ${B.n} paid${B.left ? ' · ' + fmt(B.left) + ' still to go' : ' · all done'}` : 'No bills this cycle'}</div>
       ${B.n ? `<div class="meter" style="margin-top:10px"><i style="width:${Math.round((B.paid / B.n) * 100)}%"></i></div>` : ''}</section>`; })() : `<section class="card"><div class="label">${key === 'buffer' ? 'In your income buffer' : key === 'yearly' ? 'Saved for yearly costs' : POT_NAMES[key] + ' this month'}</div><div class="big num">${fmt(key === 'yearly' ? yearlySum().saved : g)}</div><div class="hint" style="margin:0">${key === 'buffer' ? 'your steady pay: ' + fmt(bufferStatus().pay) + ' a month' : key === 'yearly' ? fmt(g) + ' set aside this month, off the top' : share + "% of this month's income"}</div></section>`}
@@ -4779,32 +5192,38 @@ const OB_STEPS = ['payday', 'bills', 'rent', 'have', 'split'];
 function renderOnboard() {
   const s = state.settings, st = OB_STEPS[obStep];
   const pSum = POT_ORDER.reduce((a, k) => a + s.percents[k], 0);
-  const bodies = {
-    payday: `<h2>When do you get paid?</h2>
-      <p class="hint">Your month in the app runs from this day to the day before it next month. If money comes on different days, pick the day your main payment usually lands.</p>
-      <div class="field"><label for="cycleDay">Pay day</label><input id="cycleDay" type="number" inputmode="numeric" min="1" max="28" step="1" value="${cycleDay()}"></div>`,
-    bills: `<h2>Your fixed bills</h2>
-      <p class="hint">Things that leave every month no matter what: phone, subscriptions, a transport pass. They come off the top before the split. You can skip this and add them later.</p>
-      ${billsEditor()}`,
-    rent: GLOBAL ? obRentBody() : `<h2>Rent after you graduate</h2>
-      <p class="hint">What you expect to pay a month once you rent on your own. It is used for Rent practice and to work out how many months your savings cover. Put 0 if you are not sure yet.</p>
-      <div class="field"><label for="rentT">Expected rent (PLN a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>`,
-    have: `<h2>What you already have</h2>
-      <p class="hint">Money you have saved or invested before today, so your progress starts from the right place. Savings are spread across your savings pots. Leave 0 if none.</p>
-      <div class="field"><label for="obSaved">Already saved (PLN)</label><input id="obSaved" type="number" inputmode="decimal" min="0" step="0.01" value="${state.openingSub ? (SUB_ORDER.reduce((a, k) => a + state.openingSub[k], 0) / 100).toFixed(2) : 0}"></div>
-      <div class="field"><label for="obInvested">Already invested (PLN)</label><input id="obInvested" type="number" inputmode="decimal" min="0" step="0.01" value="${((state.openingInvest || 0) / 100).toFixed(2)}"></div>
-      <p class="hint" style="margin-top:10px">Debts and money you have lent can be added any time from the pots page.</p>`,
-    split: `<h2>Your split</h2>
-      <p class="hint">How each payment is shared after bills. ${GLOBAL ? 'This is a starting point: change any number to fit your life.' : 'This is the split we planned; change any number if you like.'} It must add up to 100%.</p>
-      ${POT_ORDER.map((k) => `<div class="field"><label for="p_${k}">${POT_NAMES[k]}</label><input id="p_${k}" data-pct="${k}" type="number" inputmode="decimal" step="0.01" min="0" value="${s.percents[k] / 100}"></div>`).join('')}
-      <div class="sum num ${pSum === 10000 ? '' : 'bad'}">Total ${pct(pSum)}${pSum === 10000 ? '' : ' (needs to be 100%)'}</div>`,
+  // Each step: an icon, one plain question, one short line under it, then the boxes to fill in. The everyone version
+  // uses everyday words; Edd's own copy keeps the wording he set up with.
+  const W = GLOBAL;
+  const steps = {
+    payday: { ic: CC_ICONS.cycle, t: 'When do you get paid?',
+      sub: W ? 'Pick the day your pay usually arrives. The app plans your money from one payday to the next.' : 'Your month in the app runs from this day to the day before it next month. If money comes on different days, pick the day your main payment usually lands.',
+      body: `<div class="field"><label for="cycleDay">${W ? 'Day of the month' : 'Pay day'}</label><input id="cycleDay" type="number" inputmode="numeric" min="1" max="28" step="1" value="${cycleDay()}"></div>
+      ${W ? curField() : ''}` },
+    bills: { ic: CC_ICONS.p2due, t: W ? 'What do you pay every month?' : 'Your fixed bills',
+      sub: W ? 'Things like your phone, Netflix or a bus pass. This money is put aside first, before anything else. You can skip this and add them later.' : 'Things that leave every month no matter what: phone, subscriptions, a transport pass. They come off the top before the split. You can skip this and add them later.',
+      body: billsEditor() },
+    rent: W ? { ic: ['#FF9F0A', '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'], t: 'Do you pay rent?', sub: 'You can change this later in Setup.', body: obRentBody() }
+      : { ic: ['#FF9F0A', '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'], t: 'Rent after you graduate', sub: 'What you expect to pay a month once you rent on your own. It is used for Rent practice and to work out how many months your savings cover. Put 0 if you are not sure yet.',
+        body: `<div class="field"><label for="rentT">Expected rent (${HOME} a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>` },
+    have: { ic: CC_ICONS.where, t: W ? 'Do you already have money put away?' : 'What you already have',
+      sub: W ? 'If you already have savings or investments, add them so the app starts from the right number. Leave 0 if not.' : 'Money you have saved or invested before today, so your progress starts from the right place. Savings are spread across your savings pots. Leave 0 if none.',
+      body: `<div class="field"><label for="obSaved">${W ? 'Savings' : 'Already saved'} (${HOME})</label><input id="obSaved" type="number" inputmode="decimal" min="0" step="0.01" value="${state.openingSub ? (SUB_ORDER.reduce((a, k) => a + state.openingSub[k], 0) / 100).toFixed(2) : 0}"></div>
+      <div class="field"><label for="obInvested">${W ? 'Investments, like shares or funds' : 'Already invested'} (${HOME})</label><input id="obInvested" type="number" inputmode="decimal" min="0" step="0.01" value="${((state.openingInvest || 0) / 100).toFixed(2)}"></div>
+      <p class="hint" style="margin-top:10px">${W ? 'Money you owe, or money you lent to someone, can be added later.' : 'Debts and money you have lent can be added any time from the pots page.'}</p>` },
+    split: { ic: ['#5856D6', '<path d="M12 3v9l7.8 4.5"/><circle cx="12" cy="12" r="9"/>'], t: W ? 'How should your pay be shared?' : 'Your split',
+      sub: W ? 'After bills, your pay is shared into pots, like envelopes. This is a good place to start. Change any number to fit your life. It must add up to 100%. Don\'t invest? Set Investing to 0.' : 'How each payment is shared after bills. This is the split we planned; change any number if you like. It must add up to 100%.',
+      body: `${POT_ORDER.map((k) => `<div class="field"><label for="p_${k}">${POT_NAMES[k]}</label><input id="p_${k}" data-pct="${k}" type="number" inputmode="decimal" step="0.01" min="0" value="${s.percents[k] / 100}"></div>`).join('')}
+      <div class="sum num ${pSum === 10000 ? '' : 'bad'}">Total ${pct(pSum)}${pSum === 10000 ? '' : ' (needs to be 100%)'}</div>` },
   };
+  const x = steps[st];
   $app.innerHTML = `
-    <div class="top"><div class="mark">${MARK}</div><div class="label">Setting up · ${obStep + 1} of ${OB_STEPS.length}</div></div>
-    <div class="obdots" aria-hidden="true">${OB_STEPS.map((_, i) => `<i class="${i < obStep ? 'done' : i === obStep ? 'on' : ''}"></i>`).join('')}</div>
-    <section class="card obcard">${bodies[st]}</section>
+    <div class="top obtop"><div class="mark">${MARK}</div><div class="label">Step ${obStep + 1} of ${OB_STEPS.length}</div></div>
+    <div class="obbar" role="progressbar" aria-valuemin="1" aria-valuemax="${OB_STEPS.length}" aria-valuenow="${obStep + 1}"><i style="width:${((obStep + 1) / OB_STEPS.length) * 100}%"></i></div>
+    <div class="obhead"><span class="obic" style="--ic:${x.ic[0]}">${navIcon(x.ic[1])}</span><h1 class="obt">${x.t}</h1><p class="obsub">${x.sub}</p></div>
+    <section class="card obcard">${x.body}</section>
     ${obStep === 0 ? obRestoreCard() : ''}
-    <div class="obnav">${obStep ? '<button class="btn plain" data-ob="back">Back</button>' : '<span></span>'}<button class="btn" data-ob="next">${obStep === OB_STEPS.length - 1 ? 'Finish' : st === 'bills' && !s.fixed.length ? 'Skip for now' : 'Next'}</button></div>`;
+    <div class="obnav">${obStep ? '<button class="btn plain" data-ob="back">Back</button>' : '<span></span>'}<button class="btn" data-ob="next">${obStep === OB_STEPS.length - 1 ? (W ? 'Done' : 'Finish') : st === 'bills' && !s.fixed.length ? 'Skip for now' : 'Next'}</button></div>`;
 }
 // Moving from another device or address: put a backup back instead of setting up by hand.
 function obRestoreCard() {
@@ -4820,14 +5239,27 @@ function obRestoreCard() {
 // at all. "Now" makes rent a bill (like switching to paying your own rent in Setup); "none" moves the Rent practice
 // share to Savings. Going back and answering again undoes the earlier answer first.
 let obRent = null, obRentDone = null;
+// Everyone version: the currency the whole app counts in. Changing it later only changes the label: amounts stay.
+const CURS = [['PLN', 'Polish złoty'], ['EUR', 'Euro'], ['GBP', 'British pound'], ['USD', 'US dollar'], ['CHF', 'Swiss franc'], ['CZK', 'Czech koruna'], ['SEK', 'Swedish krona'], ['NOK', 'Norwegian krone'], ['DKK', 'Danish krone'], ['HUF', 'Hungarian forint'], ['RON', 'Romanian leu'], ['UAH', 'Ukrainian hryvnia'], ['CAD', 'Canadian dollar'], ['AUD', 'Australian dollar'], ['ZAR', 'South African rand'], ['NGN', 'Nigerian naira'], ['KES', 'Kenyan shilling'], ['INR', 'Indian rupee']];
+// Everyone version: a colour (filled in by tools/build.js from tools/theme.js; the first is the default) and light,
+// dark, or follow the phone (the default)
+const WORLD_COLORS = [];
+function themeField() {
+  const cur = state.settings.theme || 'auto', b = (k, t) => `<button class="btn ${cur === k ? '' : 'plain '}sm" type="button" data-themepick="${k}" aria-pressed="${cur === k}">${t}</button>`;
+  const col = state.settings.color || (WORLD_COLORS[0] || [])[0];
+  return `<div style="margin-top:16px"><div class="label">Colour</div><div class="swatches" role="group" aria-label="Colour">${WORLD_COLORS.map(([k, n, c]) => `<button type="button" class="swatch" data-colorpick="${k}" aria-pressed="${col === k}" aria-label="${n}"><i style="background:${c}"></i><span>${n}</span></button>`).join('')}</div></div>
+    <div style="margin-top:16px"><div class="label">Appearance</div><div class="ppbtns" role="group" aria-label="Appearance" style="margin-top:8px">${b('auto', 'Same as phone')}${b('light', 'Light')}${b('dark', 'Dark')}</div></div>`;
+}
+function curField(note) {
+  return `<div class="field"><label for="curSel">Your currency</label><select id="curSel" class="cur">${CURS.map(([c, n]) => `<option value="${c}" ${c === HOME ? 'selected' : ''}>${c} · ${n}</option>`).join('')}</select></div>
+      ${note ? `<p class="hint" style="margin:6px 0 0">Changing it later only changes the label. Amounts already entered stay as they are.</p>` : ''}`;
+}
 function obRentBody() {
   const s = state.settings, m = obRent;
   const opt = (k, t) => `<button class="btn ${m === k ? '' : 'plain '}sm" data-obrent="${k}" aria-pressed="${m === k}">${t}</button>`;
-  return `<h2>Rent</h2>
-      <p class="hint">Do you pay rent? You can change this later in Setup.</p>
-      <div class="ppbtns" style="flex-direction:column;align-items:stretch">${opt('now', 'Yes, I pay rent now')}${opt('later', 'Not yet, but I will')}${opt('none', 'No, I don\'t pay rent')}</div>
-      ${m === 'now' || m === 'later' ? `<p class="hint" style="margin-top:12px">${m === 'now' ? 'Your rent becomes one of your monthly bills.' : 'Part of each payment goes to Rent practice, so paying rent is already a habit when it starts.'}</p>
-      <div class="field"><label for="obRentAmt">${m === 'now' ? 'Rent' : 'Expected rent'} (PLN a month)</label><input id="obRentAmt" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget ? s.rentTarget / 100 : ''}"></div>` : ''}`;
+  return `<div class="ppbtns" style="flex-direction:column;align-items:stretch">${opt('now', 'Yes, I pay rent now')}${opt('later', 'Not yet, but I will')}${opt('none', 'No, I don\'t pay rent')}</div>
+      ${m === 'now' || m === 'later' ? `<p class="hint" style="margin-top:12px">${m === 'now' ? 'Your rent is put aside every month, like a bill.' : 'A little of each payday is put aside, so you are ready when rent starts.'}</p>
+      <div class="field"><label for="obRentAmt">${m === 'now' ? 'Rent' : 'Rent you expect'}, a month (${HOME})</label><input id="obRentAmt" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget ? s.rentTarget / 100 : ''}"></div>` : ''}`;
 }
 function obRentApply() {
   const s = state.settings;
@@ -4854,7 +5286,9 @@ function obNext() {
   }
   if (st === 'split' && POT_ORDER.reduce((a, k) => a + s.percents[k], 0) !== 10000) { toast('The split needs to add up to 100%'); return; }
   if (obStep < OB_STEPS.length - 1) return pageSlide(1, () => { obStep++; });
-  state.setup = true; save(); obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0); render();
+  state.setup = true; save(); obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0);
+  if (GLOBAL) { tourStep = 0; sheetMode = 'tour'; sheetOpen = true; render(); return; }
+  render();
   toast('All set. Add your first payment to start.');
 }
 
@@ -4925,6 +5359,200 @@ function backupNudge() {
   return `<div class="note" id="backupNudge">${s.lastBackup ? `Your last backup was ${daysSince(s.lastBackup)} days ago.` : 'You have not saved a backup yet.'} Everything lives only on this phone, so a backup file is the only way to get it back if the phone is lost or Chrome is cleared.
     <div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-act="backup">Download backup</button><button class="btn plain sm" data-act="backupLater">Later</button></div></div>`;
 }
+// Everyone version: where the data lives, and how to put the app on the home screen. Chrome offers its own
+// install prompt; when it has, the button below opens it directly.
+let installEvt = null;
+if (GLOBAL) {
+  addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; if (view === 'app' && tab === 'setup') render(); });
+  addEventListener('appinstalled', () => { installEvt = null; if (view === 'app' && tab === 'setup') render(); });
+}
+// Everyone version: import a bank statement (CSV). The file is read on the phone and never leaves it. Money out
+// becomes expenses in Groceries, Everyday spending or Fun money; money in can be added as income (split). Lines that
+// look already entered, bills (they come off the top), and lines from before the first pay in the app start skipped.
+let imp = null; // { rows, head, map, out[] } while the import sheet is open
+function csvRows(text) {
+  const first = text.split(/\r?\n/).slice(0, 40), score = (d) => first.reduce((a, l) => a + Math.min(l.split(d).length - 1, 20), 0);
+  const del = [';', ',', '\t'].sort((a, b) => score(b) - score(a))[0], rows = [];
+  let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === del) { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row.map((x) => x.trim())); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row.map((x) => x.trim())); }
+  return rows.filter((r) => r.some((x) => x));
+}
+// "1 234,56", "-12.50", "1,234.56 PLN", "(12.50)", "12,50-" -> grosze (NaN when it is not an amount)
+function csvAmount(t) {
+  let v = String(t || '').replace(/[\s ']/g, '').replace(/[A-Za-zzł€$£]+/g, ''), neg = false;
+  if (/^\(.*\)$/.test(v)) { neg = true; v = v.slice(1, -1); }
+  if (/-$/.test(v)) { neg = true; v = v.slice(0, -1); }
+  if (/^[-+]/.test(v)) { neg = neg !== (v[0] === '-'); v = v.slice(1); }
+  if (!/^[\d.,]+$/.test(v) || !/\d/.test(v)) return NaN;
+  const lc = v.lastIndexOf(','), ld = v.lastIndexOf('.');
+  if (lc >= 0 && ld >= 0) v = lc > ld ? v.replace(/\./g, '').replace(',', '.') : v.replace(/,/g, '');
+  else if (lc >= 0) v = /,\d{1,2}$/.test(v) && v.split(',').length === 2 ? v.replace(',', '.') : v.replace(/,/g, '');
+  else if (v.split('.').length > 2) v = v.replace(/\./g, '');
+  const g = toG(v); return Number.isFinite(g) ? (neg ? -g : g) : NaN;
+}
+// Dates: 2026-10-14, 14.10.2026, 14/10/2026, 14-10-2026 (with or without a time after). dayFirst decides 10/14 vs 14/10.
+function csvDate(t, dayFirst = true) {
+  const v = String(t || '').trim(); let m = v.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})/), y, mo, d;
+  if (m) [y, mo, d] = [m[1], m[2], m[3]].map(Number);
+  else if ((m = v.match(/^(\d{1,2})[-./](\d{1,2})[-./](\d{2,4})/))) { [d, mo] = dayFirst ? [+m[1], +m[2]] : [+m[2], +m[1]]; y = +m[3] < 100 ? 2000 + +m[3] : +m[3]; }
+  else return null;
+  const dt = new Date(y, mo - 1, d, 12);
+  return dt.getFullYear() === y && dt.getMonth() === mo - 1 && dt.getDate() === d ? dt : null;
+}
+const IMP_COLS = { date: /^(started date|transaction date|data transakcji|data operacji|date|data|booking date|data księgowania|completed date|datum|fecha)/i,
+  amount: /^(amount|kwota|betrag|montant|importe|value|wartość)/i, out: /(debit|obciążeni|money out|paid out|withdrawal|wydatki)/i, in: /(credit|uznani|money in|paid in|deposit|wpływy)/i,
+  note: /(merchant|payee|counterparty|odbiorca|kontrahent|nadawca|nazwa|description|opis|tytuł|title|details|reference|name)/i };
+function impGuess(raw) {
+  const head = raw.map((h) => String(h).replace(/^[#*\s]+/, '')), find = (re, skip = []) => head.findIndex((h, i) => re.test(h) && !skip.includes(i));
+  const date = find(IMP_COLS.date), amount = find(IMP_COLS.amount, [date]);
+  const out = amount < 0 ? find(IMP_COLS.out, [date]) : -1, inn = amount < 0 ? find(IMP_COLS.in, [date, out]) : -1;
+  const pri = ['merchant', 'payee', 'counterparty', 'odbiorca', 'kontrahent', 'nadawca', 'nazwa', 'description', 'opis', 'tytuł', 'title'];
+  let note = -1; for (const w of pri) { note = head.findIndex((h, i) => h.toLowerCase().includes(w) && ![date, amount, out, inn].includes(i)); if (note >= 0) break; }
+  if (note < 0) note = find(IMP_COLS.note, [date, amount, out, inn]);
+  return { date, amount, out, in: inn, note };
+}
+// The header is the first row (within the first 30) that names a date column and has a later row with a real date.
+function impHeadAt(rows) {
+  for (let i = 0; i < Math.min(rows.length - 1, 30); i++) { const g = impGuess(rows[i]); if (g.date >= 0 && (g.amount >= 0 || g.out >= 0) && csvDate(rows[i + 1][g.date])) return i; }
+  return -1;
+}
+function impBuild() {
+  const { rows, map } = imp, data = rows.filter((r) => r.length > 1);
+  const parts = data.map((r) => String(r[map.date] || '').match(/^(\d{1,2})[-./](\d{1,2})[-./]\d{2,4}/)).filter(Boolean);
+  const dayFirst = !parts.some((m) => +m[2] > 12) || parts.some((m) => +m[1] > 12);
+  const pots = new Map(); Object.keys(state.months).sort().forEach((k) => ((state.months[k] || {}).expenses || []).forEach((e) => { if (SPEND.includes(e.pot) && noteKey(e.note)) pots.set(noteKey(e.note), e.pot); }));
+  const have = new Set(); Object.values(state.months).forEach((m) => ((m || {}).expenses || []).forEach((e) => have.add(e.iso + '|' + e.g)));
+  const bills = (state.settings.fixed || []).map((b) => noteKey(b.name)).filter((n) => n.length > 2);
+  const started = Object.keys(state.months).filter((k) => ((state.months[k] || {}).income || []).length).sort()[0] || nowCycle();
+  imp.out = [];
+  data.forEach((r) => {
+    const day = csvDate(r[map.date], dayFirst); if (!day || Math.abs(day - new Date()) > 5 * 366 * 86400000) return;
+    let g = map.amount >= 0 ? csvAmount(r[map.amount]) : NaN;
+    if (map.amount < 0) { const o = csvAmount(r[map.out]), i = csvAmount(r[map.in]); g = (Number.isFinite(i) ? Math.abs(i) : 0) - (Number.isFinite(o) ? Math.abs(o) : 0); }
+    if (!Number.isFinite(g) || g === 0) return;
+    const note = String(map.note >= 0 ? r[map.note] || '' : '').replace(/\s+/g, ' ').slice(0, 60), key = cycleKeyOf(day), nk = noteKey(note);
+    let pot = g < 0 ? (pots.get(nk) || 'everyday') : 'income', why = '';
+    if (g < 0 && have.has(isoOf(day) + '|' + -g)) why = 'already in the app';
+    else if (g < 0 && bills.some((b) => nk.includes(b))) why = 'a bill: bills come off the top';
+    else if (key < started) why = 'before your first pay in the app';
+    else if (g > 0) why = 'money in: add it only if it is not already in';
+    imp.out.push({ iso: isoOf(day), key, g: Math.abs(g), out: g < 0, note, pot: why ? 'skip' : pot, why });
+  });
+  imp.out.sort((a, b) => b.iso.localeCompare(a.iso));
+}
+function readStatement(file) {
+  const go = (text) => {
+    const rows = csvRows(text), at = impHeadAt(rows);
+    if (at < 0) return toast('Could not find dates and amounts in that file');
+    const head = rows[at], sig = head.join('|'), saved = (state.settings.importMaps || {})[sig];
+    imp = { rows: rows.slice(at + 1), head, sig, map: saved || impGuess(head) }; impBuild();
+    sheetMode = 'import'; sheetOpen = true; render();
+  };
+  const r = new FileReader();
+  r.onload = () => { if (/\uFFFD/.test(r.result)) { const r2 = new FileReader(); r2.onload = () => go(r2.result); r2.readAsText(file, 'windows-1250'); } else go(r.result); };
+  r.readAsText(file);
+}
+function importHtml() {
+  const col = (k, label, opt) => `<div class="field"><label for="im_${k}">${label}</label><select id="im_${k}" class="cur" data-imcol="${k}">${opt ? '<option value="-1">None</option>' : ''}${imp.head.map((h, i) => `<option value="${i}" ${imp.map[k] === i ? 'selected' : ''}>${esc(h || 'Column ' + (i + 1))}</option>`).join('')}</select></div>`;
+  const choose = (o, i) => `<select class="cur" data-imrow="${i}" aria-label="Where it goes" style="height:36px;font-size:13px">${(o.out ? SPEND : ['income']).concat('skip').map((p) => `<option value="${p}" ${o.pot === p ? 'selected' : ''}>${p === 'skip' ? 'Skip' : p === 'income' ? 'Income (split)' : esc(SHORT[p] || POT_NAMES[p])}</option>`).join('')}</select>`;
+  return `<div class="scrim" data-act="importClose"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="impTitle"><div class="sheet-in"><div class="grab"></div>
+    <div class="h2row"><h3 id="impTitle">Import from your bank</h3><button class="linkbtn nclose" data-act="importClose">Close</button></div>
+    <p class="hint" style="margin:0 0 10px">${imp.out.length} line${imp.out.length === 1 ? '' : 's'} found. Choose where each one goes. Lines marked Skip are not added.</p>
+    <details class="imcols"><summary class="hint">Wrong columns? Change them</summary>${col('date', 'Date')}${col('amount', 'Amount', true)}${imp.map.amount < 0 ? col('out', 'Money out', true) + col('in', 'Money in', true) : ''}${col('note', 'Shop or description', true)}</details>
+    <div id="impList">${imp.out.slice(0, 400).map((o, i) => `<div class="kv imrow"><span>${esc(o.note || '(no description)')}<span class="hint"> · ${esc(dShort(new Date(o.iso + 'T12:00:00')))}${o.why ? ' · ' + esc(o.why) : ''}</span><span class="num" style="display:block;margin-top:2px">${o.out ? '−' : '+'}${fmtN(o.g)}</span></span>${choose(o, i)}</div>`).join('')}</div>
+    ${imp.out.length > 400 ? '<p class="hint">Showing the newest 400 lines. Import a shorter period for the rest.</p>' : ''}
+    <div class="row">${impBtn()}</div>
+  </div></div>`;
+}
+function impBtn() {
+  const add = imp.out.slice(0, 400).filter((o) => o.pot !== 'skip'), ex = add.filter((o) => o.out), inc = add.length - ex.length;
+  const t = add.length ? `Add ${ex.length} expense${ex.length === 1 ? '' : 's'} (${fmt(ex.reduce((a, o) => a + o.g, 0))})${inc ? ` and ${inc} income` : ''}` : 'Nothing to add';
+  return `<button class="btn" type="button" id="impAdd" data-act="importAdd" style="flex:1" ${add.length ? '' : 'disabled'}>${t}</button>`;
+}
+function importCommit() {
+  if (!imp) return;
+  const add = imp.out.slice(0, 400).filter((o) => o.pot !== 'skip'); let n = 0;
+  add.forEach((o) => {
+    const m = (state.months[o.key] = state.months[o.key] || { income: [] }), day = new Date(o.iso + 'T12:00:00');
+    if (o.out) (m.expenses = m.expenses || []).push({ id: uid(), pot: o.pot, g: o.g, note: o.note, iso: o.iso, date: dShort(day), imported: true });
+    else m.income.push({ id: uid(), g: o.g, label: o.note, imported: true });
+    n++;
+  });
+  (state.settings.importMaps = state.settings.importMaps || {})[imp.sig] = imp.map;
+  imp = null; sheetOpen = false; save(); render(); toast(`${n} line${n === 1 ? '' : 's'} added from your bank`);
+}
+function importCard() {
+  return `<section class="card">
+    <h2>Import from your bank</h2>
+    <p class="hint">Download your account history as a CSV file from your banking app or website, then pick it here. You choose where each line goes before anything is added. The file is read on this phone and never sent anywhere.</p>
+    <label class="btn plain sm filebtn" style="margin-top:10px">Choose a CSV file<input type="file" id="importFile" accept=".csv,text/csv,text/plain" hidden></label>
+  </section>`;
+}
+// Look B: the big page title under the top bar (phone layout), and the tab bar's icons
+// Home's one slim glass bar: logo, the month (tap it for the arrows) and the days left.
+let hbarOpen = false;
+function homeBar(key, now, days) {
+  const mon = (d) => new Date(cursor.getFullYear(), cursor.getMonth() + d, 1).toLocaleString('en-GB', { month: 'short' });
+  const pill = key === now ? (days > 0 ? `${days}d left` : 'Last day') : key < now ? 'Done' : 'Ahead';
+  return `<div class="top hbar${hbarOpen ? ' open' : ''}">
+    <div class="hrow"><div class="mark">${MARK}</div>
+      <button class="hmid" data-act="hbar" aria-expanded="${hbarOpen}" aria-label="Change month"><span class="hmon">${cursor.toLocaleString('en-GB', { month: 'long' })}${cursor.getFullYear() !== new Date().getFullYear() ? ' ' + cursor.getFullYear() : ''} <i aria-hidden="true">⌄</i></span><span class="hrange">${esc(cycleLabel(key).replace(/ 20\d\d/, ''))}</span></button>
+      <div class="hdays${key === now ? '' : ' off'}">${pill}</div></div>
+    <div class="monthnav hnav"><button data-act="prev" aria-label="Previous month">‹ ${mon(-1)}</button>${key !== now ? '<button class="hnow" data-act="hnow">This month</button>' : ''}<button data-act="next" aria-label="Next month">${mon(1)} ›</button></div>
+  </div>`;
+}
+// Every other tab gets the same slim glass bar as Home: the logo, and the page's name in the middle (31 Oct 2026).
+const pageBar = (t) => `<div class="top pbar"><div class="hrow"><div class="mark">${MARK}</div><h1 class="pmid">${t}</h1><div></div></div></div>`;
+const bigTitle = (t, sub) => `<div class="ltop"><h1 class="ltitle">${t}</h1>${sub ? `<div class="lsub">${esc(sub)}</div>` : ''}</div>`;
+const navIcon = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const NAV_ICONS = { home: navIcon('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), invest: navIcon('<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'),
+  goals: navIcon('<path d="M5 21V4m0 0h11l-2 4 2 4H5"/>'), setup: navIcon('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>') };
+const standalone = () => !!(window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+// Everyone version, test round: testers write a note and send it with their phone's own share menu (WhatsApp,
+// Messages, email...) to whoever gave them the app. The app version goes with it. Nothing else is sent.
+function feedbackCard() {
+  return `<section class="card fbcard" id="feedback">
+    <h2>Send feedback</h2>
+    <p class="hint">Something confusing, broken or missing? Write it here and send it to the person who gave you the app. Only what you write and the app's version are sent, never your money.</p>
+    <textarea id="fbText" rows="4" placeholder="What happened, and on which screen?" style="margin-top:10px;width:100%"></textarea>
+    <button class="btn sm" data-act="fbSend" style="margin-top:10px">Send</button>
+  </section>`;
+}
+function feedbackText(note) {
+  const v = `WDMMG${GLOBAL ? ' World' : ''} ${APP_VERSION[0]}${APP_VERSION[1] ? ', built ' + APP_VERSION[1] : ''}${APP_VERSION[2] ? ' (' + APP_VERSION[2] + ')' : ''}`;
+  return `${note.trim()}\n\n— ${v} · ${tab} · ${innerWidth}×${innerHeight}`;
+}
+async function feedbackSend() {
+  const el = document.getElementById('fbText'), note = el ? el.value : '';
+  if (!note.trim()) { toast('Write your note first'); if (el) el.focus(); return; }
+  const text = feedbackText(note);
+  try { if (navigator.share) { await navigator.share({ title: 'WDMMG feedback', text }); el.value = ''; toast('Thanks! That helps a lot.'); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(text); el.value = ''; toast('Copied. Paste it in a message to the person who gave you the app.'); } catch (e) { toast('Could not open sharing. Copy your note and send it in a message.'); }
+}
+function aboutCards() {
+  if (!GLOBAL) return '';
+  return `<section class="card">
+    <h2>Your privacy</h2>
+    <p class="hint">Everything you enter stays on this phone, in this browser. There is no account and no server, and nothing is sent anywhere: not to the app's maker, not to a bank, not to advertisers. That is also why only a backup file can bring your data back if the phone is lost or Chrome is cleared.</p>
+  </section>
+  ${standalone() ? '' : `<section class="card">
+    <h2>Put WDMMG on your home screen</h2>
+    ${installEvt ? `<p class="hint">It then opens full screen, like an app, and works without internet.</p><button class="btn sm" data-act="installApp" style="margin-top:10px">Install the app</button>`
+      : `<p class="hint">It then opens full screen, like an app, and works without internet.</p>
+    <p class="hint" style="margin-top:8px"><b>Android (Chrome):</b> tap ⋮ at the top right, then Add to home screen, then Install.</p>
+    <p class="hint" style="margin-top:6px"><b>iPhone (Safari):</b> tap the Share button, then Add to Home Screen. Your data on the home-screen app is separate from Safari's, so restore a backup there.</p>
+    <p class="hint" style="margin-top:6px">Opened from a link inside another app? Open it in Chrome or Safari first.</p>`}
+  </section>`}`;
+}
 function backupCard() {
   const n = Object.keys(state.months).length;
   return `<section class="card" id="restoreBox">
@@ -4964,13 +5592,14 @@ function renderSetup() {
   const sSum = SUB_ORDER.reduce((a, k) => a + s.sub[k], 0);
   const opening = state.openingSub;
   $app.innerHTML = `
-    <div class="top"><div class="mark">${MARK}</div><div class="label">Setup</div></div>
+    ${pageBar('Settings')}${GLOBAL ? feedbackCard() : ''}
 
     <section class="card">
       <h2>Pay cycle</h2>
       <p class="hint">The day each cycle starts. Spending resets on this day, leftovers are counted, and 20% of what is left moves to savings.</p>
       <div class="field"><label for="cycleDay">Cycle starts on day</label><input id="cycleDay" type="number" inputmode="numeric" min="1" max="28" step="1" value="${cycleDay()}"></div>
       <p class="hint" style="margin:6px 0 0">Current cycle: ${cycleLabel(nowCycle())}</p>
+      ${GLOBAL ? curField(true) + themeField() + '<button class="btn plain sm" data-act="tourAgain" style="margin-top:12px">Show the quick tour again</button>' : ''}
     </section>
 
     <section class="card">
@@ -4989,7 +5618,7 @@ function renderSetup() {
       <div class="label">Already saved</div>
       ${opening ? `<p class="hint">Starting balance added: ${fmt(SUB_ORDER.reduce((a, k) => a + opening[k], 0))}, spread by the weights above.</p><button class="btn plain sm" data-act="clearOpening">Remove starting balance</button>` : `
       <form id="openForm" class="row" style="margin-top:6px">
-        <input id="openAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Amount (PLN)" aria-label="Amount already saved" required>
+        <input id="openAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Amount (${HOME})" aria-label="Amount already saved" required>
         <button class="btn" type="submit">Spread across pots</button>
       </form>`}
     </section>
@@ -4997,7 +5626,7 @@ function renderSetup() {
     <section class="card">
       <h2>Bills</h2>
       ${billsEditor()}
-      <div class="field" style="margin-top:12px"><label for="rentT">${GLOBAL ? 'Expected rent' : 'Expected rent after graduation'} (PLN a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>
+      <div class="field" style="margin-top:12px"><label for="rentT">${GLOBAL ? 'Expected rent' : 'Expected rent after graduation'} (${HOME} a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>
       <div class="field"><label for="rentCush">Rent cushion (months of rent)</label><input id="rentCush" type="number" inputmode="numeric" min="0" max="12" step="1" value="${s.rentCushion == null ? 3 : s.rentCushion}"></div>
       <p class="hint" style="margin:6px 0 0">Rent practice fills this cushion first. Once it is full, new rent practice goes to your Emergency fund.</p>
       ${s.graduated ? `<p class="hint" style="margin:10px 0 0">Paying your own rent since ${monLong(s.graduated)}.</p>`
@@ -5016,9 +5645,13 @@ function renderSetup() {
       ${yearlyEditor()}
     </section>
 
+    ${potNamesCard()}
+
     ${bufferCard()}
 
     ${backupCard()}
+    ${importCard()}
+    ${aboutCards()}
 
     <section class="card">
       <h2>PIN and data</h2>
@@ -5029,7 +5662,17 @@ function renderSetup() {
       <p class="hint" style="margin-top:12px;display:flex;gap:8px;align-items:baseline"><span id="syncDot" class="syncdot ${sync.status}"></span><span id="syncLine">${syncText(sync.status)}</span></p>
       <div id="wipeBox"><button class="linkbtn" data-act="wipeAsk">Erase all data</button></div>
     </section>
-    ${setupMsg ? `<div class="note" role="status">${esc(setupMsg)}</div>` : ''}`;
+    ${setupMsg ? `<div class="note" role="status">${esc(setupMsg)}</div>` : ''}
+    ${engraving()}`;
+}
+// The version, pressed faintly into the bottom of Setup like an engraving. Tap it five times for the build details.
+let engraveTaps = 0, engraveAt = 0;
+const engraving = () => `<button class="engrave" data-act="engrave" aria-label="Version ${esc(APP_VERSION[0])}"><span>WDMMG${GLOBAL ? ' WORLD' : ''}</span><b>${esc(APP_VERSION[0])}</b></button>`;
+function engraveTap() {
+  const now = Date.now(); engraveTaps = now - engraveAt < 800 ? engraveTaps + 1 : 1; engraveAt = now;
+  if (engraveTaps < 5) return;
+  engraveTaps = 0;
+  toast(`You found it. ${APP_VERSION[0]}${APP_VERSION[1] ? ', built ' + APP_VERSION[1] : ''}${APP_VERSION[2] ? ' (' + APP_VERSION[2] + ')' : ''}. Thanks for testing!`);
 }
 
 // ---------- the notification panel ----------
@@ -5053,16 +5696,23 @@ document.addEventListener('keydown', (e) => {
 // ---------- shell ----------
 function render() { return withMemo(renderNow); }
 function renderNow() {
+  HOME = homeCur(); applyPotNames();
+  if (GLOBAL) {
+    const th = state.settings.theme, co = state.settings.color, r = document.documentElement;
+    if (th === 'light' || th === 'dark') r.dataset.theme = th; else delete r.dataset.theme;
+    if (co && WORLD_COLORS.some((x, i) => i && x[0] === co)) r.dataset.color = co; else delete r.dataset.color;
+  }
   const psb = document.getElementById('psBody'), psKeep = psb ? psb.scrollTop : 0;
   const dpp = document.getElementById('dPanel'), dpKeep = dpp && !deskAnim && !deskSwap ? dpp.scrollTop : 0;
   $app.classList.remove('bdfull', 'psopen', 'desk');
   if (view === 'lock') { renderLock(); return; }
-  if (tab === 'invest' && isDesk()) tab = 'home'; // the laptop has no Invest tab: Investing opens in its side panel
+  if (tab === 'invest' && (isDesk() || !investUsed())) tab = 'home'; // the laptop has no Invest tab: Investing opens in its side panel
   if (view === 'app' && !state.setup) view = 'onboard';
   if (view === 'onboard') { renderOnboard(); return; }
   if (tab === 'home') { if (detail === 'breakdown') renderBreakdown(); else if (detail === 'report') renderReport(); else if (detail) renderDetail(); else renderHome(); } else if (tab === 'invest') renderInvest(); else if (tab === 'goals') renderGoals(); else renderSetup();
   const n = document.createElement('nav');
-  n.innerHTML = `<div><i class="npill" style="--i:${TABS.indexOf(tab)}" aria-hidden="true"></i><button data-tab="home" ${tab === 'home' ? 'aria-current="page"' : ''}>Home</button>${isDesk() ? '' : `<button data-tab="invest" ${tab === 'invest' ? 'aria-current="page"' : ''}>Invest</button>`}<button data-tab="goals" ${tab === 'goals' ? 'aria-current="page"' : ''}>Goals</button><button data-tab="setup" ${tab === 'setup' ? 'aria-current="page"' : ''}>Setup</button></div>`;
+  const nb = (t, name) => `<button data-tab="${t}" ${tab === t ? 'aria-current="page"' : ''}>${NAV_ICONS[t]}<span>${name}</span></button>`;
+  n.innerHTML = `<div${investUsed() ? '' : ' class="three"'}><i class="npill" style="--i:${tabsNow().indexOf(tab)}" aria-hidden="true"></i>${nb('home', 'Home')}${isDesk() || !investUsed() ? '' : nb('invest', 'Invest')}${nb('goals', 'Goals')}${nb('setup', 'Setup')}</div>`;
   $app.appendChild(n);
   if (tab === 'home' && (!detail || detail === 'breakdown' || SPEND.includes(detail))) {
     const f = document.createElement('div');
@@ -5136,7 +5786,7 @@ function pageSlide(dir, change) {
 // Changing tab. Tabs are equals, so nothing slides sideways: the white pill glides to the new tab, the old page
 // fades out quickly and the new one fades in with a small rise. The + button stays where it is.
 function tabGo(t) {
-  const from = TABS.indexOf(tab), to = TABS.indexOf(t);
+  const from = tabsNow().indexOf(tab), to = tabsNow().indexOf(t);
   if (t === tab && !detail) return;
   if (t !== tab || detail) deskPot = null;
   const anim = !reduceMotion() && !isDesk() && !navFx && view === 'app';
@@ -5273,10 +5923,10 @@ function deskPotCards(c) {
   const owed = debts.reduce((a, d) => a + (DP.left[d.id] || 0), 0), ov = overspends().reduce((a, o) => a + o.g, 0);
   const card = (k, name, hint) => `<button class="card debtcard${deskPot === k ? ' on' : ''}" data-pot="${k}" aria-label="Open ${name}"><span class="sw" style="background:${potColor[k]}"></span>
     <span class="dc-t"><span class="pp-name">${name}</span><span class="hint">${hint}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
-  return card('yearly', 'Yearly costs', Y.n ? `${fmt(Y.saved)} saved · ${fmt(c.yearlyTotal || 0)} this month` : 'Insurance, a phone plan, anything once a year')
-    + card('debt', 'Debt', (owed ? `${fmt(owed)} owed${c.debtTotal ? ' · ' + fmt(c.debtTotal) + ' this month' : ''}` : 'Nothing owed') + (ov ? ` · ${fmt(ov)} overspent last cycle` : ''))
-    + card('lent', POT_NAMES.lent, L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything')
-    + (S.B && S.B.start ? card('buffer', 'Income buffer', S.live ? `paying you ${fmt(S.pay)} a month` : `${fmt(S.BP.bal)} of ${fmt(S.pay)}`) : '');
+  return card('yearly', potName('yearly'), Y.n ? `${fmt(Y.saved)} saved · ${fmt(c.yearlyTotal || 0)} this month` : 'Insurance, a phone plan, anything once a year')
+    + card('debt', potName('debt'), (owed ? `${fmt(owed)} owed${c.debtTotal ? ' · ' + fmt(c.debtTotal) + ' this month' : ''}` : 'Nothing owed') + (ov ? ` · ${fmt(ov)} overspent last cycle` : ''))
+    + card('lent', potName('lent'), L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything')
+    + (S.B && S.B.start ? card('buffer', potName('buffer'), S.live ? `paying you ${fmt(S.pay)} a month` : `${fmt(S.BP.bal)} of ${fmt(S.pay)}`) : '');
 }
 function deskPanelHtml(k) {
   const c = monthCalc(monthKey(cursor)), g = k === 'yearly' ? yearlySum().saved : potAmt(k, c);
@@ -5396,7 +6046,7 @@ document.addEventListener('click', (e) => {
     Object.keys(B.allocBy).sort().forEach((k) => {
       const g = B.allocBy[k]; if (!(g > 0)) return;
       const d = isoOf(cycleRange(k)[0]);
-      state.itx.push({ id: uid(), at: Date.now(), t: 'dep', date: d > today ? today : d, amt: g, cur: 'PLN', est: true, note: `Set aside in ${cycleLabel(k, true)}. Date estimated` });
+      state.itx.push({ id: uid(), at: Date.now(), t: 'dep', date: d > today ? today : d, amt: g, cur: HOME, est: true, note: `Set aside in ${cycleLabel(k, true)}. Date estimated` });
     });
     return saveValue(v);
   }
@@ -5420,6 +6070,10 @@ document.addEventListener('click', (e) => {
     });
     armedExp = null; save(); toast('Expense deleted'); return rerenderKeepingPanel();
   }
+  const thp = e.target.closest('[data-themepick]');
+  const cop = e.target.closest('[data-colorpick]');
+  if (cop) { state.settings.color = cop.dataset.colorpick === WORLD_COLORS[0][0] ? null : cop.dataset.colorpick; save(); return render(); }
+  if (thp) { state.settings.theme = thp.dataset.themepick === 'auto' ? null : thp.dataset.themepick; save(); return render(); }
   const orb = e.target.closest('[data-obrent]');
   if (orb) { obRent = orb.dataset.obrent; return render(); }
   const ob = e.target.closest('[data-ob]');
@@ -5494,7 +6148,7 @@ document.addEventListener('click', (e) => {
     const day = key === nowCycle() ? new Date() : cycleRange(key)[1];
     m.bills = Object.assign({}, m.bills, { [id]: v === 'paid' ? isoOf(day) : v === 'skip' ? 'skip' : null });
     save();
-    toast(v === 'paid' ? `${f.name} marked paid` : v === 'skip' ? `${f.name} skipped · ${fmt(f.g)} went back into that cycle's pots` : `${f.name} marked not paid`);
+    toast(v === 'paid' ? `${f.name} marked paid. Its money was already set aside from your pay, so no pot changes, and it now leaves your net worth.` : v === 'skip' ? `${f.name} skipped · ${fmt(f.g)} went back into that cycle's pots` : `${f.name} marked not paid`);
     return render();
   }
   if (t.dataset.billarm) { armedBill = t.dataset.billarm; return render(); }
@@ -5536,12 +6190,22 @@ document.addEventListener('click', (e) => {
     case 'back': if (detail === 'breakdown' && !backTo && psState === 'closed' && !reduceMotion() && !isDesk() && !navFx) { const sv = document.querySelector('svg.tagchart.select'); if (sv) { navFx = true; return ringHandOff(sv, false); } }
       if (detail === 'breakdown') { backChange(); returning = true; window.scrollTo(0, 0); return render(); }
       return pageSlide(-1, backChange);
+    case 'fbSend': return feedbackSend();
+    case 'engrave': return engraveTap();
+    case 'hbar': hbarOpen = !hbarOpen; return render();
+    case 'hnow': { const [y, m] = nowCycle().split('-').map(Number); cursor = new Date(y, m - 1, 1); return render(); }
     case 'prev': return monthGo(-1);
     case 'next': return monthGo(1);
     case 'lock': view = 'lock'; entry = ''; homeLTS = null; return render();
     case 'forgotArm': forgotArm = true; return render();
     case 'forgotNo': forgotArm = false; return render();
     case 'forgotYes': forgotArm = false; state.pin = null; state.salt = null; save(); view = 'lock'; entry = ''; first = ''; lockMsg = ''; toast('Choose a new PIN. Your entries are all still here.'); return render();
+    case 'tourNext': if (tourStep < TOUR.length - 1) { tourStep++; return render(); } // fall through on the last card
+    case 'tourSkip': sheetOpen = false; tourStep = 0; render(); if (!state.settings.tourSeen) { state.settings.tourSeen = true; save(); toast('All set. Add your first payment to start.'); } return;
+    case 'tourAgain': tourStep = 0; tab = 'home'; detail = null; sheetMode = 'tour'; sheetOpen = true; return render();
+    case 'importClose': imp = null; sheetOpen = false; return render();
+    case 'importAdd': return importCommit();
+    case 'installApp': if (installEvt) { const ev = installEvt; installEvt = null; ev.prompt(); ev.userChoice.then(() => render(), () => render()); } return;
     case 'backupLater': state.settings.backupSnooze = isoOf(new Date()); save(); return render();
     case 'resetPin': state.pin = null; state.salt = null; save(); view = 'lock'; entry = ''; first = ''; return render();
     case 'clearOpening': state.openingSub = null; save(); return render();
@@ -5557,12 +6221,12 @@ document.addEventListener('submit', (e) => {
   e.preventDefault();
   const id = e.target.id;
   if (id === 'addIncome') {
-    const cur = document.getElementById('inCur').value || 'PLN';
+    const cur = document.getElementById('inCur').value || HOME;
     const amt = toG(document.getElementById('inAmount').value);
     let g = amt, extra = {};
-    if (cur !== 'PLN') {
+    if (cur !== HOME) {
       const rate = Number(document.getElementById('inRate').value);
-      if (!(rate > 0)) { toast(`Type the rate: how many PLN you got for 1 ${cur}`); document.getElementById('inRate').focus(); return; }
+      if (!(rate > 0)) { toast(`Type the rate: how many ${HOME} you got for 1 ${cur}`); document.getElementById('inRate').focus(); return; }
       g = Math.round(amt * rate);
       extra = { cur, amt, rate };
     }
@@ -5571,6 +6235,8 @@ document.addEventListener('submit', (e) => {
     // Ask where the payment goes before storing anything. Cancel keeps what was typed.
     incDraft = { amt: document.getElementById('inAmount').value, rate: (document.getElementById('inRate') || {}).value || '', label: document.getElementById('inLabel').value };
     incSheet = { key: monthKey(cursor), g, label: incDraft.label.trim(), extra, choice: 'split', pot: null };
+    const same = GLOBAL ? lastFromPayer(incSheet.label) : null; // everyone version: same choice as last time from this payer
+    if (same) { incSheet.remembered = true; if (ONE_POTS.includes(same.pot)) { incSheet.choice = 'one'; incSheet.pot = same.pot; } }
     incSheet.prev = incPreview(incSheet);
     editExp = null; sheetMode = 'inc'; sheetOpen = true; save(); render();
   } else if (id === 'expForm') {
@@ -5687,7 +6353,7 @@ document.addEventListener('submit', (e) => {
       const sign = Number((document.querySelector('input[name="gainSign"]:checked') || {}).value || 1);
       const g = sign * Math.abs(toG(document.getElementById('gainAmt').value));
       if (!g || !Number.isFinite(g)) return;
-      state.itx.push({ id: uid(), at: Date.now(), t: 'adj', date: todayIso(), amt: g, cur: 'PLN' });
+      state.itx.push({ id: uid(), at: Date.now(), t: 'adj', date: todayIso(), amt: g, cur: HOME });
       save(); toast(g > 0 ? `Gain of ${fmtN(g)} logged to Investing` : `Loss of ${fmtN(-g)} logged to Investing`); return render();
     }
     const v = toG(document.getElementById('valAmt').value);
@@ -5720,9 +6386,9 @@ document.addEventListener('submit', (e) => {
     if (!isIso(date)) return fail('Enter a valid date.');
     if (date > todayIso()) return fail('The date cannot be in the future.');
     const cur = document.getElementById('ixCur').value;
-    if (!ITX_CUR.includes(cur)) return fail('Pick a currency.');
+    if (!itxCurs().includes(cur)) return fail('Pick a currency.');
     let rate = null, rateDate = null;
-    if (cur !== 'PLN') {
+    if (cur !== HOME) {
       const rr = document.getElementById('ixRate').value.trim();
       if (rr !== '') {
         rate = Number(rr); if (!(rate > 0 && rate < 10000)) return fail('Enter an exchange rate above zero, or leave it empty for now.');
@@ -5742,7 +6408,7 @@ document.addEventListener('submit', (e) => {
     } else (state.itx = state.itx || []).push(Object.assign({ id: uid(), at: Date.now() }, rec));
     const wasEdit = !!itxEdit;
     sheetOpen = false; itxEdit = null; armedTx = null; save();
-    toast(wasEdit ? 'Entry updated. Totals worked out again' : cur !== 'PLN' && rate == null ? `${ITX_TYPES[t].n} saved. Add the exchange rate to count it` : `${ITX_TYPES[t].n} saved`);
+    toast(wasEdit ? 'Entry updated. Totals worked out again' : cur !== HOME && rate == null ? `${ITX_TYPES[t].n} saved. Add the exchange rate to count it` : `${ITX_TYPES[t].n} saved`);
     return render();
   } else if (id === 'debtForm') {
     const name = document.getElementById('dName').value.trim();
@@ -5769,8 +6435,12 @@ document.addEventListener('submit', (e) => {
 document.addEventListener('change', (e) => {
   const t = e.target;
   if (t.id === 'restoreFile') { if (t.files && t.files[0]) readBackup(t.files[0]); return; }
+  if (t.dataset.potname) { const k = t.dataset.potname, v = t.value.trim().slice(0, 24); state.settings.potNames = Object.assign({}, state.settings.potNames); if (v && v !== NAME0[k]) state.settings.potNames[k] = v; else delete state.settings.potNames[k]; save(); render(); toast(v ? `Renamed to ${v}` : `Back to ${NAME0[k]}`); return; }
+  if (t.id === 'importFile') { if (t.files && t.files[0]) readStatement(t.files[0]); t.value = ''; return; }
+  if (t.dataset.imcol && imp) { imp.map[t.dataset.imcol] = Number(t.value); impBuild(); return render(); }
+  if (t.dataset.imrow && imp) { imp.out[Number(t.dataset.imrow)].pot = t.value; const b = document.getElementById('impAdd'); if (b) b.outerHTML = impBtn(); return; }
   if (t.name === 'incWhere' || t.name === 'incPot') return incSheetSync();
-  if (t.id === 'inCur') { const rr = document.getElementById('rateRow'); rr.hidden = t.value === 'PLN'; document.getElementById('rateCur').textContent = t.value; return; }
+  if (t.id === 'inCur') { const rr = document.getElementById('rateRow'); rr.hidden = t.value === HOME; document.getElementById('rateCur').textContent = t.value; return; }
   if (t.dataset.pct) { freezePastSplit(); state.settings.percents[t.dataset.pct] = pctIn(t.value); save(); render(); }
   else if (t.dataset.sub) { freezePastSub(); state.settings.sub[t.dataset.sub] = pctIn(t.value); save(); render(); }
   else if (t.id === 'cycleDay') {
@@ -5807,6 +6477,7 @@ document.addEventListener('change', (e) => {
     const warn = short ? ` ${short[0]} is only ${short[1]} day${short[1] === 1 ? '' : 's'} long and still takes a full month of bills.` : '';
     save(); toast(JSON.stringify([state.settings.cycleDay, state.settings.dayHist || null]) === before ? `Cycles start on day ${d}, as before` : `Cycles start on day ${d} from ${dShort(start)}. This cycle ends on ${dShort(end)}.${warn}`); render();
   }
+  else if (t.id === 'curSel') { state.settings.currency = t.value; HOME = homeCur(); save(); render(); }
   else if (t.id === 'rentT') { freezePastRent(); state.settings.rentTarget = toG(t.value) || 0; save(); render(); }
   else if (t.id === 'bufPay' && state.settings.buffer && state.settings.buffer.on) {
     const g = toG(t.value), B = state.settings.buffer, now = nowCycle();
