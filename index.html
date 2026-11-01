@@ -2,7 +2,7 @@
 </style>
 <title>WDMMG Beta</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="theme-color" content="#1B4D3E">
+<meta name="theme-color" content="#1B4D3E" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0E1213" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="fonts.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -215,7 +215,68 @@ input[type="date"] { min-height: 44px; }
 .lc-lab { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .goalbar { height: 14px; border-radius: 7px; background: rgba(255, 255, 255, .18); overflow: hidden; margin-top: 12px; }
 .goalbar i { display: block; height: 100%; background: #fff; border-radius: 7px; }
-.swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+#story { position: fixed; inset: 0; z-index: 90; background: linear-gradient(160deg, var(--fill, var(--green)), color-mix(in srgb, var(--fill, var(--green)) 55%, #000)); color: #fff; padding: calc(18px + env(safe-area-inset-top)) 22px 28px; display: flex; flex-direction: column; user-select: none; -webkit-user-select: none; animation: fade .25s ease; touch-action: manipulation; }
+#story .sseg { display: flex; gap: 4px; } #story .sseg i { flex: 1; height: 3px; border-radius: 3px; background: rgba(255,255,255,.3); overflow: hidden; } #story .sseg i.on b, #story .sseg b { display: block; height: 100%; background: #fff; } #story .sseg i.on b { width: 100%; } #story .sseg i:not(.on) b:not(#sNow) { width: 0; }
+#story .sx { position: absolute; top: calc(30px + env(safe-area-inset-top)); right: 14px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-size: 16px; }
+#story .sbody { margin-top: 56px; flex: 1; animation: rise .35s ease; } #story .sk { font-size: 14px; opacity: .8; } #story .sh { font-size: 40px; font-weight: 800; letter-spacing: -.03em; line-height: 1.08; margin: 8px 0 10px; }
+#story .ss { font-size: 16px; opacity: .88; } #story .sgr { display: flex; gap: 16px; align-items: center; margin-top: 26px; font-size: 18px; } #story .sgr .gtile { box-shadow: 0 0 0 3px rgba(255,255,255,.5); }
+#story .spots { display: grid; gap: 18px; margin-top: 26px; } #story .row2 { display: flex; justify-content: space-between; font-size: 16px; } #story .sbar { height: 8px; border-radius: 8px; background: rgba(255,255,255,.22); margin: 6px 0 4px; overflow: hidden; } #story .sbar i { display: block; height: 100%; background: #fff; border-radius: 8px; } #story .spot .ss { font-size: 13px; }
+#story .sbars { display: flex; align-items: flex-end; gap: 10px; height: 150px; margin-top: 34px; } #story .sbars div { flex: 1; background: rgba(255,255,255,.25); border-radius: 10px 10px 4px 4px; position: relative; } #story .sbars div.hi { background: #fff; } #story .sbars small { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-size: 11px; opacity: .8; }
+#story .shint { text-align: center; font-size: 12px; opacity: .55; }
+.sring3 { width: 22px; height: 22px; border-radius: 50%; box-shadow: 0 0 0 2px var(--surface, #fff), 0 0 0 4px var(--fill, var(--green)); margin: 0 8px 0 3px; animation: sring2 2.4s ease-in-out infinite; }
+.gtile.sprev { opacity: .55; }
+.gtile.sring2 { box-shadow: 0 0 0 2px var(--surface, #fff), 0 0 0 4px var(--fill, var(--green)); animation: sring2 2.4s ease-in-out infinite; }
+@keyframes sring2 { 50% { box-shadow: 0 0 0 2px var(--surface, #fff), 0 0 0 4px color-mix(in srgb, var(--fill, var(--green)) 45%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .gtile.sring2, .sring3 { animation: none; } #story, #story .sbody { animation: none; } }
+.bcal { margin: 2px 0 10px; } .calh, .calg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.calh b { font-size: 11px; font-weight: 600; color: var(--muted); padding-bottom: 2px; }
+.cd { position: relative; height: 34px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); font: 500 13px var(--font); display: grid; place-items: center; padding: 0 0 4px; }
+.cd.out { color: var(--muted); opacity: .45; }
+.cd.due::after, .cd.paid::after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #FF9500; }
+.cd.paid::after { background: #34C759; }
+.cd.today { background: var(--fill, var(--green)); color: #fff; font-weight: 700; } .cd.today.due::after, .cd.today.paid::after { background: #fff; }
+.cd.sel { box-shadow: inset 0 0 0 2px var(--fill, var(--green)); }
+.calsel { border-radius: 12px; background: var(--tint, #E6EEEA); padding: 8px 12px; margin: 0 0 8px; font-size: 13px; } .calrow { display: flex; justify-content: space-between; margin-top: 4px; }
+.bday { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-right: 6px; } .bday select { width: auto; min-width: 58px; padding: 6px 8px; }
+.spon { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0 0; padding: 10px 12px; border-radius: 14px; background: var(--tint, #E6EEEA); }
+.spon span { display: grid; } .spon small { color: var(--muted); font-size: 12px; }
+.spon input { appearance: none; -webkit-appearance: none; flex: none; width: 46px; height: 28px; border-radius: 28px; background: var(--line); position: relative; transition: background .2s; margin: 0; }
+.spon input::after { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+.spon input:checked { background: var(--fill, var(--green)); } .spon input:checked::after { transform: translateX(18px); }
+#spBox { margin-top: 8px; }
+.chlist { display: grid; gap: 8px; }
+.chpick { display: flex; gap: 12px; align-items: center; text-align: left; width: 100%; padding: 10px 12px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+.chpick > span:last-child { display: grid; gap: 1px; } .chpick .hint { margin: 0; font-size: 13px; }
+.chic { flex: none; width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, #FF9F0A 16%, transparent); color: #C26A00; }
+.chic svg { width: 20px; height: 20px; }
+.chdots { display: flex; gap: 8px; margin: 8px 0 2px; }
+.chd { display: grid; justify-items: center; gap: 3px; font-size: 11px; color: var(--muted); }
+.chd i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--fill, var(--green)); box-sizing: border-box; }
+.chd.ok i { background: var(--fill, var(--green)); } .chd.today i { box-shadow: 0 0 0 3px var(--tint, #E3EEE8); }
+.chd.miss i { border-color: #E38B00; background: color-mix(in srgb, #FF9F0A 25%, transparent); } .chd.soon i { border-style: dashed; border-color: var(--line); }
+.chprog { height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; margin-top: 8px; } .chprog i { display: block; height: 100%; background: var(--fill, var(--green)); border-radius: 6px; }
+.cc:has(.chbar) { position: relative; } .chbar { position: absolute; left: 18px; right: 18px; bottom: 6px; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; pointer-events: none; }
+.chbar i { display: block; height: 100%; background: #FF9F0A; } .cc:has(.cch[aria-expanded="true"]) .chbar { display: none; }
+.chwin { display: flex; gap: 12px; align-items: flex-start; position: relative; overflow: hidden; }
+.chconf { position: absolute; inset: 0; pointer-events: none; }
+.chconf i { position: absolute; top: -10px; width: 6px; height: 10px; border-radius: 2px; background: var(--c, #FF9F0A); animation: chfall 1.6s cubic-bezier(.2,.6,.4,1) both; }
+.chconf i:nth-child(1) { left: 4%; --c: #FF9F0A; animation-delay: 0.00s; }
+.chconf i:nth-child(2) { left: 11%; --c: #34C759; animation-delay: 0.08s; }
+.chconf i:nth-child(3) { left: 18%; --c: #007AFF; animation-delay: 0.16s; }
+.chconf i:nth-child(4) { left: 25%; --c: #FF2D55; animation-delay: 0.24s; }
+.chconf i:nth-child(5) { left: 32%; --c: #AF52DE; animation-delay: 0.32s; }
+.chconf i:nth-child(6) { left: 39%; --c: #FF9F0A; animation-delay: 0.00s; }
+.chconf i:nth-child(7) { left: 46%; --c: #34C759; animation-delay: 0.08s; }
+.chconf i:nth-child(8) { left: 53%; --c: #007AFF; animation-delay: 0.16s; }
+.chconf i:nth-child(9) { left: 60%; --c: #FF2D55; animation-delay: 0.24s; }
+.chconf i:nth-child(10) { left: 67%; --c: #AF52DE; animation-delay: 0.32s; }
+.chconf i:nth-child(11) { left: 74%; --c: #FF9F0A; animation-delay: 0.00s; }
+.chconf i:nth-child(12) { left: 81%; --c: #34C759; animation-delay: 0.08s; }
+.chconf i:nth-child(13) { left: 88%; --c: #007AFF; animation-delay: 0.16s; }
+.chconf i:nth-child(14) { left: 95%; --c: #FF2D55; animation-delay: 0.24s; }
+@keyframes chfall { from { transform: translateY(0) rotate(0); opacity: 1; } to { transform: translateY(140px) rotate(320deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .chconf { display: none; } }
+.swatches { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; margin-top: 8px; }
 .swatch { display: grid; justify-items: center; gap: 6px; padding: 10px 4px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); font-size: 12px; font-weight: 600; }
 .swatch i { width: 28px; height: 28px; border-radius: 50%; display: block; }
 .swatch[aria-pressed=true] { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); }
@@ -1050,6 +1111,93 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .tourbody .obic { width: 56px; height: 56px; border-radius: 16px; }
 .tourbody h3 { font-size: 22px; margin: 16px 0 8px; letter-spacing: -.02em; }
 .tourbody p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); max-width: 32ch; }
+
+/* Council review fixes, 1 Nov 2026: one material, one quiet icon colour, rounded everything, room for the + button */
+html.notips .tip { display: none; }
+.ccic, .obic { background: color-mix(in srgb, var(--fill, var(--green)) 14%, transparent); color: var(--fill, var(--green)); }
+.ccwarn .ccic { background: color-mix(in srgb, var(--warn) 14%, transparent); color: var(--warn); }
+.chic { background: color-mix(in srgb, var(--fill, var(--green)) 14%, transparent); color: var(--fill, var(--green)); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(.ccic, .obic, .chic) { background: color-mix(in srgb, var(--fill, var(--green)) 30%, transparent); color: color-mix(in srgb, var(--fill, var(--green)) 45%, #fff); } }
+:root[data-theme="dark"] :is(.ccic, .obic, .chic) { background: color-mix(in srgb, var(--fill, var(--green)) 30%, transparent); color: color-mix(in srgb, var(--fill, var(--green)) 45%, #fff); }
+.card.hero.ivhero { color: var(--ink); border: .5px solid color-mix(in srgb, var(--fill, var(--green)) 22%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 20px rgba(0, 0, 0, .04); }
+.card.hero.ivhero { background: linear-gradient(160deg, color-mix(in srgb, var(--fill, var(--green)) 16%, transparent), color-mix(in srgb, var(--fill, var(--green)) 5%, transparent) 70%), color-mix(in srgb, var(--surface) 68%, transparent); }
+.card.hero.ivhero .label, .card.hero.ivhero .hnote { color: var(--muted); } .card.hero.ivhero .v { color: var(--ink); }
+.ivhero .big { color: var(--fill, var(--green)); }
+.ivhero .hpair > div + div { border-left-color: color-mix(in srgb, var(--ink) 10%, transparent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ivhero .big { color: color-mix(in srgb, var(--fill, var(--green)) 45%, #fff); } }
+:root[data-theme="dark"] .ivhero .big { color: color-mix(in srgb, var(--fill, var(--green)) 45%, #fff); }
+.ivbtns { gap: 10px; }
+.ivact { display: grid; justify-items: center; gap: 2px; padding: 12px 6px 10px; border: 0; border-radius: 20px; font: inherit; color: var(--ink); cursor: pointer;
+  background: color-mix(in srgb, var(--surface) 68%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: inset 0 0 0 .5px color-mix(in srgb, var(--ink) 9%, transparent), 0 4px 14px rgba(0, 0, 0, .05); transition: transform .12s; }
+.ivact:active { transform: scale(.96); }
+.ivact .ivai { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 4px; background: var(--fill, var(--green)); color: var(--green-ink, #fff); }
+.ivact .ivai svg { width: 19px; height: 19px; }
+.ivact b { font-size: 14px; font-weight: 700; } .ivact small { font-size: 11.5px; color: var(--muted); }
+.pot .sw, .tag .sw { border-radius: 50%; }
+.btrack, .btrack i { border-radius: 5px; } .btrack b { border-radius: 0 5px 5px 0; }
+#app { padding-bottom: 160px; }
+
+/* Setup menu (grouped list), Extras switches, Home's "in detail" row: council review, 1 Nov 2026 */
+.smgroup { font-size: 13px; font-weight: 600; color: var(--muted); margin: 22px 20px 6px; }
+.card.smenu { padding: 4px 0; margin-top: 0; }
+.smrow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; padding: 11px 16px; border: 0; background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; }
+.smrow + .smrow { box-shadow: inset 58px 0 0 transparent, inset 0 .5px 0 color-mix(in srgb, var(--ink) 10%, transparent); }
+.smrow .cct { display: grid; gap: 1px; } .smrow .cct b { font-size: 15.5px; font-weight: 600; } .smrow .ccl { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.smrow .ccchev { transform: rotate(-90deg); color: var(--muted); }
+.smrow.warn .ccl { color: var(--warn); }
+.smrow:active { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.setpage > .card:first-child { margin-top: 4px; }
+.xrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; }
+.xrow + .xrow { border-top: .5px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+.xrow > span { display: grid; gap: 2px; } .xrow b { font-weight: 600; }
+.switch { appearance: none; -webkit-appearance: none; flex: none; width: 50px; height: 30px; border-radius: 30px; background: color-mix(in srgb, var(--ink) 14%, transparent); position: relative; transition: background .2s; margin: 0; cursor: pointer; }
+.switch::after { content: ""; position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+.switch:checked { background: var(--fill, var(--green)); } .switch:checked::after { transform: translateX(20px); }
+.ccmore .chev { font-size: 22px; color: var(--muted); padding: 0 4px; }
+</style>
+<style>
+/* everyone version colours: built by tools/theme.js */
+:root { --fill: #1B4D3E; --tint: #E8EDEC; --soft: #B6C6C1; --dock: #14201C; --navoff: #98AFA8; }
+.hero, .gtile.g-A, .gtile.g-B, .fab, .btn:not(.plain), .mch.big, .lrung.done .ldot { background-color: var(--fill); }
+.hero { box-shadow: 0 10px 30px color-mix(in srgb, var(--fill) 30%, transparent); }
+.pill.good, .delta.up, .bpaid { background: var(--tint); }
+.choice input:checked + span, .lnow { background: var(--tint); }
+.lrung.now .ldot { box-shadow: 0 0 0 4px var(--tint); }
+.hero .label, .sub, .dhero > .hnote, .ivhero > .hnote, .ivhero .hpair .hnote { color: var(--soft-on-fill, rgba(255,255,255,.86)); }
+.sring .sl2 { fill: rgba(255,255,255,.75); }
+.dtabs, .toast, .gtile { background: var(--dock); }
+.dtabs button { color: var(--navoff); }
+.hscrim { background: color-mix(in srgb, var(--bg) 65%, transparent); }
+@keyframes keyhit { 0% { background: var(--tint); border-color: var(--line); transform: scale(.965); } 100% { background: var(--surface); transform: none; } }
+@keyframes fresh { 0%, 30% { background: var(--tint); } 100% { background: transparent; } }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0E1213; --surface: #181D1F; --ink: #ECEDEF; --muted: #9CA4A8; --line: #282F31; --green: #829D95; --fill: #2D5B4D; --tint: #192B27; --soft: #A4B8B2; --dock: #242C2E; --navoff: #818C8F; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #3D685B; --pot-2: #5F8278; --pot-3: #829D95; --pot-4: #A4B8B2; --pot-5: #BFCDC9; --pot-6: #DBE3E0; --pot-7: #4A4A50; color-scheme: dark; }
+  :root:not([data-theme="light"]) .dtabs button[aria-current=page] { color: #111; }
+  :root:not([data-theme="light"]) .scrim { background: rgba(0, :root:not([data-theme="light"]) 0, :root:not([data-theme="light"]) 0, :root:not([data-theme="light"]) .55); }
+  :root:not([data-theme="light"]) .btn.plain { background: var(--surface); }
+  :root:not([data-theme="light"]) input, :root:not([data-theme="light"]) select, :root:not([data-theme="light"]) textarea { color-scheme: dark; }
+  :root:not([data-theme="light"]) .card.tile.hero, :root:not([data-theme="light"]) .hero { border: 0; }
+}
+:root[data-theme="dark"] { --bg: #0E1213; --surface: #181D1F; --ink: #ECEDEF; --muted: #9CA4A8; --line: #282F31; --green: #829D95; --fill: #2D5B4D; --tint: #192B27; --soft: #A4B8B2; --dock: #242C2E; --navoff: #818C8F; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #3D685B; --pot-2: #5F8278; --pot-3: #829D95; --pot-4: #A4B8B2; --pot-5: #BFCDC9; --pot-6: #DBE3E0; --pot-7: #4A4A50; color-scheme: dark; }
+:root[data-theme="dark"] .dtabs button[aria-current=page] { color: #111; }
+:root[data-theme="dark"] .scrim { background: rgba(0, :root[data-theme="dark"] 0, :root[data-theme="dark"] 0, :root[data-theme="dark"] .55); }
+:root[data-theme="dark"] .btn.plain { background: var(--surface); }
+:root[data-theme="dark"] input, :root[data-theme="dark"] select, :root[data-theme="dark"] textarea { color-scheme: dark; }
+:root[data-theme="dark"] .card.tile.hero, :root[data-theme="dark"] .hero { border: 0; }
+:root[data-color="ocean"] { --bg: #F2F4F8; --surface: #FFFFFF; --ink: #152030; --muted: #586473; --line: #E0E6EF; --green: #1F4E8C; --fill: #1F4E8C; --tint: #E9EDF4; --soft: #B7C6DA; --dock: #152030; --navoff: #9AAFCB; --pot-1: #163762; --pot-2: #1F4E8C; --pot-3: #4C71A3; --pot-4: #7491B8; --pot-5: #9AAFCB; --pot-6: #C0CDDF; --pot-7: #BEC3C9; }
+@media (prefers-color-scheme: dark) { :root[data-color="ocean"]:not([data-theme="light"]) { --bg: #0E1219; --surface: #191D26; --ink: #ECEDEF; --muted: #9DA4B2; --line: #282F3D; --green: #849EC0; --fill: #315C95; --tint: #1A2B43; --soft: #A5B8D1; --dock: #252C3A; --navoff: #818C9E; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #41699D; --pot-2: #6283AF; --pot-3: #849EC0; --pot-4: #A5B8D1; --pot-5: #C0CDDF; --pot-6: #DBE3ED; --pot-7: #4A4A50; } }
+:root[data-color="ocean"][data-theme="dark"] { --bg: #0E1219; --surface: #191D26; --ink: #ECEDEF; --muted: #9DA4B2; --line: #282F3D; --green: #849EC0; --fill: #315C95; --tint: #1A2B43; --soft: #A5B8D1; --dock: #252C3A; --navoff: #818C9E; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #41699D; --pot-2: #6283AF; --pot-3: #849EC0; --pot-4: #A5B8D1; --pot-5: #C0CDDF; --pot-6: #DBE3ED; --pot-7: #4A4A50; }
+:root[data-color="violet"] { --bg: #F4F3F8; --surface: #FFFFFF; --ink: #201B31; --muted: #635F74; --line: #E6E3EF; --green: #4B3A8F; --fill: #4B3A8F; --tint: #EDEBF4; --soft: #C5C0DB; --dock: #201B31; --navoff: #AEA6CD; --pot-1: #352964; --pot-2: #4B3A8F; --pot-3: #6F61A5; --pot-4: #8F85BA; --pot-5: #AEA6CD; --pot-6: #CDC8E0; --pot-7: #C3C1CA; }
+@media (prefers-color-scheme: dark) { :root[data-color="violet"]:not([data-theme="light"]) { --bg: #121119; --surface: #1D1B27; --ink: #ECEDEF; --muted: #A2A2B2; --line: #2F2C3D; --green: #9C93C1; --fill: #594A98; --tint: #2A2444; --soft: #B7B0D2; --dock: #2C293A; --navoff: #8A889F; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #6658A0; --pot-2: #8175B1; --pot-3: #9C93C1; --pot-4: #B7B0D2; --pot-5: #CDC8E0; --pot-6: #E2DFED; --pot-7: #4A4A50; } }
+:root[data-color="violet"][data-theme="dark"] { --bg: #121119; --surface: #1D1B27; --ink: #ECEDEF; --muted: #A2A2B2; --line: #2F2C3D; --green: #9C93C1; --fill: #594A98; --tint: #2A2444; --soft: #B7B0D2; --dock: #2C293A; --navoff: #8A889F; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #6658A0; --pot-2: #8175B1; --pot-3: #9C93C1; --pot-4: #B7B0D2; --pot-5: #CDC8E0; --pot-6: #E2DFED; --pot-7: #4A4A50; }
+:root[data-color="lagoon"] { --bg: #F1F5F6; --surface: #FFFFFF; --ink: #102328; --muted: #54676B; --line: #DDE8EA; --green: #0E5A6B; --fill: #0E5A6B; --tint: #E7EFF0; --soft: #B2CAD0; --dock: #102328; --navoff: #93B5BC; --pot-1: #0A3F4B; --pot-2: #0E5A6B; --pot-3: #3E7B89; --pot-4: #6A99A3; --pot-5: #93B5BC; --pot-6: #BCD1D6; --pot-7: #BDC4C6; }
+@media (prefers-color-scheme: dark) { :root[data-color="lagoon"]:not([data-theme="light"]) { --bg: #0D1316; --surface: #171F23; --ink: #ECEDEF; --muted: #9BA6AE; --line: #263138; --green: #7AA4AE; --fill: #216777; --tint: #152F37; --soft: #9FBDC4; --dock: #222E35; --navoff: #7E8F98; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #327381; --pot-2: #568C97; --pot-3: #7AA4AE; --pot-4: #9FBDC4; --pot-5: #BCD1D6; --pot-6: #D8E5E7; --pot-7: #4A4A50; } }
+:root[data-color="lagoon"][data-theme="dark"] { --bg: #0D1316; --surface: #171F23; --ink: #ECEDEF; --muted: #9BA6AE; --line: #263138; --green: #7AA4AE; --fill: #216777; --tint: #152F37; --soft: #9FBDC4; --dock: #222E35; --navoff: #7E8F98; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #327381; --pot-2: #568C97; --pot-3: #7AA4AE; --pot-4: #9FBDC4; --pot-5: #BCD1D6; --pot-6: #D8E5E7; --pot-7: #4A4A50; }
+:root[data-color="graphite"] { --bg: #F3F3F4; --surface: #FFFFFF; --ink: #1B1D1F; --muted: #5F6063; --line: #E3E4E6; --green: #3A3F4A; --fill: #3A3F4A; --tint: #EBECED; --soft: #C0C2C5; --dock: #1B1D1F; --navoff: #A6A9AE; --pot-1: #292C34; --pot-2: #3A3F4A; --pot-3: #61656E; --pot-4: #85888F; --pot-5: #A6A9AE; --pot-6: #C8C9CC; --pot-7: #C1C2C3; }
+@media (prefers-color-scheme: dark) { :root[data-color="graphite"]:not([data-theme="light"]) { --bg: #111114; --surface: #1B1C20; --ink: #ECEDEF; --muted: #A0A2AA; --line: #2C2D33; --green: #93959B; --fill: #4A4E58; --tint: #24262B; --soft: #B0B2B7; --dock: #292A30; --navoff: #878991; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #585C65; --pot-2: #757980; --pot-3: #93959B; --pot-4: #B0B2B7; --pot-5: #C8C9CC; --pot-6: #DFE0E2; --pot-7: #4A4A50; } }
+:root[data-color="graphite"][data-theme="dark"] { --bg: #111114; --surface: #1B1C20; --ink: #ECEDEF; --muted: #A0A2AA; --line: #2C2D33; --green: #93959B; --fill: #4A4E58; --tint: #24262B; --soft: #B0B2B7; --dock: #292A30; --navoff: #878991; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #585C65; --pot-2: #757980; --pot-3: #93959B; --pot-4: #B0B2B7; --pot-5: #C8C9CC; --pot-6: #DFE0E2; --pot-7: #4A4A50; }
 </style>
 
 <div id="app"></div>
@@ -1084,7 +1232,7 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
 // Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
-const APP_VERSION = ["v74","1 Nov 2026","f58d4f4"];
+const APP_VERSION = ["v75","1 Nov 2026","6df0572"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -1769,8 +1917,15 @@ function load() {
 }
 let state = load();
 HOME = homeCur();
-function saveLocal() { memoryState = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} lastIds = idSnapshot(state); }
+function saveLocal() { askPersist(); memoryState = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} lastIds = idSnapshot(state); }
 function save() { noteDeletions(); saveLocal(); schedulePush(); }
+// Ask the browser to keep this site's storage even when the phone runs low on space (council review, 1 Nov 2026).
+// Installed apps on Android are usually granted it straight away; anywhere it is refused, nothing changes.
+var persistAsked = false;
+function askPersist() {
+  if (persistAsked) return; persistAsked = true;
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persisted().then((p) => p || navigator.storage.persist()).catch(() => {}); } catch (e) {}
+}
 
 // ---------- sync: Claude storage ----------
 // Everything lives in this viewer's private area of the artifact's database (data/users/<id>/), which only
@@ -2395,7 +2550,7 @@ function debtsEditor() {
         <button class="btn" type="submit">Add</button>
       </div>
     </form>
-    <p class="hint" style="margin-top:10px">Payments come off the top each cycle, like a bill, and stop once a debt is cleared. Debt does not count against your 100k, but money still owed lowers your monthly grade.</p>`;
+    <p class="hint tip" style="margin-top:10px">Payments come off the top each cycle, like a bill, and stop once a debt is cleared. Debt does not count against your 100k, but money still owed lowers your monthly grade.</p>`;
 }
 // ---------- yearly costs ui ----------
 let payingYearly = null, armedYearly = null, yAnim = null;
@@ -2472,7 +2627,7 @@ function yearlyEditor() {
         <input id="yDue" class="f1" type="month" min="${now}" value="${addMonths(now, 12)}" aria-label="When it is next due" required></div>
       <div class="row" style="margin-top:8px"><button class="btn" type="submit" style="flex:1">Add yearly cost</button></div>
     </form>
-    <p class="hint" style="margin-top:10px">Things you pay once a year. Each cycle sets aside what is still needed divided by the months left, off the top like a bill, so the money is there when it is due. Not counted in the 100k.</p>
+    <p class="hint tip" style="margin-top:10px">Things you pay once a year. Each cycle sets aside what is still needed divided by the months left, off the top like a bill, so the money is there when it is due. Not counted in the 100k.</p>
     ${done.length ? `<div class="label" style="margin-top:16px">Removed</div>${done.slice().reverse().map((y) => { const lp = lastPaid(y); return `<div class="kv"><div><div class="n">${esc(y.name)}</div><div class="m">${lp ? 'last paid ' + fmtN(lp.g) + ' · ' + esc(lp.date) : 'never paid'}</div></div><div class="a"></div></div>`; }).join('')}` : ''}`;
 }
 // Paid: the cost comes out of its pot (anything over what was saved comes from the pot you pick), and from next
@@ -2544,7 +2699,7 @@ function billsEditor() {
       <input id="bAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" placeholder="${HOME}" aria-label="Monthly amount in ${HOME}" required>
       <button class="btn" type="submit">Add bill</button>
     </form>
-    <p class="hint" style="margin-top:10px">Changes count from this month on. Past months keep the bills they had.</p>`;
+    <p class="hint tip" style="margin-top:10px">Changes count from this month on. Past months keep the bills they had.</p>`;
 }
 // ---------- Bills pot: tick bills off (B2) ----------
 let billOpen = null;
@@ -2564,7 +2719,7 @@ function billsWaiting(key = nowCycle()) {
 // with what is still to save. Cycle dates follow the reset-day history, like every other cycle date.
 function dueSoon(today = new Date()) {
   const nk = cycleKeyOf(today), m = state.months[nk] || {}, lim = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
-  const bills = cycleBillList(nk).filter((f) => !f.paused && !billState(m, f.id)).map((f) => ({ id: f.id, name: f.name, g: f.g }));
+  const bills = cycleBillList(nk).filter((f) => !f.paused && !billState(m, f.id)).map((f) => ({ id: f.id, name: f.name, g: f.g, day: f.day }));
   const bal = bufferPlan(state).yearly.bal, yearly = [];
   (state.settings.yearly || []).filter((y) => yActive(y, nk)).forEach((y) => {
     const p = yPlanAt(y, nk); if (!p || !p.g || !p.due) return;
@@ -2593,11 +2748,11 @@ function billsTicker() {
   };
   const rows = list.map((f) => {
     const edit = !isPast && inSettings(f.id), open = edit && billOpen === f.id;
-    const name = `<div class="n">${esc(f.name)}</div><div class="m num">${fmt(f.g)} a month</div>`;
+    const name = `<div class="n">${esc(f.name)}</div><div class="m num">${fmt(f.g)} a month${f.day ? ` · due on the ${ordinal(f.day)}` : ''}</div>`;
     return `<div class="brow${f.paused ? ' paused' : ''}">
       ${edit ? `<button class="bname" data-billopen="${f.id}" aria-expanded="${open}">${name}</button>` : `<div>${name}</div>`}
       <div>${right(f)}</div>
-      ${open ? `<div class="bedit"><button class="btn plain sm" data-billpause="${f.id}">${f.paused ? 'Resume' : 'Pause'}</button>
+      ${open ? `<div class="bedit"><label class="bday">Due on day <select data-billday="${f.id}" aria-label="Day of the month ${esc(f.name)} is due"><option value="">–</option>${Array.from({ length: 31 }, (_, i) => `<option${f.day === i + 1 ? ' selected' : ''}>${i + 1}</option>`).join('')}</select></label><button class="btn plain sm" data-billpause="${f.id}">${f.paused ? 'Resume' : 'Pause'}</button>
         ${armedBill === f.id ? `<button class="btn sm danger" data-billdel="${f.id}">Yes, delete ${esc(f.name)}</button>` : `<button class="btn plain sm warnbtn" data-billarm="${f.id}">Delete</button>`}
         <button class="btn plain sm" data-billopen="${f.id}">Done</button></div>` : ''}
     </div>`;
@@ -2987,12 +3142,12 @@ function renderReport() {
     </section>
     ${gHist.length ? `<section class="card" id="gHistCard"><div class="h2row"><h2>Grade history</h2><span class="lc-lab">${gHist.length} month${gHist.length === 1 ? '' : 's'}</span></div>
       <div id="gTl">${gradeTimeline(gHist, gSel)}</div>
-      <p class="hint" style="margin:4px 0 0">Tap a month to see what happened</p></section>` : ''}
+      <p class="hint tip" style="margin:4px 0 0">Tap a month to see what happened</p></section>` : ''}
     <section class="card">
       <div class="h2row"><h2>Money made</h2><span class="lc-lab" id="incLab">${span.length ? monLong(span[span.length - 1]) : ''}</span></div>
       <div class="lc-head"><span class="lc-val num" id="incVal">${fmtN(last)}</span>${delta}</div>
       ${span.length ? lineChart('incChart', { keys: span, vals: incomes, label: 'Income per month', valEl: 'incVal', labEl: 'incLab', rest: [fmtN(last), span.length ? monLong(span[span.length - 1]) : ''] }) : '<div class="empty">Add income to start the chart.</div>'}
-      <p class="hint" style="margin:6px 0 0">Drag across the chart to see any month.</p>
+      <p class="hint tip" style="margin:6px 0 0">Drag across the chart to see any month.</p>
     </section>
     ${graded.length ? `<section class="card"><h2>Best and worst months</h2><div class="duo" style="margin-top:4px">${tile(best, 'Best')}${tile(worst, 'Worst')}</div></section>` : ''}
     <div class="psheet gsheet ${gState}" id="gsheet" role="region" aria-label="Month details"><div class="psin">
@@ -3233,10 +3388,78 @@ function homeTiles(key) {
 let homeOpen = {}, notesOpen = false;
 const sgnN = (g) => (g < 0 ? '−' + fmtN(-g) : fmtN(g));
 const tagPill = (t) => `<span class="pill ${t === 'entered' ? 'good' : 'weak'} hpill">${t}</span>`;
+// Month recap as story cards (1 Nov 2026, Edd's pick): for the first 5 days of a new cycle a thin ring sits round
+// the grade on Home (no text). Tapping the tile plays last cycle's story; once watched the ring goes and the tile
+// opens the report again. "Play last cycle's story" in This cycle replays it any time.
+const monName = (k) => { const [y, m] = k.split('-').map(Number); return new Date(y, m - 1, 1).toLocaleString('en-GB', { month: 'long' }); };
+function recapReady() {
+  const now = nowCycle(), P = addMonths(now, -1), L = buildLedger(state, P, now);
+  if (!gradeMonth(state, P, L)) return null;
+  return P;
+}
+function recapRing(key) {
+  if (key !== nowCycle()) return false;
+  const P = recapReady(); if (!P || state.recapSeen === P) return false;
+  const [a] = cycleRange(nowCycle()); return (new Date(new Date().toDateString()) - new Date(a.toDateString())) / 864e5 < 5;
+}
+function recapSlides(P) {
+  const now = nowCycle(), L = buildLedger(state, P, now), g = gradeMonth(state, P, L), [a, b] = cycleRange(P), name = monName(P);
+  const ns = netSaved(state, P, L).total, PP = addMonths(P, -1), gp = L[PP] ? gradeMonth(state, PP, L) : null, nsp = gp ? netSaved(state, PP, L).total : null;
+  const r = L[P], pots = SPEND.map((p) => ({ p, spent: Math.max(0, r.pots[p].spent), budget: r.pots[p].budget })), top = pots.slice().sort((x, y) => y.spent - x.spent)[0];
+  const ex = ((state.months[P] || {}).expenses || []).filter((e) => !e.cover && SPEND.includes(e.pot));
+  const weeks = []; for (let d = new Date(a), i = 0; d <= b; d.setDate(d.getDate() + 7), i++) { const s0 = isoOf(d), e0 = new Date(d); e0.setDate(e0.getDate() + 6); const e1 = isoOf(e0 > b ? b : e0);
+    weeks.push({ from: new Date(d), to: new Date(e0 > b ? b : e0), g: ex.filter((e) => e.iso >= s0 && e.iso <= e1).reduce((t, e) => t + e.g, 0), full: e0 <= b }); }
+  const pool = weeks.filter((w) => w.full), best = (pool.length ? pool : weeks).slice().sort((x, y) => x.g - y.g)[0], avg = weeks.reduce((t, w) => t + w.g, 0) / Math.max(1, weeks.length), maxW = Math.max(1, ...weeks.map((w) => w.g));
+  const places = topPlaces(P), won = (state.chalDone || []).filter((c) => c.ok && c.to >= isoOf(a) && c.to <= isoOf(b)).length;
+  const range = `${dShort(a)} – ${dShort(b)}`;
+  return [
+    `<div class="sk">${name} · ${range}</div><div class="sh">${name} is done</div><div class="sgr"><span class="gtile g-${g.letter}">${g.letter}</span><div><b>${g.score} points</b><div class="ss">${GRADE_SHORT[g.letter]}${gp ? ` · ${g.score >= gp.score ? '+' : ''}${g.score - gp.score} on ${monName(PP)}` : ''}</div></div></div>`,
+    `<div class="sk">Saved</div><div class="sh num">${sgnN(ns)}</div><div class="ss">${nsp == null ? 'Your first full month in the app.' : ns >= nsp ? `${fmtN(ns - nsp)} more than ${monName(PP)}.` : `${fmtN(nsp - ns)} less than ${monName(PP)}.`}</div>`,
+    `<div class="sk">Where your spending went</div><div class="sh">${top.spent ? `Most went on ${potName(top.p)}` : 'Hardly anything spent'}</div><div class="spots">${pots.map((x) => `<div class="spot"><div class="row2"><span>${potName(x.p)}</span><b class="num">${fmtN(x.spent)}</b></div><div class="sbar"><i style="width:${x.budget ? Math.min(100, Math.round((x.spent / x.budget) * 100)) : 0}%"></i></div><div class="ss">${x.budget ? `${Math.round((x.spent / x.budget) * 100)}% of ${fmtN(x.budget)}` : 'no budget'}</div></div>`).join('')}</div>`,
+    `<div class="sk">Best week</div><div class="sh">${dShort(best.from)} – ${dShort(best.to)}</div><div class="ss">${best.g <= 0 ? 'Nothing spent from your pots that week.' : `You spent ${fmtN(best.g)}${avg > 0 && best.g < avg ? `, ${Math.round((1 - best.g / avg) * 100)}% below your usual week` : ''}.`}</div>
+      <div class="sbars">${weeks.map((w, i) => `<div class="${w === best ? 'hi' : ''}" style="height:${Math.max(6, Math.round((w.g / maxW) * 100))}%"><small>wk ${i + 1}</small></div>`).join('')}</div>`,
+    `<div class="sk">Habits</div><div class="sh">${ex.length} thing${ex.length === 1 ? '' : 's'} logged</div><div class="ss">${places.length ? `Most at ${esc(places[0].name)}: ${fmtN(places[0].g)} over ${places[0].n} visit${places[0].n === 1 ? '' : 's'}.` : 'Add the shop as a note to see where you spend most.'}</div>${won ? `<div class="ss" style="margin-top:14px">Challenges finished: <b>${won}</b></div>` : ''}`,
+    `<div class="sk">Next up</div><div class="sh">On to ${monName(now)}</div><div class="ss">${fmtN(leftToSpend(now).left)} left to spend this cycle. You've got this.</div>`,
+  ];
+}
+let story = null; // { P, i, slides, t0, paused, raf }
+function storyOpen(P) {
+  P = P || recapReady(); if (!P) return toast('A story needs a finished cycle with income');
+  state.recapSeen = P; save(); render();
+  story = { P, i: 0, slides: recapSlides(P), t0: performance.now(), held: 0, paused: false };
+  const el = document.createElement('div'); el.id = 'story'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', `${monName(P)} story`);
+  document.body.appendChild(el); storyDraw(); storyTick();
+}
+function storyDraw() {
+  const el = document.getElementById('story'); if (!el || !story) return;
+  el.innerHTML = `<div class="sseg">${story.slides.map((_, i) => `<i class="${i < story.i ? 'on' : ''}"><b${i === story.i ? ' id="sNow"' : ''}></b></i>`).join('')}</div>
+    <button class="sx" data-storyx aria-label="Close">✕</button><div class="sbody" aria-live="polite">${story.slides[story.i]}</div><div class="shint">Tap for next · hold to pause</div>`;
+}
+const STORY_MS = 5500;
+function storyTick() {
+  if (!story) return;
+  const b = document.getElementById('sNow');
+  if (!story.paused) { const f = (performance.now() - story.t0) / STORY_MS; if (b) b.style.width = Math.min(100, f * 100) + '%'; if (f >= 1) return storyStep(1); }
+  story.raf = requestAnimationFrame(storyTick);
+}
+function storyStep(d) {
+  if (!story) return; cancelAnimationFrame(story.raf);
+  const i = story.i + d; if (i >= story.slides.length) return storyClose(); story.i = Math.max(0, i); story.t0 = performance.now(); storyDraw(); storyTick();
+}
+function storyClose() { if (story) cancelAnimationFrame(story.raf); story = null; const el = document.getElementById('story'); if (el) el.remove(); }
+document.addEventListener('pointerdown', (e) => { if (!story || !e.target.closest('#story') || e.target.closest('[data-storyx]')) return; story.down = performance.now(); story.paused = true; story.pausedAt = performance.now(); });
+document.addEventListener('pointerup', (e) => {
+  if (!story || !e.target.closest('#story')) return;
+  if (e.target.closest('[data-storyx]')) return storyClose();
+  const held = performance.now() - (story.down || 0); story.t0 += performance.now() - (story.pausedAt || performance.now()); story.paused = false;
+  if (held < 250) storyStep(e.clientX < innerWidth / 3 ? -1 : 1);
+});
+document.addEventListener('keydown', (e) => { if (!story) return; if (e.key === 'Escape') storyClose(); else if (e.key === 'ArrowRight') storyStep(1); else if (e.key === 'ArrowLeft') storyStep(-1); });
 function homeGradeTile(key) {
   const L = buildLedger(state, key, nowCycle()), g = gradeMonth(state, key, L), isNow = key === nowCycle();
-  return `<button class="card tile" data-act="report" aria-label="Grade. Open the report"><span class="label">${isNow ? 'Grade so far' : 'Grade'}</span>
-    <span class="tg">${g ? `<span class="gtile g-${g.letter} xs">${g.letter}</span><span class="tv num">${g.score}</span>` : '<span class="tv num" style="color:var(--muted)">–</span>'}</span>
+  const ring = recapRing(key);
+  return `<button class="card tile${ring ? ' hasstory' : ''}" data-act="${ring ? 'story' : 'report'}" aria-label="${ring ? `Grade. Play ${monName(addMonths(key, -1))}'s story` : 'Grade. Open the report'}"><span class="label">${isNow ? 'Grade so far' : 'Grade'}</span>
+    <span class="tg">${g ? `<span class="gtile g-${g.letter} xs${ring ? ' sring2' : ''}">${g.letter}</span><span class="tv num">${g.score}</span>` : `${ring ? (() => { const P = addMonths(key, -1), gp = gradeMonth(state, P, buildLedger(state, P, nowCycle())); return gp ? `<span class="gtile g-${gp.letter} xs sring2 sprev">${gp.letter}</span>` : ''; })() : ''}<span class="tv num" style="color:var(--muted)">–</span>`}</span>
     <span class="ts">${g ? GRADE_SHORT[g.letter] + (isNow ? ' so far' : '') : 'add income to get one'}</span></button>`;
 }
 // Net worth: the grosze a little smaller, so the number stays on one line
@@ -3279,10 +3502,85 @@ const CC_ICONS = { spend: ['var(--fill, var(--green))', '<circle cx="9" cy="20" 
   places: ['#AF52DE', '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'], p2flow: ['#34C759', '<path d="M7 17V7m0 0L3 11m4-4l4 4M17 7v10m0 0l-4-4m4 4l4-4"/>'],
   p2due: ['#FF9500', '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/>'], cycle: ['#30B0C7', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
   where: ['#5856D6', '<path d="M3 7h18v12H3zM3 7l2-3h14l2 3M16 13h2"/>'], prog: ['#FF2D55', '<path d="M5 21V4m0 0h11l-2 4 2 4H5"/>'], worth: ['#FFCC00', '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/>'],
-  byinv: ['#007AFF', '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'] };
+  byinv: ['#007AFF', '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'],
+  chal: ['#FF9F0A', '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/>'] };
 function compactCard(id, title, line, body, warn) {
   const open = !!homeOpen[id];
   return `<section class="card cc${warn ? ' ccwarn' : ''}"><button class="cch" data-cc="${id}" aria-expanded="${open}" aria-controls="cc-${id}">${CC_ICONS[id] ? `<span class="ccic" style="--ic:${CC_ICONS[id][0]}">${navIcon(CC_ICONS[id][1])}</span>` : ''}<span class="cct"><b>${title}</b><span class="ccl">${line}</span></span>${CHEV}</button><div class="ccb" id="cc-${id}"${open ? '' : ' hidden'}>${body}</div></section>`;
+}
+// Challenges (1 Nov 2026, Edd's pick from "ideas from other apps"): one small challenge at a time, judged day by day
+// from the spending pots (Groceries, Day-to-day, Treat yourself). Bills and moves never count. A day only passes once
+// it is over; any day that breaks the rule ends the challenge as missed. state.chal = { id, from, to, limit? };
+// finished ones go to state.chalDone (newest first, at most 60).
+const CHALS = {
+  weekend: { name: 'No-spend weekend', what: 'Nothing from your spending pots on Saturday and Sunday', ic: '<path d="M4 18v-6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6M2 18h20M6 9V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/>' },
+  notreats: { name: 'No treats week', what: '7 days with nothing from Treat yourself', ic: '<path d="M5 8h12v5a6 6 0 0 1-12 0zM17 9h1.5a2.5 2.5 0 0 1 0 5H17M8 2v3M12 2v3"/>' },
+  pace: { name: '5 days on pace', what: 'Each day, spend no more than your daily pace', ic: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>' },
+  oneday: { name: 'One no-spend day', what: 'Nothing from your spending pots today', ic: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>' },
+};
+const isoAdd = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return isoOf(d); };
+const isoDay = (iso) => new Date(iso + 'T12:00:00');
+function dayPotSpend(iso, pots = SPEND) {
+  let g = 0;
+  Object.values(state.months).forEach((m) => ((m && m.expenses) || []).forEach((e) => { if (e.iso === iso && !e.cover && pots.includes(e.pot)) g += e.g; }));
+  return g;
+}
+function chalPlan(id) {
+  const today = isoOf(new Date()), dow = isoDay(today).getDay();
+  if (id === 'weekend') { const from = dow === 6 ? today : dow === 0 ? isoAdd(today, 6) : isoAdd(today, 6 - dow); return { id, from, to: isoAdd(from, 1) }; }
+  if (id === 'notreats') return { id, from: today, to: isoAdd(today, 6) };
+  if (id === 'oneday') return { id, from: today, to: today };
+  // pace: the even daily share of what the spending pots hold this cycle, fixed when the challenge starts
+  const key = nowCycle(), ls = leftToSpend(key), [a, b] = cycleRange(key), n = Math.round((b - a) / 864e5) + 1;
+  return { id, from: today, to: isoAdd(today, 4), limit: Math.max(0, Math.floor((ls.budget || 0) / n)) };
+}
+function chalDayOk(c, iso) {
+  if (c.id === 'notreats') return dayPotSpend(iso, ['fun']) <= 0;
+  if (c.id === 'pace') return dayPotSpend(iso) <= (c.limit || 0);
+  return dayPotSpend(iso) <= 0;
+}
+// Every day of the challenge: 'ok', 'miss', 'today' (so far so good) or 'soon'. State: 'on', 'won' or 'missed'.
+function chalStatus(c) {
+  const today = isoOf(new Date()), days = [];
+  for (let d = c.from; d <= c.to; d = isoAdd(d, 1)) days.push({ iso: d, st: d > today ? 'soon' : !chalDayOk(c, d) ? 'miss' : d === today ? 'today' : 'ok' });
+  const miss = days.find((d) => d.st === 'miss');
+  return { days, miss, state: miss ? 'missed' : today > c.to ? 'won' : 'on', done: days.filter((d) => d.st === 'ok').length };
+}
+// A finished challenge is filed the next time the app looks; a win is shown once as a small celebration.
+function chalSettle() {
+  const c = state.chal; if (!c || !CHALS[c.id]) return;
+  const st = chalStatus(c); if (st.state !== 'won') return;
+  state.chalDone = [{ id: c.id, from: c.from, to: c.to, ok: true }].concat(state.chalDone || []).slice(0, 60);
+  state.chal = null; state.chalWin = c.id; save();
+}
+const chalWins = () => (state.chalDone || []).filter((x) => x.ok).length;
+function chalCard() {
+  chalSettle();
+  const c = state.chal, ic = (id) => `<span class="chic">${navIcon(CHALS[id].ic)}</span>`;
+  const list = () => `<div class="chlist">${Object.entries(CHALS).map(([id, x]) => { const pl = chalPlan(id);
+      return `<button class="chpick" data-chal="${id}">${ic(id)}<span><b>${x.name}</b><span class="hint">${id === 'pace' ? `Spend no more than ${fmtN(pl.limit)} a day for 5 days` : x.what}${pl.from > isoOf(new Date()) ? ` · starts ${dShort(isoDay(pl.from))}` : ''}</span></span></button>`; }).join('')}</div>`;
+  const wins = chalWins(), winTxt = wins ? `<p class="hint" style="margin:10px 0 0">Challenges finished: ${wins}</p>` : '';
+  if (state.chalWin && CHALS[state.chalWin]) {
+    const x = CHALS[state.chalWin];
+    return `<section class="card chwin" id="chalWin"><div class="chconf" aria-hidden="true">${'<i></i>'.repeat(14)}</div>${ic(state.chalWin)}<div><b>You did it: ${x.name}</b><p class="hint" style="margin:2px 0 8px">${wins} challenge${wins === 1 ? '' : 's'} finished so far.</p>
+      <div class="ppbtns"><button class="btn sm" data-act="chalNew">Pick the next one</button><button class="btn plain sm" data-act="chalOk">Done</button></div></div></section>`;
+  }
+  if (!c || !CHALS[c.id]) return compactCard('chal', 'Challenges', 'Pick a small one to try', `<p class="hint tip" style="margin:0 0 10px">One at a time. Each day is checked against your spending pots; bills don't count.</p>${list()}${winTxt}`);
+  const x = CHALS[c.id], st = chalStatus(c), n = st.days.length, started = st.days[0].st !== 'soon';
+  const dots = `<div class="chdots">${st.days.map((d) => `<span class="chd ${d.st}" title="${dShort(isoDay(d.iso))}"><i></i>${isoDay(d.iso).toLocaleString('en-GB', { weekday: 'narrow' })}</span>`).join('')}</div>`;
+  if (st.state === 'missed') {
+    const sp = c.id === 'notreats' ? dayPotSpend(st.miss.iso, ['fun']) : dayPotSpend(st.miss.iso);
+    const body = `${dots}<p class="hint" style="margin:8px 0 10px">${dShort(isoDay(st.miss.iso))}: ${fmtN(sp)} spent${c.id === 'pace' ? `, over ${fmtN(c.limit)}` : ''}. No harm done, try again whenever you like.</p>
+      <div class="ppbtns"><button class="btn sm" data-chal="${c.id}">Try again</button><button class="btn plain sm" data-act="chalDrop">Pick another</button></div>`;
+    return compactCard('chal', x.name, 'Missed this time', body);
+  }
+  const line = !started ? `Starts ${dShort(isoDay(c.from))}` : `${st.done} of ${n} day${n === 1 ? '' : 's'} done${c.id === 'pace' ? ` · under ${fmtN(c.limit)} a day` : ''}`;
+  const body = `<p class="hint" style="margin:0 0 4px">${x.what}${c.id === 'pace' ? ` (${fmtN(c.limit)})` : ''}.</p>${dots}
+    <div class="prog chprog"><i style="width:${Math.round((st.done / n) * 100)}%"></i></div>
+    <p class="hint" style="margin:8px 0 10px">${!started ? 'Nothing to do until it starts.' : st.days.some((d) => d.st === 'today') ? 'Today counts once it is over.' : ''}</p>
+    <button class="btn plain sm" data-act="chalDrop">Stop this challenge</button>${winTxt}`;
+  const cardH = compactCard('chal', x.name, line, body), at = cardH.lastIndexOf('</section>');
+  return cardH.slice(0, at) + `<div class="chbar" aria-hidden="true"><i style="width:${Math.round((st.done / n) * 100)}%"></i></div>` + cardH.slice(at);
 }
 // Everyone version: where the money goes by place (an expense's note, e.g. the shop), and a search over every
 // expense ever logged. Notes are grouped ignoring case and spaces at the ends.
@@ -3316,7 +3614,8 @@ function placesCard(key) {
 function cycleCard(key, incomeHtml) {
   const inc = (state.months[key] || {}).income || [], got = inc.reduce((a, e) => a + e.g, 0), N = netSavedRow(key);
   const inner = incomeHtml.replace('<section class="card">', '<section class="card ccin">');
-  return compactCard('cycle', 'This cycle', `Net saved ${sgnN(N.ns)} · income ${fmtN(got)}`, N.html + inner);
+  const P = key === nowCycle() ? recapReady() : null;
+  return compactCard('cycle', 'This cycle', `Net saved ${sgnN(N.ns)} · income ${fmtN(got)}`, N.html + inner + (P ? `<button class="btn plain sm" data-act="story" style="margin-top:10px">Play ${monName(P)}'s story</button>` : ''));
 }
 function worthCard(key) {
   const n = alertList(key).filter((a) => a[2]).length;
@@ -3349,12 +3648,53 @@ function dueBits() {
   const d = dueSoon(new Date()), nb = d.bills.length, ny = d.yearly.length;
   const total = d.bills.reduce((a, x) => a + x.g, 0) + d.yearly.reduce((a, x) => a + x.need, 0);
   const what = [nb ? `${nb} bill${nb === 1 ? '' : 's'}` : '', ny ? `${ny} yearly cost${ny === 1 ? '' : 's'}` : ''].filter(Boolean).join(' and ');
-  const rows = d.bills.map((x) => p2row(esc(x.name), 'bill · this cycle · not ticked yet', fmtN(x.g))).join('')
+  const rows = d.bills.map((x) => p2row(esc(x.name), x.day && billDueIn(nowCycle(), x.day) ? `bill · due ${dShort(isoDay(billDueIn(nowCycle(), x.day)))} · not ticked yet` : 'bill · this cycle · not ticked yet', fmtN(x.g))).join('')
     + d.yearly.map((x) => p2row(esc(x.name), `yearly · due from ${dShort(new Date(x.dueStart + 'T12:00:00'))} · still to save`, fmtN(x.need))).join('');
   return { line: nb + ny ? `${what} · ${fmtN(total)}` : 'Nothing due in the next 30 days',
-    html: (nb + ny ? `<div class="p2rows">${rows}</div>` : '<div class="p2empty">Nothing due in the next 30 days.</div>') + (nb ? '<button class="btn plain sm p2go" data-pot="subs">Open bills</button>' : '') };
+    html: billsCalendar(nowCycle()) + (nb + ny ? `<div class="p2rows">${rows}</div>` : '<div class="p2empty">Nothing due in the next 30 days.</div>') + (nb ? '<button class="btn plain sm p2go" data-pot="subs">Open bills</button>' : '') };
+}
+// Bills calendar (1 Nov 2026): a bill can carry the day of the month it leaves your account (settings.fixed[].day,
+// optional). Due soon then shows this pay month as a grid: orange dots for bills still to pay, green once ticked.
+const ordinal = (n) => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+function billDueIn(key, day) {
+  const [a, b] = cycleRange(key);
+  for (let d = new Date(a); d <= b; d.setDate(d.getDate() + 1)) { const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); if (d.getDate() === Math.min(day, last)) return isoOf(d); }
+  return null;
+}
+let calDay = null;
+function billsCalendar(key) {
+  const m = state.months[key], [a, b] = cycleRange(key), today = isoOf(new Date()), by = {};
+  const list = cycleBillList(key).filter((f) => !f.paused && billState(m, f.id) !== 'skip');
+  list.forEach((f) => { if (!f.day) return; const iso = billDueIn(key, f.day); if (iso) (by[iso] = by[iso] || []).push({ f, paid: !!billState(m, f.id) }); });
+  const noDay = list.filter((f) => !f.day).length;
+  const start = new Date(a); start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+  const end = new Date(b); end.setDate(end.getDate() + (6 - ((end.getDay() + 6) % 7)));
+  let cells = '';
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    const iso = isoOf(d), out = d < a || d > b, bs = by[iso] || [], dot = bs.length ? (bs.every((x) => x.paid) ? ' paid' : ' due') : '';
+    cells += out ? `<span class="cd out">${d.getDate()}</span>` : `<button class="cd${dot}${iso === today ? ' today' : ''}${iso === calDay ? ' sel' : ''}" data-calday="${iso}" aria-label="${dShort(d)}${bs.length ? ', ' + bs.map((x) => `${x.f.name} ${x.paid ? 'paid' : 'due'}`).join(', ') : ''}">${d.getDate()}</button>`;
+  }
+  const sel = calDay && by[calDay] ? `<div class="calsel"><b>${dShort(isoDay(calDay))}</b>${by[calDay].map((x) => `<div class="calrow"><span>${esc(x.f.name)}</span><span class="num">${fmtN(x.f.g)} · ${x.paid ? 'paid' : 'to pay'}</span></div>`).join('')}</div>` : '';
+  return `<div class="bcal"><div class="calh">${['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((x) => `<b>${x}</b>`).join('')}</div><div class="calg">${cells}</div></div>${sel}
+    ${noDay ? `<p class="hint" style="margin:6px 0 0">${noDay} bill${noDay === 1 ? ' has' : 's have'} no day yet. Open Bills, tap a bill and pick its day to see it here.</p>` : ''}`;
 }
 const p2tag = (html, id) => html.replace('<section class="card', `<section data-p2="${id}" class="card`);
+// Home keeps Due soon; Money in and out lives on the "in detail" page (council review, 1 Nov 2026)
+function dueCard(key) {
+  const D = key === nowCycle() ? dueBits() : null;
+  return D ? p2tag(compactCard('p2due', 'Due soon', D.line, `<div class="p2body">${D.html}</div>`), 'due') : '';
+}
+function flowOnly(key) {
+  const F = flowBits(key);
+  return p2tag(compactCard('p2flow', 'Money in and out', F.line, `<div class="p2body">${F.html}</div>`, F.warn), 'flow');
+}
+// The last row on Home: everything else about this month, one tap away.
+let homeMore = false;
+function homeMoreRow(key, c) {
+  const F = flowBits(key), n = alertList(key).filter((a) => a[2]).length;
+  const bits = [F.line, n ? `${n} suggestion${n === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ');
+  return `<section class="card cc ccmore"><button class="cch" data-act="moreOpen"><span class="ccic">${navIcon('<path d="M4 6h16M4 12h16M4 18h10"/>')}</span><span class="cct"><b>${monName(key)} in detail</b><span class="ccl">${bits || 'Money in and out, where you stand, your safety net'}</span></span><span class="chev" aria-hidden="true">›</span></button></section>`;
+}
 function flowCards(key) {
   const F = flowBits(key), now = key === nowCycle(), D = now ? dueBits() : null;
   return p2tag(compactCard('p2flow', 'Money in and out', F.line, `<div class="p2body">${F.html}</div>`, F.warn), 'flow')
@@ -3518,7 +3858,7 @@ function moneyCard(MP) {
     ${kv('Debt you owe', MP.debt ? '' : 'nothing owed', MP.debt ? '−' + fmtN(MP.debt) : fmtN(0), 'calculated')}
     ${kv('<b>Net worth</b>', 'everything above, less debt', `<b>${fmtN(MP.netWorth)}</b>`)}
     ${kv('Counts toward money covers your life', 'what is in your brokerage only', fmtN(MP.fi))}
-    <p class="hint" style="margin:10px 0 0">Calculated figures come from your income, split, spending and moves. The app cannot see your bank, so check them against it now and then. Only portfolio values are entered by you.</p></section>`;
+    <p class="hint tip" style="margin:10px 0 0">Calculated figures come from your income, split, spending and moves. The app cannot see your bank, so check them against it now and then. Only portfolio values are entered by you.</p></section>`;
 }
 function renderGoals() {
   const nowKey = nowCycle(), L = buildLedger(state, nowKey, nowCycle()), gs = goalStats(state, L, nowKey);
@@ -3547,7 +3887,7 @@ function renderGoals() {
       <div class="h2row"><h2>Progress</h2><span class="lc-lab" id="goalLab">${keys.length ? monLong(keys[keys.length - 1]) : ''}</span></div>
       <div class="lc-head"><span class="lc-val num" id="goalVal">${fmtN(gs.net)}</span></div>
       ${keys.length ? lineChart('goalChart', { keys: ckeys, vals, proj, goal: GOAL, label: 'Progress to 100k', valEl: 'goalVal', labEl: 'goalLab', rest: [fmtN(gs.net), monLong(keys[keys.length - 1])] }) : '<div class="empty">Nothing to chart yet.</div>'}
-      <p class="hint" style="margin:6px 0 0">Solid line is what you have. Dotted line is where your pace takes you.</p>
+      <p class="hint tip" style="margin:6px 0 0">Solid line is what you have. Dotted line is where your pace takes you.</p>
     </section>
     <section class="card">
       <h2>What it is made of</h2>
@@ -3563,7 +3903,7 @@ function renderGoals() {
         return `<div class="h2row"><h2>Investments</h2><span class="lc-lab" id="invLab">${monLong(keys[n - 1])}</span></div>
           <div class="lc-head"><span class="lc-val num" id="invVal">${fmtN(gs.inv)}</span>${n > 1 ? `<span class="delta ${d > 0 ? 'up' : d < 0 ? 'down' : 'flat'}">${d > 0 ? '▲ +' : d < 0 ? '▼ ' : '• '}${fmtN(d)} vs ${monShort(keys[n - 2])}</span>` : ''}</div>
           ${lineChart('invChart', { keys, vals: iv, label: 'Investing pot by month', valEl: 'invVal', labEl: 'invLab', rest: [fmtN(gs.inv), monLong(keys[n - 1])] })}
-          <p class="hint" style="margin:6px 0 0">What the investing pot held at the end of each month.</p>`;
+          <p class="hint tip" style="margin:6px 0 0">What the investing pot held at the end of each month.</p>`;
       })()}
       <div class="pp-foot" style="margin-top:12px"><button class="btn plain sm" data-goinv>Open investments ›</button></div>
     </section>`;
@@ -3599,20 +3939,20 @@ function invBody(g, tidy) {
       ${pts.length ? `<div class="h2row"><h2>Profit and loss</h2><span class="lc-lab" id="plLab">${dLong(pts[pts.length - 1].date)}</span></div>
           <div class="lc-head"><span class="lc-val num" id="plVal">${B.perf > 0 ? '+' : ''}${fmtN(B.perf)}</span><span class="delta flat" id="plDelta">so far</span></div>
           ${plChart(pts, B)}
-          <p class="hint" style="margin:6px 0 0">Points are placed by date. Hollow points are older entries that only know their month.</p>`
+          <p class="hint tip" style="margin:6px 0 0">Points are placed by date. Hollow points are older entries that only know their month.</p>`
         : '<h2>Profit and loss</h2><p class="hint" style="margin:6px 0 0">Your profit and loss chart appears here after your first gain, loss, fee, dividend or portfolio value.</p>'}
     </section>
     ${B.vals.length >= 2 ? `<section class="card"><div class="h2row"><h2>Value and money put in</h2><span class="lc-lab" id="vcLab">${dLong(B.vals[B.vals.length - 1].date)}</span></div>
         <div class="lc-head"><span class="lc-val num" id="vcVal">${fmtN(B.vals[B.vals.length - 1].g)}</span><span class="delta flat" id="vcDelta">put in ${fmtN(B.vals[B.vals.length - 1].put)}</span></div>
-        ${valChart(B)}<p class="hint" style="margin:6px 0 0">Green points are the values you entered. The dashed line is your starting balance plus deposits, less withdrawals. Nothing is filled in between your values.</p></section>` : ''}
+        ${valChart(B)}<p class="hint tip" style="margin:6px 0 0">Green points are the values you entered. The dashed line is your starting balance plus deposits, less withdrawals. Nothing is filled in between your values.</p></section>` : ''}
     <section class="card"><h2>${cycleLabel(mk, true)}</h2><div class="pp-rows">
       ${none ? '' : row('Set aside for investing', 'from this cycle’s split', fmtN(alloc))}
       ${row('Moved to your brokerage', m.investHold ? 'you are keeping this cycle’s share as cash' : 'deposits less withdrawals dated in this cycle', fmtN(moved))}</div>
       <div class="ppbtns" style="margin-top:10px"><button class="btn plain sm" data-invhold aria-pressed="${!!m.investHold}">${m.investHold ? 'Invest it after all' : 'Keep it as cash this cycle'}</button></div>
-      <p class="hint" style="margin:8px 0 0">${none ? noneTxt + ' ' : ''}Your grade counts the investing share once it is moved, or in full if you choose to keep it as cash, for example while you build your emergency savings.</p></section>
+      <p class="hint tip" style="margin:8px 0 0">${none ? noneTxt + ' ' : ''}Your grade counts the investing share once it is moved, or in full if you choose to keep it as cash, for example while you build your emergency savings.</p></section>
     <section class="card">
       <h2>Log a change</h2>
-      <p class="hint" style="margin:6px 0 10px">Record money you move in or out, and what your portfolio is worth now and then. A gain, loss or value entered here is dated today, in ${HOME}. Use More for other dates, currencies or types.</p>
+      <p class="hint tip" style="margin:6px 0 10px">Record money you move in or out, and what your portfolio is worth now and then. A gain, loss or value entered here is dated today, in ${HOME}. Use More for other dates, currencies or types.</p>
       <div class="ppbtns" style="margin-bottom:10px"><button class="btn sm" data-itx="dep">Deposit</button><button class="btn plain sm" data-itx="wd">Withdrawal</button><button class="btn plain sm" data-itx="div">Dividend</button><button class="btn plain sm" data-itx="fee">Fee</button><button class="btn plain sm" data-itx="">More</button></div>
       <form id="gainForm">
         <div class="choices" role="radiogroup" aria-label="Gain or loss" style="grid-template-columns:1fr 1fr;margin-bottom:8px">
@@ -3639,8 +3979,9 @@ function invTidy(B, R, d) {
   const hero = `<section class="card hero ivhero"><div class="label">In Investing</div><div class="big num">${fmtN(B.total)}</div><div class="hnote">${pl}</div>
     <div class="hpair"><div><div class="label">Brokerage</div><div class="v num">${fmtN(B.brokerage)}</div><div class="hnote">${brokNote}</div></div>
       <div><div class="label">Waiting in your bank</div><div class="v num">${fmtN(B.waiting)}</div><div class="hnote">${B.waiting < 0 ? 'you moved more than you set aside' : B.waiting ? 'not moved yet' : 'nothing waiting'}</div></div></div></section>`;
-  const btns = `<div class="ivbtns"><button class="btn" data-ivmove>Move in</button><button class="btn plain" data-itx="dep">Deposit</button><button class="btn plain" data-itx="val">Value</button></div>
-    <p class="hint ivhint">Move in: from another pot into Investing. Deposit: from your bank to the brokerage. Value: what the brokerage says it is worth.</p>`;
+  // Three actions, each a button with its own icon and a few words saying what it does (council review, 1 Nov 2026)
+  const ivb = (attr, ic, t, sub) => `<button class="ivact" type="button" ${attr}><span class="ivai">${navIcon(ic)}</span><b>${t}</b><small>${sub}</small></button>`;
+  const btns = `<div class="ivbtns">${ivb('data-ivmove', '<path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/>', 'Move in', 'from a pot')}${ivb('data-itx="dep"', '<path d="M4 10l8-6 8 6M6 10v8m4-8v8m4-8v8m4-8v8M3 20h18"/>', 'Deposit', 'to brokerage')}${ivb('data-itx="val"', '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>', 'Value', 'what it\'s worth')}</div>`;
   const cyc = `<section class="card"><h2>This cycle · ${cycleLabel(mk, true)}</h2><div class="pp-rows">
       ${none ? '' : row('Set aside for investing', '', fmtN(Math.max(0, (B.splitBy[mk] || 0) - one)))}
       ${row('Moved in from pots', '', sign(mv))}
@@ -3651,12 +3992,12 @@ function invTidy(B, R, d) {
       <div class="ppbtns" style="margin-top:10px"><button class="btn plain sm" data-invhold aria-pressed="${!!m.investHold}">${m.investHold ? 'Invest it after all' : 'Keep it as cash this cycle'}</button></div></section>`;
   const vals = B.vals.length >= 2 ? `<div class="h2row ivch"><span class="label">Value and money put in</span><span class="lc-lab" id="vcLab">${dLong(B.vals[B.vals.length - 1].date)}</span></div>
         <div class="lc-head"><span class="lc-val num" id="vcVal">${fmtN(B.vals[B.vals.length - 1].g)}</span><span class="delta flat" id="vcDelta">put in ${fmtN(B.vals[B.vals.length - 1].put)}</span></div>
-        ${valChart(B)}<p class="hint" style="margin:6px 0 0">Green points are the values you entered. The dashed line is your starting balance plus deposits, less withdrawals. Nothing is filled in between your values.</p>` : '';
+        ${valChart(B)}<p class="hint tip" style="margin:6px 0 0">Green points are the values you entered. The dashed line is your starting balance plus deposits, less withdrawals. Nothing is filled in between your values.</p>` : '';
   const named = ivNamed ? `<div class="ivmore">
       <div class="pp-rows">${row('Locked in (sold)', 'from gains and losses you named', pmN(B.lockedAll))}${row('On paper (still holding)', 'from gains and losses you named', pmN(B.paperAll))}</div>
       ${byInvCard(B)}
       <div class="ivform"><h3>Log a gain, loss or value</h3>
-      <p class="hint" style="margin:6px 0 10px">A gain, loss or value entered here is dated today, in ${HOME}. Use the Deposit and Value buttons above for other dates, currencies or types.</p>
+      <p class="hint tip" style="margin:6px 0 10px">A gain, loss or value entered here is dated today, in ${HOME}. Use the Deposit and Value buttons above for other dates, currencies or types.</p>
       <form id="gainForm">
         <div class="choices" role="radiogroup" aria-label="Gain or loss" style="grid-template-columns:1fr 1fr;margin-bottom:8px">
           <label class="choice"><input type="radio" name="gainSign" value="1" checked><span>Gain<small>money went up</small></span></label>
@@ -3671,7 +4012,7 @@ function invTidy(B, R, d) {
       ${pts.length ? `<div class="h2row ivch"><span class="label">Profit and loss</span><span class="lc-lab" id="plLab">${dLong(pts[pts.length - 1].date)}</span></div>
           <div class="lc-head"><span class="lc-val num" id="plVal">${B.perf > 0 ? '+' : ''}${fmtN(B.perf)}</span><span class="delta flat" id="plDelta">so far</span></div>
           ${plChart(pts, B)}
-          <p class="hint" style="margin:6px 0 0">Points are placed by date. Hollow points are older entries that only know their month.</p>` : ''}</div>` : '';
+          <p class="hint tip" style="margin:6px 0 0">Points are placed by date. Hollow points are older entries that only know their month.</p>` : ''}</div>` : '';
   const perf = `<section class="card"><h2>Performance</h2><div class="pp-rows">
       ${row('Price changes', 'gains, losses and portfolio values', sign(other))}
       ${row('Dividends and interest', 'paid out and reinvested', '+' + fmtN(B.income))}
@@ -3692,7 +4033,7 @@ function byInvCard(B) {
   const rows = N.map((r) => `<button class="pp-row ibrow" data-invf="${esc(r.key)}" aria-describedby="ibHint"><div><div class="n">${esc(r.name)}</div><div class="m">${r.open ? 'Open' : 'Closed'} · ${r.n} ${r.n === 1 ? 'entry' : 'entries'}</div><div class="m">locked in ${pmN(r.locked)} · on paper ${pmN(r.paper)}</div></div><div class="a num">${pmN(r.overall)}</div></button>`).join('');
   const nl = `<div class="pp-row"><div><div class="n">Not linked to an investment</div><div class="m">from portfolio values and unnamed gains or losses</div></div><div class="a num">${pmN(B.notLinked)}</div></div>`;
   return compactCard('byinv', 'By investment', `${N.length} investment${N.length === 1 ? '' : 's'} · locked in ${pmN(B.lockedAll)} · on paper ${pmN(B.paperAll)}`,
-    `<div class="pp-rows">${rows}${nl}</div><p class="hint" id="ibHint" style="margin:8px 0 0">Tap a name to see its entries. Dividends, interest and fees are not in this list.</p>`);
+    `<div class="pp-rows">${rows}${nl}</div><p class="hint tip" id="ibHint" style="margin:8px 0 0">Tap a name to see its entries. Dividends, interest and fees are not in this list.</p>`);
 }
 function itxLabel(x) { const T = ITX_TYPES[x && x.t]; if (!T) return 'Unknown entry'; if (x.t === 'adj') return x.amt < 0 ? 'Loss' : 'Gain'; if (x.t === 'div' && x.paidOut) return 'Dividend or interest, paid to your bank'; return T.n; }
 // Every entry, newest first. Older month-only entries are marked; foreign amounts show their rate and PLN value.
@@ -3778,7 +4119,7 @@ function potNamesCard() {
   const row = (k) => `<div class="field"><label for="pn_${k}">${esc(NAME0[k])}</label><input id="pn_${k}" type="text" maxlength="24" data-potname="${k}" value="${esc(own[k] || '')}" placeholder="${esc(NAME0[k])}" autocomplete="off"></div>`;
   return `<section class="card">
       <h2>Pot names</h2>
-      <p class="hint">Call your pots what makes sense to you. Leave a name empty to go back to the original. Only the name changes: the money and history stay as they are.</p>
+      <p class="hint tip">Call your pots what makes sense to you. Leave a name empty to go back to the original. Only the name changes: the money and history stay as they are.</p>
       <div class="label" style="margin-top:12px">Spending</div>${['groceries', 'everyday', 'fun'].map(row).join('')}
       <div class="label" style="margin-top:12px">Saving</div>${['savings', 'emergency', 'travel', 'general', 'big', 'investing'].map(row).join('')}
     </section>`;
@@ -3843,7 +4184,7 @@ function alertList(key) {
     const st = potStatus(x);
     if (st === 'over') out.push(['over', `${POT_NAMES[p]} is over budget by ${fmt(x.spent - x.budget)}.`]);
     else if (st === 'warn' && x.spent > 0) out.push(['warn', `${POT_NAMES[p]} is at ${Math.round(x.used * 100)}% of its budget. ${fmt(x.left)} left.`]);
-    else if (GLOBAL && key === nowCycle()) { const w = paceWarn(key, x); if (w) out.push(['warn', `${POT_NAMES[p]} is going fast. At this pace it runs out around ${w.day}, ${w.early} day${w.early === 1 ? '' : 's'} before reset.`]); }
+    else if (key === nowCycle()) { const w = paceWarn(key, x); if (w) out.push(['warn', `${POT_NAMES[p]} is going fast. At this pace it runs out around ${w.day}, ${w.early} day${w.early === 1 ? '' : 's'} before reset.`]); }
   });
   // Underspending is judged on the cycle that just closed, once this one has started.
   const prevK = addMonths(key, -1), L2 = buildLedger(state, key, nowCycle()), pr = L2[prevK];
@@ -3920,7 +4261,7 @@ function dayChart(k) {
       ${ti >= 0 ? `<div><div class="label">Safe per day now</div><div class="num">${fmtN(safe)}</div></div>` : ''}
       <div><div class="label">Even share a day</div><div class="num">${fmtN(Math.round(allow))}</div></div>
     </div>
-    <p class="hint" style="margin:8px 0 0">Drag across the bars to see any day. Amber days went over the even share.</p>
+    <p class="hint tip" style="margin:8px 0 0">Drag across the bars to see any day. Amber days went over the even share.</p>
   </section>`;
 }
 function dcRead(i) {
@@ -3980,7 +4321,7 @@ function specialsCard() {
     </div>`;
   };
   return `<section class="card"><h2>Special pots</h2>
-    <p class="hint" style="margin:4px 0 0">Saving for one thing. Each takes a share of Big purchases from now until you mark it bought. Not counted in the 100k.</p>
+    <p class="hint tip" style="margin:4px 0 0">Saving for one thing. Each takes a share of Big purchases from now until you mark it bought. Not counted in the 100k.</p>
     ${open.map(one).join('')}
     <form id="specForm" style="margin-top:14px">
       <input id="spName" type="text" placeholder="What are you saving for?" aria-label="Name" required style="width:100%;margin-bottom:8px">
@@ -4041,7 +4382,7 @@ function loansBody() {
     ${r.lent ? `<div class="meter" style="margin-top:8px"><i style="width:${Math.round((r.back / r.lent) * 100)}%"></i></div><div class="hint" style="margin:4px 0 0">${r.out ? `${Math.round((r.back / r.lent) * 100)}% paid back · owes you ${fmtN(r.out)}` : 'All paid back'}</div>` : ''}
     <div class="ppbtns" style="margin-top:10px"><button class="btn plain sm" data-lend="${r.p.id}">Lent more</button>${r.out ? `<button class="btn sm" data-repay="${r.p.id}">Paid back</button>` : ''}
       ${!r.out ? `<button class="ib del" data-persondel="${r.p.id}" aria-label="Remove ${esc(r.p.name)}">${TRASH}</button>` : ''}</div>
-    ${r.list.length ? `<details class="hist"><summary>History</summary>${expRows(r.list.slice().reverse().map((x) => ({ id: x.id, kind: 'move', g: x.to === 'lent' ? -x.g : x.g, date: x.date, note: x.to === 'lent' ? 'Lent' : 'Paid back', sub: x.to === 'lent' ? 'from ' + potName(x.from) : 'into ' + potName(x.to) })))}</details>` : ''}
+    ${r.list.length ? `<details class="hist"><summary>History</summary>${expRows(r.list.slice().reverse().map((x) => ({ id: x.id, kind: 'move', g: x.to === 'lent' ? -x.g : x.g, date: x.date, note: x.to === 'lent' ? (x.split ? 'Split bill' : 'Lent') : 'Paid back', sub: x.to === 'lent' ? 'from ' + potName(x.from) : 'into ' + potName(x.to) })))}</details>` : ''}
   </div>`;
   return `<section class="card">
       <div class="dcstats" style="border:0;margin:0;padding:0">
@@ -4049,8 +4390,8 @@ function loansBody() {
         <div><div class="label">Lent in total</div><div class="num">${fmtN(L.lentAll)}</div></div>
         <div><div class="label">Paid back</div><div class="num">${fmtN(L.backAll)}</div></div>
       </div>
-      <div class="ppbtns" style="margin-top:14px"><button class="btn sm" data-lend="">Lend money</button></div>
-      <p class="hint" style="margin:10px 0 0">The money leaves the pot you lend from and goes back into a pot when you're paid back. Money lent out isn't counted in your 100k until it's back.</p>
+      <div class="ppbtns" style="margin-top:14px"><button class="btn sm" data-lend="">Lend money</button><button class="btn plain sm" data-act="splitBill">Split a bill</button></div>
+      <p class="hint tip" style="margin:10px 0 0">Split a bill: only your share counts as spending, and each person's share waits here until they pay you. The money leaves the pot you lend from and goes back into a pot when you're paid back. Money lent out isn't counted in your 100k until it's back.</p>
     </section>
     ${L.rows.length ? `<section class="card"><h2>People</h2>${L.rows.map(person).join('')}</section>` : ''}`;
 }
@@ -4125,7 +4466,7 @@ function itxSheetHtml() {
         <p class="hint" style="margin:6px 0 0">Use the rate you really got, or the bank's rate for that day. Leave it empty if you do not have it yet: the entry is saved but is not counted in ${HOME} until you add it. The rate date defaults to the entry's date.</p></div>
       <div class="ix-flow"><div class="label" style="margin:12px 0 6px">Counts for</div>
         <div class="choices" role="radiogroup" aria-label="Which cycle it counts for" style="grid-template-columns:1fr 1fr"><label class="choice"><input type="radio" name="ixFor" value="" ${x.forKey ? '' : 'checked'}><span>The cycle of its date</span></label><label class="choice"><input type="radio" name="ixFor" value="prev" ${x.forKey ? 'checked' : ''}><span>The cycle before<small>a late transfer</small></span></label></div>
-        <p class="hint" style="margin:6px 0 0">Your grade counts each cycle's investing share once it is moved. If this is last cycle's share sent a few days late, pick the cycle before. The date stays as it is.</p></div>
+        <p class="hint tip" style="margin:6px 0 0">Your grade counts each cycle's investing share once it is moved. If this is last cycle's share sent a few days late, pick the cycle before. The date stays as it is.</p></div>
       <label class="ix-div chk"><input type="checkbox" id="ixPaid" ${x.paidOut ? 'checked' : ''}> Paid to my bank, not kept in the account</label>
       <div class="row"><input id="ixAcct" class="f1" type="text" list="ixAccts" maxlength="40" placeholder="Account (optional)" value="${esc(x.acct || '')}" aria-label="Account"><datalist id="ixAccts">${accts.map((a) => `<option value="${esc(a)}">`).join('')}</datalist></div>
       <div class="row"><input id="ixNote" class="f2" type="text" maxlength="120" placeholder="Note (optional)" value="${esc(x.note || '')}" aria-label="Note"></div>
@@ -4372,10 +4713,56 @@ function sheetHtml() {
       ${(() => { const ys = openYearly().concat(yItem(sheetPot) && yItem(sheetPot).end ? [yItem(sheetPot)] : []); if (!ys.length) return ''; const yb = bufferPlan(state).yearly.bal;
         return `<div class="label" style="margin:12px 0 6px">From yearly costs</div><div class="choices four" role="radiogroup" aria-label="Yearly cost">${ys.map((y) => `<label class="choice"><input type="radio" name="expPot" value="${y.id}" ${y.id === sheetPot ? 'checked' : ''}><span>${esc(shortName(y.id))}<small class="num">${fmtS(yb[y.id] || 0)}</small></span></label>`).join('')}</div>`; })()}
       <div class="row"><input id="expNote" class="f2" type="text" placeholder="What was it? (optional)" aria-label="Note" value="${ed ? esc(ed.note || '') : ''}"><input id="expDate" class="f1" type="date" value="${ed && ed.iso ? ed.iso : monthKey(cursor) === nowCycle() ? isoOf(new Date()) : isoOf(cycleRange(monthKey(cursor))[0])}" aria-label="Date"></div>
+      ${ed ? '' : `<label class="spon"><span><b>Split with someone</b><small>Only your share comes off the pot</small></span><input type="checkbox" id="spOn" role="switch"></label>
+      <div id="spBox" hidden>
+        <input id="spWho" type="text" placeholder="Who? e.g. Kasia, Tomek" aria-label="Who you split it with, separated by commas" list="spPeople" autocomplete="off">
+        <datalist id="spPeople">${people().map((x) => `<option value="${esc(x.name)}">`).join('')}</datalist>
+        <div class="choices" role="radiogroup" aria-label="Their share" style="grid-template-columns:1fr 1fr 1fr;margin-top:8px">
+          <label class="choice"><input type="radio" name="spMode" value="half" checked><span>Evenly</span></label>
+          <label class="choice"><input type="radio" name="spMode" value="custom"><span>Custom</span></label>
+          <label class="choice"><input type="radio" name="spMode" value="all"><span>They pay all</span></label>
+        </div>
+        <input id="spAmt" class="num" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Each person's share" aria-label="Each person's share in ${HOME}" hidden style="margin-top:8px">
+        <p class="hint" id="spPrev" style="margin:8px 0 0"></p>
+      </div>`}
       <div class="row"><button class="btn" type="submit" style="flex:1">Save</button>${ed ? (armedEditDel ? `<button class="btn plain warnbtn" type="button" data-editdel="1">${TRASH} Delete</button>` : `<button class="ib del" type="button" data-editarm="1" aria-label="Delete this expense">${TRASH}</button>`) : ''}</div>
     </form>
   </div></div>`;
 }
+// Split a bill (1 Nov 2026): you paid the whole amount, so the pot drops by all of it. Your share is an expense; their
+// share is money lent to them (a move to nxtdoor Bank / Owed to you), which comes back when they pay you.
+// Several people: "Kasia, Tomek" or "Kasia and Tomek". Even = everyone (you too) pays the same, any odd grosz is
+// yours; They pay all = shared between them; Custom = what EACH of them owes.
+const splitNames = (t) => { const seen = new Set(); return String(t || '').split(/,|&|\band\b/i).map((x) => x.trim()).filter((x) => x && !seen.has(x.toLowerCase()) && seen.add(x.toLowerCase())); };
+function splitShares(g, n, mode, customG) {
+  if (!n || !(g > 0)) return null;
+  const each = mode === 'all' ? Math.floor(g / n) : mode === 'custom' ? customG : Math.floor(g / (n + 1));
+  const shares = Array(n).fill(each); if (mode === 'all') shares[0] += g - each * n; // the odd grosz goes to the first person
+  return { shares, their: shares.reduce((a, x) => a + x, 0) };
+}
+function splitOf(g) {
+  const on = document.getElementById('spOn'); if (!on || !on.checked || editExp || !(g > 0)) return null;
+  const names = splitNames(document.getElementById('spWho').value); if (!names.length) { toast('Type who you split it with'); return false; }
+  const mode = (document.querySelector('input[name="spMode"]:checked') || {}).value || 'half';
+  const sh = splitShares(g, names.length, mode, toG(document.getElementById('spAmt').value));
+  if (!sh || !(sh.shares[0] > 0) || sh.their > g) { toast(mode === 'custom' ? `Each share must be above 0 and ${names.length > 1 ? 'together ' : ''}no more than ${fmtN(g)}` : 'That amount is too small to split'); return false; }
+  return { names, shares: sh.shares, their: sh.their, mode };
+}
+function splitPreview() {
+  const box = document.getElementById('spBox'), on = document.getElementById('spOn'); if (!box || !on) return;
+  box.hidden = !on.checked; if (!on.checked) return;
+  const mode = (document.querySelector('input[name="spMode"]:checked') || {}).value || 'half', amt = document.getElementById('spAmt');
+  amt.hidden = mode !== 'custom';
+  const g = toG(document.getElementById('expAmt').value) || 0, pot = (document.querySelector('input[name="expPot"]:checked') || {}).value;
+  const names = splitNames(document.getElementById('spWho').value), n = Math.max(1, names.length), sh = splitShares(g, n, mode, toG(amt.value) || 0);
+  const who = names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0] || 'They';
+  const each = sh ? (sh.shares.every((x) => x === sh.shares[0]) ? fmtN(sh.shares[0]) : fmtN(sh.shares[1])) : '0.00';
+  document.getElementById('spPrev').textContent = !SPEND.includes(pot) ? `Splitting works with ${SPEND.map((p) => potName(p)).join(', ')}.`
+    : !sh ? '' : sh.their > g ? `Their shares add up to more than ${fmtN(g)}.`
+    : `You pay ${fmtN(g - sh.their)} from ${potName(pot)}. ${who} ${n > 1 ? `owe you ${each} each` : `owes you ${fmtN(sh.their)}`}, kept in ${potName('lent')}.`;
+}
+document.addEventListener('input', (e) => { if (e.target.closest && e.target.closest('#expForm')) splitPreview(); });
+document.addEventListener('change', (e) => { if (e.target.closest && e.target.closest('#expForm')) splitPreview(); });
 // What a payment would add to each pot if it is split like the salary: the cycle worked out with it, less the cycle without it.
 function incPreview(sh) {
   const b = bufOf(bufferPlan(state), sh.key);
@@ -4539,7 +4926,7 @@ function debtRows(row) {
 
 // ---------- breakdown ----------
 function potPanel(k, opt = {}) {
-  if (!k) return `<p class="hint" style="margin:0">Tap a slice or a tag to see what is inside that pot.</p>`;
+  if (!k) return `<p class="hint tip" style="margin:0">Tap a slice or a tag to see what is inside that pot.</p>`;
   const s = state.settings, c = monthCalc(monthKey(cursor));
   const g = potAmt(k, c);
   const share = c.total ? Math.round((g / c.total) * 100) : 0;
@@ -4637,7 +5024,7 @@ function renderBreakdown() {
     <div class="minihead" id="miniHead">${selPot ? miniHeadHtml(selPot) : ''}</div>
     <section class="card bdcard">
       <h2 style="margin:0">Where it goes</h2>
-      <p class="hint" style="margin:4px 0 0">Tap a tag, or run your finger round the ring</p>
+      <p class="hint tip" style="margin:4px 0 0">Tap a tag, or run your finger round the ring</p>
       ${tagChart(items, { select: true, selected: selPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: HOME })}
     </section>
     ${debtG ? '' : `<button class="card debtcard${selPot === 'debt' ? ' on' : ''}" data-sel="debt" aria-label="Open the debt pot">
@@ -5001,7 +5388,7 @@ function renderHome() {
     </section>`;
   const noteHtml = `${backupNudge()}${c.short ? `<div class="note">Income is below your fixed costs${c.debtTotal || (state.settings.debts || []).length ? ', debt payments' : ''}${openYearly().length ? ' and yearly costs' : ''}. Nothing is left to split this month.${c.fixedTotal > c.splitTotal ? ' Cover the bills below.' : ''}</div>` : ''}`;
   const ringHtml = desk
-    ? `<section class="card dring"><h2 style="margin:0">Where it goes</h2><p class="hint" style="margin:4px 0 0">Click a slice or a tag to open that pot</p>
+    ? `<section class="card dring"><h2 style="margin:0">Where it goes</h2><p class="hint tip" style="margin:4px 0 0">Click a slice or a tag to open that pot</p>
       ${tagChart(items, { select: true, selected: deskPot, label: 'Income split by pot', cn: 'Income', cb: fmtN(c.total), cs: HOME })}</section>`
     : `<section class="card ringcard" data-open="breakdown" role="button" tabindex="0" aria-label="Where it goes. Open the breakdown">
       <div class="h2row"><h2>Where it goes</h2><span class="chev" aria-hidden="true">›</span></div>
@@ -5028,7 +5415,7 @@ function renderHome() {
           <button class="btn" type="submit">Add payment</button>
         </div>
       </form>
-      <p class="hint" style="margin-top:10px">Payments in the same cycle are combined and split together, unless you put one all in one pot. For other currencies, type the rate you actually got.</p>
+      <p class="hint tip" style="margin-top:10px">Payments in the same cycle are combined and split together, unless you put one all in one pot. For other currencies, type the rate you actually got.</p>
     </section>`;
   // Laptop (H1): a green panel across the top with what is left to spend (the ring, the big number, the three
   // spending pots), then the split, recent spending and income, and the tiles and notes.
@@ -5047,8 +5434,19 @@ function renderHome() {
   const spendLine = (() => {
     if (key !== now) return `${sgnN(ls.left)} ${key < now ? 'left over' : 'to spend'}`;
     const next = new Date(cycleRange(key)[1]); next.setDate(next.getDate() + 1);
-    return `${sgnN(ls.left)} left · resets ${dShort(next)}`;
+    return `${fmtN(Math.max(0, ls.budget - ls.left))} spent so far · resets ${dShort(next)}`; // the dial already shows what is left
   })();
+  if (homeMore) {
+    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="moreBack" aria-label="Back to home">‹ Home</button><h1 class="pmid">${monName(key)} in detail</h1><div></div></div></div>
+      ${extraOn('places') ? placesCard(key) : ''}
+      ${flowOnly(key)}
+      ${compactCard('where', 'Where you stand', `Savings ${sgnN(SR.sav)} · Investing ${sgnN(MP.B.total)}`, SR.html, SR.neg)}
+      ${cycleCard(key, incomeHtml)}
+      ${compactCard('prog', 'Your safety net', PB.line, PB.html)}
+      ${worthCard(key)}
+      <div class="hspacer"></div>`;
+    return;
+  }
   $app.innerHTML = `
     ${homeBar(key, now, days)}
     ${dHero}
@@ -5056,12 +5454,10 @@ function renderHome() {
     ${noteHtml}
     ${alertsFor(key, 'red')}
     ${compactCard('spend', 'Spending', spendLine, spendingCard(key, true), ls.left < 0)}
-    ${placesCard(key)}
-    ${flowCards(key)}
-    ${compactCard('where', 'Where you stand', `Savings ${sgnN(SR.sav)} · Investing ${sgnN(MP.B.total)}`, SR.html, SR.neg)}
-    ${cycleCard(key, incomeHtml)}
-    ${compactCard('prog', 'Your safety net', PB.line, PB.html)}
-    ${worthCard(key)}
+    ${dueCard(key)}
+    ${!c.total ? cycleCard(key, incomeHtml) : ''}
+    ${extraOn('chal') ? chalCard() : ''}
+    ${homeMoreRow(key, c)}
     <div class="hspacer"></div>`;
   fitRingText();
   homeRingFx(key, ls, intro);
@@ -5136,7 +5532,7 @@ function potBody(key, inSheet) {
     </section>
     ${specialsCard()}
     <section class="card"><h2>Use your savings</h2>
-      <p class="hint" style="margin:4px 0 12px">Log something you paid for out of a savings pot, like a trip from Travel, or move money between pots.</p>
+      <p class="hint tip" style="margin:4px 0 12px">Log something you paid for out of a savings pot, like a trip from Travel, or move money between pots.</p>
       <div class="ppbtns"><button class="btn sm" data-addexp="travel">Spend from savings</button><button class="btn plain sm" data-movefrom="travel">Move money</button></div>
       ${(() => {
         const m = state.months[monthKey(cursor)] || {};
@@ -5175,7 +5571,7 @@ function potBody(key, inSheet) {
 function renderDetail() {
   const key = detail, c = monthCalc(monthKey(cursor)), g = potAmt(key, c);
   const share = c.total ? Math.round((g / c.total) * 100) : 0;
-  const body = potBody(key, false);
+  const body = potBody(key, true);
   $app.innerHTML = `
     <div class="top pbar"><div class="hrow"><button class="back" data-act="back" aria-label="Back to ${backTo === 'goals' ? 'goals' : 'home'}">‹ ${backTo === 'goals' ? 'Goals' : 'Home'}</button><div class="pmid label">${monthLabel(cursor)}</div><div></div></div></div>
     ${key === 'subs' ? (() => { const B = billsSummary(monthKey(cursor)); return `<section class="card"><div class="label">Bills this cycle</div><div class="big num">${fmt(B.total)}</div>
@@ -5243,12 +5639,23 @@ let obRent = null, obRentDone = null;
 const CURS = [['PLN', 'Polish złoty'], ['EUR', 'Euro'], ['GBP', 'British pound'], ['USD', 'US dollar'], ['CHF', 'Swiss franc'], ['CZK', 'Czech koruna'], ['SEK', 'Swedish krona'], ['NOK', 'Norwegian krone'], ['DKK', 'Danish krone'], ['HUF', 'Hungarian forint'], ['RON', 'Romanian leu'], ['UAH', 'Ukrainian hryvnia'], ['CAD', 'Canadian dollar'], ['AUD', 'Australian dollar'], ['ZAR', 'South African rand'], ['NGN', 'Nigerian naira'], ['KES', 'Kenyan shilling'], ['INR', 'Indian rupee']];
 // Everyone version: a colour (filled in by tools/build.js from tools/theme.js; the first is the default) and light,
 // dark, or follow the phone (the default)
-const WORLD_COLORS = [];
+const WORLD_COLORS = [["forest","Forest green","#1B4D3E"],["ocean","Ocean blue","#1F4E8C"],["violet","Violet","#4B3A8F"],["lagoon","Lagoon teal","#0E5A6B"],["graphite","Graphite","#3A3F4A"]];
 function themeField() {
   const cur = state.settings.theme || 'auto', b = (k, t) => `<button class="btn ${cur === k ? '' : 'plain '}sm" type="button" data-themepick="${k}" aria-pressed="${cur === k}">${t}</button>`;
   const col = state.settings.color || (WORLD_COLORS[0] || [])[0];
   return `<div style="margin-top:16px"><div class="label">Colour</div><div class="swatches" role="group" aria-label="Colour">${WORLD_COLORS.map(([k, n, c]) => `<button type="button" class="swatch" data-colorpick="${k}" aria-pressed="${col === k}" aria-label="${n}"><i style="background:${c}"></i><span>${n}</span></button>`).join('')}</div></div>
     <div style="margin-top:16px"><div class="label">Appearance</div><div class="ppbtns" role="group" aria-label="Appearance" style="margin-top:8px">${b('auto', 'Same as phone')}${b('light', 'Light')}${b('dark', 'Dark')}</div></div>`;
+}
+// Help text: the explaining lines under cards. Shown for the first 14 days after setup, then tucked away;
+// Setup can turn them back on (or off) for good. Status lines and empty-state lines are not tips.
+function tipsOn() {
+  const t = state && state.settings && state.settings.tips;
+  if (t === 'on') return true; if (t === 'off') return false;
+  return !!(state && state.tipsUntil && todayIso() <= state.tipsUntil);
+}
+function tipsField() {
+  const on = tipsOn(), b = (k, t, sel) => `<button class="btn ${sel ? '' : 'plain '}sm" type="button" data-tipspick="${k}" aria-pressed="${sel}">${t}</button>`;
+  return `<div style="margin-top:16px"><div class="label">Help text under cards</div><div class="ppbtns" role="group" aria-label="Help text" style="margin-top:8px">${b('on', 'Show', on)}${b('off', 'Hide', !on)}</div></div>`;
 }
 function curField(note) {
   return `<div class="field"><label for="curSel">Your currency</label><select id="curSel" class="cur">${CURS.map(([c, n]) => `<option value="${c}" ${c === HOME ? 'selected' : ''}>${c} · ${n}</option>`).join('')}</select></div>
@@ -5286,7 +5693,7 @@ function obNext() {
   }
   if (st === 'split' && POT_ORDER.reduce((a, k) => a + s.percents[k], 0) !== 10000) { toast('The split needs to add up to 100%'); return; }
   if (obStep < OB_STEPS.length - 1) return pageSlide(1, () => { obStep++; });
-  state.setup = true; save(); obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0);
+  state.setup = true; state.tipsUntil = isoOf(new Date(Date.now() + 14 * 86400000)); save(); obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0);
   if (GLOBAL) { tourStep = 0; sheetMode = 'tour'; sheetOpen = true; render(); return; }
   render();
   toast('All set. Add your first payment to start.');
@@ -5307,7 +5714,7 @@ async function offerFile(filename, text) {
 }
 const stamp = () => isoOf(new Date());
 function exportBackup() {
-  if (GLOBAL) { state.settings.lastBackup = isoOf(new Date()); state.settings.backupSnooze = null; save(); render(); }
+  state.settings.lastBackup = isoOf(new Date()); state.settings.backupSnooze = null; save(); render();
   const data = { app: 'WDMMG', kind: 'backup', version: 1, exportedAt: new Date().toISOString(), state };
   offerFile(`wdmmg-backup-${stamp()}.json`, JSON.stringify(data, null, 1));
 }
@@ -5345,10 +5752,9 @@ function applyRestore() {
   if (view === 'onboard') { obStep = 0; view = 'app'; tab = 'home'; detail = null; returning = true; window.scrollTo(0, 0); }
   pendingRestore = null; save(); toast('Backup restored'); render();
 }
-// Everyone version: the data lives only on this phone, so once someone has used the app for two weeks Home asks
+// Both apps: the data lives only on this phone, so once someone has used the app for two weeks Home asks
 // for a backup, then again a month after the last one. "Later" waits a week.
 function backupNudge() {
-  if (!GLOBAL) return '';
   const s = state.settings, keys = Object.keys(state.months).filter((k) => (state.months[k].income || []).length || (state.months[k].expenses || []).length).sort();
   if (!keys.length) return '';
   const today = isoOf(new Date()), daysSince = (iso) => Math.floor((new Date(today) - new Date(iso)) / 864e5);
@@ -5493,7 +5899,7 @@ function importCommit() {
 function importCard() {
   return `<section class="card">
     <h2>Import from your bank</h2>
-    <p class="hint">Download your account history as a CSV file from your banking app or website, then pick it here. You choose where each line goes before anything is added. The file is read on this phone and never sent anywhere.</p>
+    <p class="hint tip">Download your account history as a CSV file from your banking app or website, then pick it here. You choose where each line goes before anything is added. The file is read on this phone and never sent anywhere.</p>
     <label class="btn plain sm filebtn" style="margin-top:10px">Choose a CSV file<input type="file" id="importFile" accept=".csv,text/csv,text/plain" hidden></label>
   </section>`;
 }
@@ -5557,7 +5963,7 @@ function backupCard() {
   const n = Object.keys(state.months).length;
   return `<section class="card" id="restoreBox">
     <h2>Backup</h2>
-    <p class="hint">Keep a copy of everything on your phone or laptop. Do it every month or two, and before big changes. A backup can be put back on any device.</p>
+    <p class="hint tip">Keep a copy of everything on your phone or laptop. Do it every month or two, and before big changes. A backup can be put back on any device.</p>
     <div class="ppbtns"><button class="btn sm" data-act="backup">Download backup</button><button class="btn plain sm" data-act="csv">Spending as CSV</button><button class="btn plain sm" data-act="csvInv">Investments as CSV</button></div>
     ${pendingRestore ? `<div class="note" style="margin-top:12px">This backup is from ${(() => { const d = new Date(pendingRestore.exportedAt); return isNaN(d) ? 'an unknown date' : esc(d.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })); })()} with ${Object.keys(pendingRestore.state.months).length} month${Object.keys(pendingRestore.state.months).length === 1 ? '' : 's'}. Putting it back replaces everything in the app now (${n} month${n === 1 ? '' : 's'}).</div>
       <div class="ppbtns" style="margin-top:10px"><button class="btn sm warnbtn" data-act="restoreYes">Replace with backup</button><button class="btn plain sm" data-act="restoreNo">Cancel</button></div>`
@@ -5586,32 +5992,36 @@ function freezePastRent() {
   });
 }
 function freezePastSplit() { const now = nowCycle(); Object.keys(state.months).forEach((k) => { const m = state.months[k]; if (k < now && !m.pct && ((m.income || []).length || (state.invest || []).some((x) => x && x.key === k && !x.keep))) m.pct = Object.assign({}, state.settings.percents); }); }
-function renderSetup() {
-  const s = state.settings;
-  const pSum = POT_ORDER.reduce((a, k) => a + s.percents[k], 0);
-  const sSum = SUB_ORDER.reduce((a, k) => a + s.sub[k], 0);
-  const opening = state.openingSub;
-  $app.innerHTML = `
-    ${pageBar('Settings')}${GLOBAL ? feedbackCard() : ''}
-
+const setupVars = () => { const s = state.settings; return { s, pSum: POT_ORDER.reduce((a, k) => a + s.percents[k], 0), sSum: SUB_ORDER.reduce((a, k) => a + s.sub[k], 0), opening: state.openingSub }; };
+function setupCycleHtml() {
+  const { s, pSum, sSum, opening } = setupVars();
+  return `
     <section class="card">
       <h2>Pay cycle</h2>
-      <p class="hint">The day each cycle starts. Spending resets on this day, leftovers are counted, and 20% of what is left moves to savings.</p>
+      <p class="hint tip">The day each cycle starts. Spending resets on this day, leftovers are counted, and 20% of what is left moves to savings.</p>
       <div class="field"><label for="cycleDay">Cycle starts on day</label><input id="cycleDay" type="number" inputmode="numeric" min="1" max="28" step="1" value="${cycleDay()}"></div>
       <p class="hint" style="margin:6px 0 0">Current cycle: ${cycleLabel(nowCycle())}</p>
-      ${GLOBAL ? curField(true) + themeField() + '<button class="btn plain sm" data-act="tourAgain" style="margin-top:12px">Show the quick tour again</button>' : ''}
+      ${GLOBAL ? curField(true) : ''}
     </section>
-
+`;
+}
+function setupSplitHtml() {
+  const { s, pSum, sSum, opening } = setupVars();
+  return `
     <section class="card">
       <h2>Monthly split</h2>
-      <p class="hint">Share of the money left after fixed costs. Must add up to 100%.</p>
+      <p class="hint tip">Share of the money left after fixed costs. Must add up to 100%.</p>
       ${POT_ORDER.map((k) => `<div class="field"><label for="p_${k}">${POT_NAMES[k]}</label><input id="p_${k}" data-pct="${k}" type="number" inputmode="decimal" step="0.01" min="0" value="${s.percents[k] / 100}"></div>`).join('')}
       <div class="sum num ${pSum === 10000 ? '' : 'bad'}">Total ${pct(pSum)}${pSum === 10000 ? '' : ' (needs to be 100%)'}</div>
     </section>
-
+`;
+}
+function setupSavHtml() {
+  const { s, pSum, sSum, opening } = setupVars();
+  return `
     <section class="card">
       <h2>Savings sub pots</h2>
-      <p class="hint">How each savings transfer is shared. Emergency fund first, the rest spread out.</p>
+      <p class="hint tip">How each savings transfer is shared. Emergency fund first, the rest spread out.</p>
       ${SUB_ORDER.map((k) => `<div class="field"><label for="s_${k}">${SUB_NAMES[k]}</label><input id="s_${k}" data-sub="${k}" type="number" inputmode="decimal" step="0.01" min="0" value="${s.sub[k] / 100}"></div>`).join('')}
       <div class="sum num ${sSum === 10000 ? '' : 'bad'}">Total ${pct(sSum)}${sSum === 10000 ? '' : ' (needs to be 100%)'}</div>
       <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
@@ -5622,37 +6032,27 @@ function renderSetup() {
         <button class="btn" type="submit">Spread across pots</button>
       </form>`}
     </section>
-
+`;
+}
+function setupBillsHtml() {
+  const { s, pSum, sSum, opening } = setupVars();
+  return `
     <section class="card">
       <h2>Bills</h2>
       ${billsEditor()}
       <div class="field" style="margin-top:12px"><label for="rentT">${GLOBAL ? 'Expected rent' : 'Expected rent after graduation'} (${HOME} a month)</label><input id="rentT" type="number" inputmode="decimal" min="0" step="1" value="${s.rentTarget / 100}"></div>
       <div class="field"><label for="rentCush">Rent cushion (months of rent)</label><input id="rentCush" type="number" inputmode="numeric" min="0" max="12" step="1" value="${s.rentCushion == null ? 3 : s.rentCushion}"></div>
-      <p class="hint" style="margin:6px 0 0">Rent practice fills this cushion first. Once it is full, new rent practice goes to your Emergency fund.</p>
+      <p class="hint tip" style="margin:6px 0 0">Rent practice fills this cushion first. Once it is full, new rent practice goes to your Emergency fund.</p>
       ${s.graduated ? `<p class="hint" style="margin:10px 0 0">Paying your own rent since ${monLong(s.graduated)}.</p>`
         : armedGrad ? `<div class="note" style="margin-top:12px">This adds Rent (${fmt(s.rentTarget)}) as a monthly bill from this cycle, moves the ${pct(s.percents.rent)} rent practice share to Savings, and keeps what is in the pot as your rent cushion. Past months stay as they were.</div>
           <div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-act="gradYes">Yes, I pay my own rent now</button><button class="btn plain sm" data-act="gradNo">Cancel</button></div>`
         : `<button class="btn plain sm" data-act="gradArm" style="margin-top:12px">I'm paying my own rent now</button>`}
     </section>
-
-    <section class="card">
-      <h2>Debts</h2>
-      ${debtsEditor()}
-    </section>
-
-    <section class="card">
-      <h2>Yearly costs</h2>
-      ${yearlyEditor()}
-    </section>
-
-    ${potNamesCard()}
-
-    ${bufferCard()}
-
-    ${backupCard()}
-    ${importCard()}
-    ${aboutCards()}
-
+`;
+}
+function setupPinHtml() {
+  const { s, pSum, sSum, opening } = setupVars();
+  return `
     <section class="card">
       <h2>PIN and data</h2>
       <div class="row">
@@ -5662,8 +6062,96 @@ function renderSetup() {
       <p class="hint" style="margin-top:12px;display:flex;gap:8px;align-items:baseline"><span id="syncDot" class="syncdot ${sync.status}"></span><span id="syncLine">${syncText(sync.status)}</span></p>
       <div id="wipeBox"><button class="linkbtn" data-act="wipeAsk">Erase all data</button></div>
     </section>
-    ${setupMsg ? `<div class="note" role="status">${esc(setupMsg)}</div>` : ''}
-    ${engraving()}`;
+`;
+}
+// Extras: parts of the app most people can do without. Each can be switched on or off in Setup > Extras.
+// Edd's own app has them all on. In the everyone app they start off, unless they already hold something.
+const EXTRAS = [
+  ['chal', 'Challenges', 'Small spending challenges on Home'],
+  ['places', 'Where you spend', 'Your top shops, from the notes you type'],
+  ['debts', 'Debts', 'Loans and cards you are paying off'],
+  ['yearly', 'Yearly costs', 'Put a little aside each month for once-a-year bills'],
+  ['buffer', 'Income buffer', 'Pay yourself the same amount every month'],
+];
+function extraInUse(k) {
+  const s = state.settings;
+  if (k === 'debts') return (s.debts || []).length > 0;
+  if (k === 'yearly') return (s.yearly || []).length > 0;
+  if (k === 'buffer') { try { const B = bufferStatus().B; return !!(B && (B.on || B.start)); } catch (e) { return false; } }
+  return false;
+}
+function extraOn(k) {
+  const x = (state.settings.extras || {})[k];
+  if (x === true || x === false) return x;
+  if (!GLOBAL || k === 'chal' || k === 'places') return true;
+  return extraInUse(k);
+}
+const extrasLine = () => { const n = EXTRAS.filter(([k]) => extraOn(k)).length; return `${n} of ${EXTRAS.length} on`; };
+function extrasCard() {
+  return `<section class="card"><h2>Extras</h2><p class="hint" style="margin:0 0 6px">Turn on only what you need. Turning one off hides it; nothing you entered is deleted.</p>
+    ${EXTRAS.map(([k, n, d]) => { const on = extraOn(k); return `<label class="xrow"><span><b>${n}</b><span class="hint" style="margin:0">${d}</span></span><input type="checkbox" class="switch" data-extra="${k}" ${on ? 'checked' : ''} aria-label="${n}"></label>`; }).join('')}</section>`;
+}
+document.addEventListener('change', (e) => {
+  const x = e.target.closest && e.target.closest('[data-extra]');
+  if (!x) return;
+  state.settings.extras = Object.assign({}, state.settings.extras, { [x.dataset.extra]: x.checked }); save(); render();
+});
+// Setup is a short menu, like the iPhone's Settings: each row opens its own page (council review, 1 Nov 2026).
+// On a laptop every section is shown at once in columns, as before. setupSec '*' also shows them all.
+let setupSec = null;
+const SETUP_ICON = {
+  cycle: CC_ICONS.cycle[1], split: '<circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/>', savings: '<path d="M4 10h16v10H4zM2 10l10-6 10 6"/>',
+  bills: CC_ICONS.p2due[1], debts: '<path d="M4 7h16v10H4zM4 11h16"/>', yearly: '<path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4M9 15h2"/>',
+  buffer: '<path d="M3 12h4l3-8 4 16 3-8h4"/>', look: '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/>',
+  names: '<path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/>', extras: '<path d="M12 3v18M3 12h18"/>', backup: '<path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/>',
+  about: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>', pin: '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>' };
+function setupSections() {
+  const s = state.settings;
+  const pSum = POT_ORDER.reduce((a, k) => a + s.percents[k], 0);
+  const sSum = SUB_ORDER.reduce((a, k) => a + s.sub[k], 0);
+  const opening = state.openingSub;
+  const nBills = (s.fixed || []).length, nDebts = (s.debts || []).length, nYear = (s.yearly || []).filter((y) => !y.end).length;
+  const buf = (() => { try { const S = bufferStatus(); return S.live ? 'Paying you ' + fmtN(S.pay) + ' a month' : S.B && S.B.on ? 'Filling' : 'Off'; } catch (e) { return ''; } })();
+  const many = (n, one, more) => n ? `${n} ${n === 1 ? one : more}` : 'None yet';
+  return [
+    { group: 'Your money plan' },
+    { id: 'cycle', t: 'Pay cycle', sub: `Starts on day ${cycleDay()}${GLOBAL ? ' · ' + HOME : ''}`, html: setupCycleHtml },
+    { id: 'split', t: 'Monthly split', sub: pSum === 10000 ? POT_ORDER.filter((k) => s.percents[k]).map((k) => `${POT_NAMES[k]} ${pct(s.percents[k])}`).slice(0, 3).join(' · ') : 'Needs to add up to 100%', warn: pSum !== 10000, html: setupSplitHtml },
+    { id: 'savings', t: 'Savings pots', sub: sSum === 10000 ? SUB_ORDER.map((k) => SUB_NAMES[k]).slice(0, 3).join(', ') : 'Needs to add up to 100%', warn: sSum !== 10000, html: setupSavHtml },
+    { id: 'bills', t: 'Bills and rent', sub: many(nBills, 'bill', 'bills'), html: setupBillsHtml },
+    { id: 'debts', t: 'Debts', sub: many(nDebts, 'debt', 'debts'), extra: 'debts', html: () => `<section class="card"><h2>Debts</h2>${debtsEditor()}</section>` },
+    { id: 'yearly', t: 'Yearly costs', sub: many(nYear, 'cost', 'costs'), extra: 'yearly', html: () => `<section class="card"><h2>Yearly costs</h2>${yearlyEditor()}</section>` },
+    { id: 'buffer', t: 'Income buffer', sub: buf, extra: 'buffer', html: () => bufferCard() },
+    { group: 'Make it yours' },
+    { id: 'look', t: 'Look', sub: `${(WORLD_COLORS.find((c) => c[0] === (s.color || (WORLD_COLORS[0] || [])[0])) || [, 'Colour'])[1]} · ${s.theme === 'dark' ? 'Dark' : s.theme === 'light' ? 'Light' : 'Same as phone'}`, html: () => `<section class="card"><h2>Look</h2>${WORLD_COLORS.length ? themeField() : ''}${tipsField()}${GLOBAL ? '<button class="btn plain sm" data-act="tourAgain" style="margin-top:16px">Show the quick tour again</button>' : ''}</section>` },
+    { id: 'names', t: 'Pot names', sub: 'Call your pots what you like', html: () => potNamesCard() },
+    { id: 'extras', t: 'Extras', sub: extrasLine(), html: () => extrasCard() },
+    { group: 'Your data' },
+    { id: 'backup', t: 'Backup and import', sub: state.lastBackup ? 'Last backup ' + dShort(new Date(state.lastBackup)) : 'No backup yet', warn: !state.lastBackup, html: () => backupCard() + importCard() },
+    ...(GLOBAL ? [{ id: 'about', t: 'Privacy and install', sub: 'Everything stays on this phone', html: () => aboutCards() }] : []),
+    { id: 'pin', t: 'PIN and data', sub: 'Lock, change PIN, erase', html: setupPinHtml },
+  ].filter((x) => !x.extra || extraOn(x.extra));
+}
+function renderSetup() {
+  const all = setupSections(), secs = all.filter((x) => x.id);
+  const showAll = setupSec === '*' || isDesk();
+  const cur = !showAll && setupSec ? secs.find((x) => x.id === setupSec) : null;
+  if (setupSec && setupSec !== '*' && !cur) setupSec = null;
+  const msg = setupMsg ? `<div class="note" role="status">${esc(setupMsg)}</div>` : '';
+  if (showAll) { $app.innerHTML = `${pageBar('Settings')}${GLOBAL ? feedbackCard() : ''}${secs.map((x) => x.html()).join('')}${msg}${engraving()}`; return; }
+  if (cur) {
+    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="setupBack" aria-label="Back to Settings">‹ Settings</button><h1 class="pmid">${cur.t}</h1><div></div></div></div>
+      <div class="setpage">${cur.html()}</div>${msg}`;
+    return;
+  }
+  let rows = '', open = false;
+  const close = () => (open ? '</div></section>' : '');
+  for (const x of all) {
+    if (x.group) { rows += close() + `<div class="smgroup">${x.group}</div><section class="card smenu"><div>`; open = true; continue; }
+    rows += `<button class="smrow${x.warn ? ' warn' : ''}" data-setsec="${x.id}"><span class="ccic">${navIcon(SETUP_ICON[x.id] || '')}</span><span class="cct"><b>${x.t}</b><span class="ccl">${x.sub}</span></span>${CHEV}</button>`;
+  }
+  rows += close();
+  $app.innerHTML = `${pageBar('Settings')}${GLOBAL ? feedbackCard() : ''}${rows}${msg}${engraving()}`;
 }
 // The version, pressed faintly into the bottom of Setup like an engraving. Tap it five times for the build details.
 let engraveTaps = 0, engraveAt = 0;
@@ -5694,10 +6182,22 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ---------- shell ----------
-function render() { return withMemo(renderNow); }
+// Home-screen shortcuts (hold the app icon): ?add=exp or ?add=inc opens that form once the app is unlocked.
+let launchAdd = (() => { try { const a = new URLSearchParams(location.search).get('add'); if (a) history.replaceState(null, '', location.pathname); return a === 'exp' || a === 'inc' ? a : null; } catch (e) { return null; } })();
+function launchShortcut(a) {
+  if (a === 'exp') return openSheet();
+  sheetOpen = false; tab = 'home'; detail = null; homeOpen.cycle = true; homeMore = !!monthCalc(monthKey(cursor)).total; render();
+  setTimeout(() => { const el = document.getElementById('inAmount'); if (el) { el.scrollIntoView({ block: 'center' }); el.focus(); } }, 60);
+}
+function render() {
+  const r = withMemo(renderNow);
+  if (launchAdd && view === 'app' && state && state.setup && !unlocking) { const a = launchAdd; launchAdd = null; setTimeout(() => launchShortcut(a), 0); }
+  return r;
+}
 function renderNow() {
   HOME = homeCur(); applyPotNames();
-  if (GLOBAL) {
+  document.documentElement.classList.toggle('notips', !tipsOn());
+  {
     const th = state.settings.theme, co = state.settings.color, r = document.documentElement;
     if (th === 'light' || th === 'dark') r.dataset.theme = th; else delete r.dataset.theme;
     if (co && WORLD_COLORS.some((x, i) => i && x[0] === co)) r.dataset.color = co; else delete r.dataset.color;
@@ -5786,6 +6286,8 @@ function pageSlide(dir, change) {
 // Changing tab. Tabs are equals, so nothing slides sideways: the white pill glides to the new tab, the old page
 // fades out quickly and the new one fades in with a small rise. The + button stays where it is.
 function tabGo(t) {
+  if (t === 'setup' && setupSec && setupSec !== '*') { setupSec = null; if (tab === 'setup' && !detail) { window.scrollTo(0, 0); return render(); } }
+  if (t === 'home' && homeMore) { homeMore = false; if (tab === 'home' && !detail) { window.scrollTo(0, 0); return render(); } }
   const from = tabsNow().indexOf(tab), to = tabsNow().indexOf(t);
   if (t === tab && !detail) return;
   if (t !== tab || detail) deskPot = null;
@@ -5923,8 +6425,8 @@ function deskPotCards(c) {
   const owed = debts.reduce((a, d) => a + (DP.left[d.id] || 0), 0), ov = overspends().reduce((a, o) => a + o.g, 0);
   const card = (k, name, hint) => `<button class="card debtcard${deskPot === k ? ' on' : ''}" data-pot="${k}" aria-label="Open ${name}"><span class="sw" style="background:${potColor[k]}"></span>
     <span class="dc-t"><span class="pp-name">${name}</span><span class="hint">${hint}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
-  return card('yearly', potName('yearly'), Y.n ? `${fmt(Y.saved)} saved · ${fmt(c.yearlyTotal || 0)} this month` : 'Insurance, a phone plan, anything once a year')
-    + card('debt', potName('debt'), (owed ? `${fmt(owed)} owed${c.debtTotal ? ' · ' + fmt(c.debtTotal) + ' this month' : ''}` : 'Nothing owed') + (ov ? ` · ${fmt(ov)} overspent last cycle` : ''))
+  return (extraOn('yearly') ? card('yearly', potName('yearly'), Y.n ? `${fmt(Y.saved)} saved · ${fmt(c.yearlyTotal || 0)} this month` : 'Insurance, a phone plan, anything once a year') : '')
+    + (extraOn('debts') ? card('debt', potName('debt'), (owed ? `${fmt(owed)} owed${c.debtTotal ? ' · ' + fmt(c.debtTotal) + ' this month' : ''}` : 'Nothing owed') + (ov ? ` · ${fmt(ov)} overspent last cycle` : '')) : '')
     + card('lent', potName('lent'), L.out ? `${fmt(L.out)} still owed to you · ${L.owing} ${L.owing === 1 ? 'person' : 'people'}` : 'Nobody owes you anything')
     + (S.B && S.B.start ? card('buffer', potName('buffer'), S.live ? `paying you ${fmt(S.pay)} a month` : `${fmt(S.BP.bal)} of ${fmt(S.pay)}`) : '');
 }
@@ -6073,6 +6575,8 @@ document.addEventListener('click', (e) => {
   const thp = e.target.closest('[data-themepick]');
   const cop = e.target.closest('[data-colorpick]');
   if (cop) { state.settings.color = cop.dataset.colorpick === WORLD_COLORS[0][0] ? null : cop.dataset.colorpick; save(); return render(); }
+  const tpk = e.target.closest('[data-tipspick]');
+  if (tpk) { state.settings.tips = tpk.dataset.tipspick; save(); return render(); }
   if (thp) { state.settings.theme = thp.dataset.themepick === 'auto' ? null : thp.dataset.themepick; save(); return render(); }
   const orb = e.target.closest('[data-obrent]');
   if (orb) { obRent = orb.dataset.obrent; return render(); }
@@ -6124,12 +6628,15 @@ document.addEventListener('click', (e) => {
   if (!t) return;
   if (t.dataset.k !== undefined) return void press(t.dataset.k);
   if (t.dataset.tab) return tabGo(t.dataset.tab);
+  if (t.dataset.setsec) { setupSec = t.dataset.setsec; window.scrollTo(0, 0); return render(); }
   if (t.dataset.del) {
     const m = state.months[monthKey(cursor)];
     if (m) m.income = m.income.filter((x) => x.id !== t.dataset.del);
     save(); return render();
   }
   if (t.dataset.debtarm) { armedDebt = t.dataset.debtarm; return render(); }
+  if (t.dataset.calday) { calDay = calDay === t.dataset.calday ? null : t.dataset.calday; return render(); }
+  if (t.dataset.chal) { state.chal = chalPlan(t.dataset.chal); state.chalWin = null; homeOpen.chal = true; save(); render(); return toast(state.chal.from > isoOf(new Date()) ? `Starts ${dShort(isoDay(state.chal.from))}. Good luck!` : 'Challenge started. Good luck!'); }
   if (t.dataset.debtdel) { freezePastDebts(); state.settings.debts = (state.settings.debts || []).filter((x) => x.id !== t.dataset.debtdel); armedDebt = null; save(); return render(); }
   if (t.dataset.debtpause) { freezePastDebts(); const d = (state.settings.debts || []).find((x) => x.id === t.dataset.debtpause); if (d) d.paused = !d.paused; armedDebt = null; save(); return render(); }
   if (t.dataset.coverBills) {
@@ -6158,7 +6665,7 @@ document.addEventListener('click', (e) => {
     case 'incAdd': return incCommit();
     case 'addExp': return openSheet();
     case 'addPick': editExp = null; sheetMode = 'add'; sheetOpen = true; return render();
-    case 'addInc': sheetOpen = false; tab = 'home'; detail = null; homeOpen.cycle = true; render();
+    case 'addInc': sheetOpen = false; tab = 'home'; detail = null; homeOpen.cycle = true; homeMore = !!monthCalc(monthKey(cursor)).total; render();
       return setTimeout(() => { const a = document.getElementById('inAmount'); if (a) { a.scrollIntoView({ block: 'center' }); a.focus(); } }, 60);
     case 'addMove': return openMove();
     case 'addInv': return openItx('dep');
@@ -6187,6 +6694,9 @@ document.addEventListener('click', (e) => {
     case 'csvInv': return exportInvCsv();
     case 'restoreYes': return applyRestore();
     case 'restoreNo': pendingRestore = null; return render();
+    case 'moreOpen': homeMore = true; window.scrollTo(0, 0); return render();
+    case 'moreBack': homeMore = false; window.scrollTo(0, 0); return render();
+    case 'setupBack': setupSec = null; window.scrollTo(0, 0); return render();
     case 'back': if (detail === 'breakdown' && !backTo && psState === 'closed' && !reduceMotion() && !isDesk() && !navFx) { const sv = document.querySelector('svg.tagchart.select'); if (sv) { navFx = true; return ringHandOff(sv, false); } }
       if (detail === 'breakdown') { backChange(); returning = true; window.scrollTo(0, 0); return render(); }
       return pageSlide(-1, backChange);
@@ -6206,6 +6716,11 @@ document.addEventListener('click', (e) => {
     case 'importClose': imp = null; sheetOpen = false; return render();
     case 'importAdd': return importCommit();
     case 'installApp': if (installEvt) { const ev = installEvt; installEvt = null; ev.prompt(); ev.userChoice.then(() => render(), () => render()); } return;
+    case 'story': return storyOpen();
+    case 'splitBill': { openSheet(SPEND.includes(sheetPot) ? sheetPot : 'fun'); const on = document.getElementById('spOn'); if (on) { on.checked = true; splitPreview(); } return; }
+    case 'chalOk': state.chalWin = null; save(); return render();
+    case 'chalNew': state.chalWin = null; homeOpen.chal = true; save(); return render();
+    case 'chalDrop': state.chal = null; homeOpen.chal = true; save(); return render();
     case 'backupLater': state.settings.backupSnooze = isoOf(new Date()); save(); return render();
     case 'resetPin': state.pin = null; state.salt = null; save(); view = 'lock'; entry = ''; first = ''; return render();
     case 'clearOpening': state.openingSub = null; save(); return render();
@@ -6235,7 +6750,7 @@ document.addEventListener('submit', (e) => {
     // Ask where the payment goes before storing anything. Cancel keeps what was typed.
     incDraft = { amt: document.getElementById('inAmount').value, rate: (document.getElementById('inRate') || {}).value || '', label: document.getElementById('inLabel').value };
     incSheet = { key: monthKey(cursor), g, label: incDraft.label.trim(), extra, choice: 'split', pot: null };
-    const same = GLOBAL ? lastFromPayer(incSheet.label) : null; // everyone version: same choice as last time from this payer
+    const same = lastFromPayer(incSheet.label); // same choice as last time from this payer
     if (same) { incSheet.remembered = true; if (ONE_POTS.includes(same.pot)) { incSheet.choice = 'one'; incSheet.pot = same.pot; } }
     incSheet.prev = incPreview(incSheet);
     editExp = null; sheetMode = 'inc'; sheetOpen = true; save(); render();
@@ -6259,6 +6774,8 @@ document.addEventListener('submit', (e) => {
     // A typo like year 2062 or 1926 would create decades of empty cycles, so dates must be within 5 years of today.
     if (!(Math.abs(day - new Date()) < 5 * 366 * 86400000)) { undo(); toast('Pick a date within 5 years of today'); return; }
     const key = cycleKeyOf(day);
+    const sp = splitOf(g); if (sp === false) { undo(); return; }
+    if (sp && !SPEND.includes(pot)) { undo(); toast(`Splitting works with ${SPEND.map((x) => potName(x)).join(', ')}`); return; }
     if (SUB_ORDER.includes(pot) || specialOf(pot) || yItem(pot)) {
       const have = available(pot);
       if (g > have) { undo(); toast(`${potName(pot)} only has ${fmt(have)}`); return; }
@@ -6272,6 +6789,16 @@ document.addEventListener('submit', (e) => {
     const before = ledgerRow(key);
     const m = (state.months[key] = state.months[key] || { income: [] });
     const nid = keepId && key === oldKey ? keepId : uid(); freshId = nid; // a new id when it moves to another cycle, so the old cycle can list the old one as gone
+    if (sp) {
+      const ps = sp.names.map((nm) => { let pp = people().find((x) => x.name.toLowerCase() === nm.toLowerCase()); if (!pp) { pp = { id: 'p' + uid(), name: nm }; people().push(pp); } return pp; });
+      const mine = g - sp.their;
+      if (mine > 0) m.expenses = (m.expenses || []).concat([{ id: nid, pot, g: mine, note, iso, date: dShort(day), split: { with: ps.map((x) => x.id), total: g } }]);
+      ps.forEach((pp, i) => (m.moves = m.moves || []).push({ id: uid(), from: pot, to: 'lent', g: sp.shares[i], person: pp.id, note: `${note || 'Split bill'} · ${pp.name}'s share`, iso, date: dShort(day), split: nid }));
+      sheetPot = pot; sheetOpen = false; editExp = null; save();
+      const who = ps.length > 1 ? `${ps.length} people owe you ${fmtN(sp.their)}` : `${ps[0].name} owes you ${fmtN(sp.their)}`;
+      toast(mine > 0 ? `You paid ${fmtN(mine)} · ${who}` : who);
+      return render();
+    }
     (m.expenses = m.expenses || []).push({ id: nid, pot, g, note, iso, date: dShort(day) });
     const wasEdit = !!old;
     sheetPot = pot; sheetOpen = false; editExp = null; save();
@@ -6436,6 +6963,10 @@ document.addEventListener('change', (e) => {
   const t = e.target;
   if (t.id === 'restoreFile') { if (t.files && t.files[0]) readBackup(t.files[0]); return; }
   if (t.dataset.potname) { const k = t.dataset.potname, v = t.value.trim().slice(0, 24); state.settings.potNames = Object.assign({}, state.settings.potNames); if (v && v !== NAME0[k]) state.settings.potNames[k] = v; else delete state.settings.potNames[k]; save(); render(); toast(v ? `Renamed to ${v}` : `Back to ${NAME0[k]}`); return; }
+  if (t.dataset.billday) {
+    const v = Number(t.value) || null, set = (f) => { if (f.id === t.dataset.billday) { if (v) f.day = v; else delete f.day; } };
+    state.settings.fixed.forEach(set); Object.values(state.months).forEach((m) => (m && m.fixed || []).forEach(set)); save(); return render();
+  }
   if (t.id === 'importFile') { if (t.files && t.files[0]) readStatement(t.files[0]); t.value = ''; return; }
   if (t.dataset.imcol && imp) { imp.map[t.dataset.imcol] = Number(t.value); impBuild(); return render(); }
   if (t.dataset.imrow && imp) { imp.out[Number(t.dataset.imrow)].pot = t.value; const b = document.getElementById('impAdd'); if (b) b.outerHTML = impBtn(); return; }
