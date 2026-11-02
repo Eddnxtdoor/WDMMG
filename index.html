@@ -1155,6 +1155,109 @@ html.notips .tip { display: none; }
 .switch::after { content: ""; position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
 .switch:checked { background: var(--fill, var(--green)); } .switch:checked::after { transform: translateX(20px); }
 .ccmore .chev { font-size: 22px; color: var(--muted); padding: 0 4px; }
+
+/* Clearing notifications (1 Nov 2026) */
+.nsheet .nitem { grid-template-columns: 8px minmax(0, 1fr) auto; }
+.nclear { width: 30px; height: 30px; border-radius: 50%; border: 0; display: grid; place-items: center; margin: -4px -6px -4px 0; background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--muted); cursor: pointer; }
+.nclear svg { width: 14px; height: 14px; }
+.nbtns { display: flex; gap: 14px; align-items: center; }
+
+/* Large titles and pot colours (Edd's picks, 2 Nov 2026) */
+:root { --pc-gro: #2E9E68; --pc-day: #2F7BDB; --pc-fun: #DB4F86; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pc-gro: #45B97F; --pc-day: #5196EE; --pc-fun: #EC6D9E; } }
+:root[data-theme="dark"] { --pc-gro: #45B97F; --pc-day: #5196EE; --pc-fun: #EC6D9E; }
+.bigt { font: 800 34px/1.1 var(--font); letter-spacing: -.02em; margin: 14px 6px 2px; color: var(--ink); text-wrap: balance; transition: opacity .15s; }
+#app:has(.bigt) .top.pbar .pmid { opacity: 0; transition: opacity .15s; font-weight: 700; } html.scrolled #app:has(.bigt) .top.pbar .pmid { opacity: 1; } html.scrolled .bigt { opacity: 0; }
+.desk .bigt { display: none; } #app.desk:has(.bigt) .top.pbar .pmid { opacity: 1; }
+.dsegs .drow i:not(.dover) { background: var(--c, var(--green)); }
+.dsegs .drow u { background: color-mix(in srgb, var(--c, var(--ink)) 16%, transparent); }
+.dsegs .drow em::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; background: var(--c, var(--green)); }
+
+/* Notifications: A's bottom sheet with B's iPhone-style cards (Edd, 2 Nov 2026) */
+.nsheet .nhd { display: flex; justify-content: space-between; align-items: center; margin: 2px 2px 12px; } .nsheet .nhd h3 { margin: 0; font: 800 26px/1.1 var(--font); letter-spacing: -.02em; }
+.nbtns { display: flex; gap: 8px; align-items: center; }
+.nclrall { border: 0; border-radius: 999px; padding: 8px 14px; background: color-mix(in srgb, var(--ink) 9%, transparent); color: var(--ink); font: 600 13px/1 var(--font); cursor: pointer; }
+.nround { width: 34px; height: 34px; border-radius: 50%; border: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--ink) 9%, transparent); color: var(--ink); cursor: pointer; } .nround svg { width: 15px; height: 15px; }
+.nwrap { position: relative; border-radius: 22px; margin-top: 10px; } .nwrap:first-child { margin-top: 0; }
+.ndel { position: absolute; inset: 0; border-radius: 22px; background: var(--warn); color: #fff; display: flex; align-items: center; justify-content: flex-end; padding-right: 22px; font: 700 14px/1 var(--font); }
+.ncard { position: relative; display: flex; gap: 12px; align-items: flex-start; padding: 14px 12px 14px 14px; border-radius: 22px; background: var(--surface); box-shadow: 0 4px 16px rgba(0, 0, 0, .07), inset 0 0 0 .5px color-mix(in srgb, var(--ink) 8%, transparent); touch-action: pan-y; transition: transform .22s; font: 500 14px/1.35 var(--font); color: var(--ink); }
+.ncard .nt { flex: 1; min-width: 0; } .ncard .nt b { display: block; font: 700 15px/1.3 var(--font); margin-bottom: 2px; }
+.ncard .abt { margin-top: 8px; }
+.nic { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none; color: #fff; background: #3D7BFF; } .nic svg { width: 18px; height: 18px; }
+.ncard.over .nic { background: var(--warn); } .ncard.warn .nic { background: #E8A13A; }
+.ncard .nclear { margin: -2px -2px 0 0; }
+.nswipe, .nempty { text-align: center; color: var(--muted); font: 500 12px/1.3 var(--font); margin: 10px 0 2px; } .nempty { font-size: 15px; margin: 20px 0; }
+.nround.nclose { padding: 0; width: 34px; height: 34px; flex: none; margin: 0; }
+.ncard.good .nic { background: var(--green); }
+.alert.good { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.things { position: relative; overflow: hidden; }
+.titem { border-top: 1px solid var(--line); } .titem:first-of-type { border-top: 0; }
+.trow { display: flex; gap: 12px; align-items: center; width: 100%; padding: 10px 0; background: none; border: 0; text-align: left; color: var(--ink); font: inherit; cursor: pointer; }
+.tring { width: 44px; height: 44px; flex: none; }
+.trow .tt { min-width: 0; } .trow .tt b { display: block; font-size: 15px; } .trow .tt .num { font-size: 13px; color: var(--muted); }
+.trow .ok { color: var(--green); font-weight: 700; } .trow .slow { color: var(--amber); font-weight: 700; }
+.tmore { padding: 0 0 12px 56px; }
+.tadd { width: 100%; margin-top: 8px; border-radius: 999px; }
+.tform { margin-top: 12px; display: grid; } .tform input { width: 100%; margin-bottom: 10px; }
+.tl { font-size: 13px; color: var(--muted); font-weight: 600; margin: 0 0 4px; }
+.tprev { background: var(--tint, #E3EEE8); border-radius: 16px; padding: 12px 14px; font-size: 14px; margin: 2px 0 12px; }
+/* the app's own pickers (2 Nov 2026) */
+.pkn { position: absolute !important; opacity: 0; pointer-events: none; width: 1px !important; height: 1px !important; min-height: 0 !important; padding: 0 !important; border: 0 !important; }
+.pkf { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; border: 0; border-radius: 14px; background: var(--field, color-mix(in srgb, var(--ink) 6%, transparent)); color: var(--ink); padding: 0 14px; font: 600 15px/1.2 var(--font); text-align: left; cursor: pointer; width: 100%; }
+.row > .pkf { width: auto; }
+.pkf svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+#pkSheet { position: fixed; inset: 0; z-index: 60; pointer-events: none; }
+#pkSheet.on { pointer-events: auto; }
+.pkscrim { position: absolute; inset: 0; background: rgba(0, 0, 0, .3); opacity: 0; transition: opacity .25s; }
+#pkSheet.on .pkscrim { opacity: 1; }
+.pkpanel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88dvh; overflow-y: auto; background: var(--surface); border-radius: 30px 30px 0 0; padding: 10px 16px calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateY(105%); transition: transform .32s cubic-bezier(.2, .8, .2, 1); box-shadow: 0 -8px 30px rgba(0, 0, 0, .16); }
+#pkSheet.on .pkpanel { transform: none; }
+@media (min-width: 700px) { .pkpanel { left: calc(50% - 250px); right: calc(50% - 250px); } }
+.pkgrab { width: 38px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 10px; }
+.pkt { margin: 0 0 6px; text-align: center; font: 600 13px/1.3 var(--font); color: var(--muted); }
+.pkread { text-align: center; } .pkread b { display: block; font: 800 28px/1.15 var(--font); letter-spacing: -.02em; color: var(--ink); }
+.pkread span { display: block; font: 600 13px/1.4 var(--font); color: var(--muted); margin-top: 4px; min-height: 18px; } .pkread span b { display: inline; font-size: inherit; letter-spacing: 0; }
+.pkrul { position: relative; margin: 12px -16px 4px; height: 64px; }
+.pktrack { display: flex; overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 calc(50% - 9px); height: 64px; align-items: flex-end; }
+.pktrack::-webkit-scrollbar { display: none; }
+.pktrack .t { flex: none; width: 18px; scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 64px; gap: 4px; }
+.pktrack .t i { width: 3px; height: 16px; border-radius: 2px; background: color-mix(in srgb, var(--ink) 25%, transparent); }
+.pktrack .t.y i { height: 30px; background: var(--ink); } .pktrack .t span { font: 800 10px/12px var(--font); color: var(--muted); height: 12px; white-space: nowrap; }
+.pktrack .t:not(.y) span { visibility: hidden; }
+.pkneedle { position: absolute; left: 50%; bottom: 16px; width: 4px; height: 46px; margin-left: -2px; border-radius: 2px; background: var(--fill, var(--green)); pointer-events: none; z-index: 2; }
+.pkrul::before, .pkrul::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 1; pointer-events: none; }
+.pkrul::before { left: 0; background: linear-gradient(90deg, var(--surface), transparent); } .pkrul::after { right: 0; background: linear-gradient(-90deg, var(--surface), transparent); }
+.pkqs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 10px 0; align-items: center; }
+.pkqs button { border: 0; border-radius: 999px; padding: 9px 14px; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--ink); font: 700 13px/1 var(--font); cursor: pointer; }
+.pkqs button.on { background: var(--fill, var(--green)); color: var(--green-ink); } .pkqs span { font: 600 12px var(--font); color: var(--muted); }
+.pkdone { width: 100%; height: 50px; border: 0; border-radius: 999px; background: var(--fill, var(--green)); color: var(--green-ink); font: 800 16px/1 var(--font); cursor: pointer; margin-top: 10px; }
+.pkhd { display: flex; align-items: center; justify-content: space-between; margin: 10px 0 4px; } .pkhd b { font: 700 16px var(--font); }
+.pkrb { width: 36px; height: 36px; border-radius: 50%; border: 0; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--ink); display: grid; place-items: center; cursor: pointer; } .pkrb:disabled { opacity: .3; } .pkrb svg { width: 16px; height: 16px; }
+.pkcal { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 2px; }
+.pkcal .wd { font: 700 11px var(--font); color: var(--muted); padding: 4px 0; }
+.pkcal button { width: 40px; height: 40px; margin: 1px auto; border: 0; border-radius: 12px; font: 600 14px/1 var(--font); color: var(--ink); cursor: pointer; background: color-mix(in srgb, var(--fill, var(--green)) calc(var(--h, 0) * 1%), transparent); }
+.pkcal button.hi { color: var(--green-ink); } .pkcal button.on { box-shadow: 0 0 0 2.5px var(--ink); font-weight: 800; } .pkcal button.now:not(.on) { box-shadow: inset 0 0 0 1.5px var(--fill, var(--green)); }
+.pkcal button:disabled { opacity: .3; cursor: default; }
+.pkleg { display: flex; align-items: center; gap: 6px; justify-content: center; font: 600 12px var(--font); color: var(--muted); margin-top: 8px; }
+.pkleg i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; background: color-mix(in srgb, var(--fill, var(--green)) calc(var(--h) * 1%), transparent); }
+.pkseg { display: flex; background: color-mix(in srgb, var(--ink) 7%, transparent); border-radius: 999px; padding: 4px; margin-top: 6px; }
+.pkseg button { flex: 1; height: 42px; border: 0; background: none; color: var(--ink); font: 700 14px var(--font); cursor: pointer; border-radius: 999px; }
+.pkseg button.on { background: var(--fill, var(--green)); color: var(--green-ink); }
+.pklist button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 50px; border: 0; background: none; color: var(--ink); font: 600 16px/1.3 var(--font); padding: 8px 6px; border-top: 1px solid var(--line); cursor: pointer; text-align: left; }
+.pklist button:first-child { border-top: 0; } .pklist button svg { width: 18px; height: 18px; color: var(--fill, var(--green)); visibility: hidden; flex: none; } .pklist button.on svg { visibility: visible; }
+#pkPad { position: fixed; z-index: 59; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px 10px calc(12px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -8px 30px rgba(0, 0, 0, .16); transform: translateY(105%); transition: transform .28s cubic-bezier(.2, .8, .2, 1); }
+#pkPad.on { transform: none; }
+@media (min-width: 700px) { #pkPad { left: calc(50% - 250px); right: calc(50% - 250px); } }
+.pksum { text-align: center; font: 600 13px/1.3 var(--font); color: var(--muted); min-height: 18px; margin-bottom: 4px; } .pksum b { color: var(--ink); }
+#pkPad .pkqs { margin: 4px 0 8px; }
+.pkkeys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pkkeys button { height: 50px; border: 0; border-radius: 999px; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--ink); font: 600 22px/1 var(--font); cursor: pointer; display: grid; place-items: center; }
+.pkkeys button.fn { background: color-mix(in srgb, var(--fill, var(--green)) 16%, var(--surface)); }
+.pkkeys button.ok { background: var(--fill, var(--green)); color: var(--green-ink); font-size: 16px; font-weight: 800; grid-row: span 2; height: auto; }
+.pkkeys button svg { width: 22px; height: 22px; }
+.pkkeys button:active { filter: brightness(.92); }
+html.pkpadon #app { padding-bottom: calc(var(--pkh, 300px) + 24px); }
+html.pkpadon .sheet { padding-bottom: calc(var(--pkh, 300px) + 24px); }
 </style>
 <style>
 /* everyone version colours: built by tools/theme.js */
@@ -1198,6 +1301,9 @@ html.notips .tip { display: none; }
 :root[data-color="graphite"] { --bg: #F3F3F4; --surface: #FFFFFF; --ink: #1B1D1F; --muted: #5F6063; --line: #E3E4E6; --green: #3A3F4A; --fill: #3A3F4A; --tint: #EBECED; --soft: #C0C2C5; --dock: #1B1D1F; --navoff: #A6A9AE; --pot-1: #292C34; --pot-2: #3A3F4A; --pot-3: #61656E; --pot-4: #85888F; --pot-5: #A6A9AE; --pot-6: #C8C9CC; --pot-7: #C1C2C3; }
 @media (prefers-color-scheme: dark) { :root[data-color="graphite"]:not([data-theme="light"]) { --bg: #111114; --surface: #1B1C20; --ink: #ECEDEF; --muted: #A0A2AA; --line: #2C2D33; --green: #93959B; --fill: #4A4E58; --tint: #24262B; --soft: #B0B2B7; --dock: #292A30; --navoff: #878991; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #585C65; --pot-2: #757980; --pot-3: #93959B; --pot-4: #B0B2B7; --pot-5: #C8C9CC; --pot-6: #DFE0E2; --pot-7: #4A4A50; } }
 :root[data-color="graphite"][data-theme="dark"] { --bg: #111114; --surface: #1B1C20; --ink: #ECEDEF; --muted: #A0A2AA; --line: #2C2D33; --green: #93959B; --fill: #4A4E58; --tint: #24262B; --soft: #B0B2B7; --dock: #292A30; --navoff: #878991; --warn: #FF6B6F; --warn-bg: #3A1C1E; --amber: #F2A93B; --amber-bg: #352A15; --pot-debt: #E0786D; --dots: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.4px); --pot-1: #585C65; --pot-2: #757980; --pot-3: #93959B; --pot-4: #B0B2B7; --pot-5: #C8C9CC; --pot-6: #DFE0E2; --pot-7: #4A4A50; }
+
+/* Edd's pick, 2 Nov 2026: the phone's own font (San Francisco on iPhone, Roboto on Android) */
+:root { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, Roboto, "Segoe UI", sans-serif; }
 </style>
 
 <div id="app"></div>
@@ -1232,7 +1338,7 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
 // Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
-const APP_VERSION = ["v75","1 Nov 2026","6df0572"];
+const APP_VERSION = ["v76","2 Nov 2026","dd67d80"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -2159,7 +2265,7 @@ const $app = document.getElementById('app');
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const pct = (bp) => (bp / 100).toLocaleString('en-GB', { maximumFractionDigits: 2 }) + '%';
 const uid = () => Math.random().toString(36).slice(2, 8);
-const potColor = { subs: 'var(--pot-1)', buffer: '#5E7F92', yearly: '#A08D5E', debt: 'var(--pot-debt)', lent: 'var(--amber)', rent: 'var(--pot-2)', groceries: 'var(--pot-3)', savings: 'var(--pot-4)', investing: 'var(--pot-5)', everyday: 'var(--pot-6)', fun: 'var(--pot-7)' };
+const potColor = { subs: 'var(--pot-1)', buffer: '#5E7F92', yearly: '#A08D5E', debt: 'var(--pot-debt)', lent: 'var(--amber)', rent: 'var(--pot-2)', groceries: 'var(--pc-gro)', savings: 'var(--pot-4)', investing: 'var(--pot-5)', everyday: 'var(--pc-day)', fun: 'var(--pc-fun)' };
 
 const subColor = { emergency: 'var(--pot-1)', travel: 'var(--pot-3)', general: 'var(--pot-5)', big: 'var(--pot-7)' };
 const fmtN = (g) => (g / 100).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -2239,7 +2345,7 @@ function dialCard(key, ls, c, o) {
   if (c.total && f > 0 && !over) { const [x, y] = P(a0 + span * f).split(' '); dot += `<circle cx="${x}" cy="${y}" r="7" class="dtoday dend"/>`; }
   const head = !c.total ? 'No income yet' : over ? 'Over budget' : key < o.now ? 'Left over' : key > o.now ? 'To spend' : 'Left to spend';
   const big = !c.total ? 'Add income' : fmtN(ls.left), l2 = !c.total ? 'to start the split' : ls.budget ? `${over ? 'over' : pct + '% of'} ${fmtN(ls.budget)}`.replace(/^over (.*)$/, 'budget was $1') : '';
-  const row = ledgerRow(key), rows = row && ls.budget ? `<div class="dsegs">${SPEND.map((p) => { const x = row.pots[p]; return x && x.budget > 0 ? `<span class="drow"><em>${esc(SHORT[p])}</em><b class="num">${fmtN(Math.abs(x.left))} <small>${x.left < 0 ? 'over' : 'left'}</small></b><u><i style="width:${Math.max(0, Math.min(100, (x.left / x.budget) * 100)).toFixed(1)}%"${x.left < 0 ? ' class="dover"' : ''}></i></u></span>` : ''; }).join('')}</div>` : '';
+  const row = ledgerRow(key), rows = row && ls.budget ? `<div class="dsegs">${SPEND.map((p) => { const x = row.pots[p]; return x && x.budget > 0 ? `<span class="drow" style="--c:${potColor[p]}"><em>${esc(SHORT[p])}</em><b class="num">${fmtN(Math.abs(x.left))} <small>${x.left < 0 ? 'over' : 'left'}</small></b><u><i style="width:${Math.max(0, Math.min(100, (x.left / x.budget) * 100)).toFixed(1)}%"${x.left < 0 ? ' class="dover"' : ''}></i></u></span>` : ''; }).join('')}</div>` : '';
   const inc = o.live ? c.total - c.oneTotal : c.total;
   return `<div class="dglow"><section class="card dhero dialcard${over ? ' dialover' : ''}" data-open="breakdown" role="button" tabindex="0" aria-label="${esc(head)} ${fmtN(ls.left)}. Open the breakdown">
       <div class="dg"><svg class="dial" viewBox="0 0 230 230" aria-hidden="true"><defs><linearGradient id="dgrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" class="dgs0"/><stop offset="1" class="dgs1"/></linearGradient></defs>
@@ -3712,8 +3818,19 @@ function perDayOf(key, ls) {
   return days > 0 ? Math.floor(ls.left / days) : 0;
 }
 // The red dot after WDMMG: how many things need you. Tapping it opens them. Serious problems stay on Home as well.
+const NOTE_IC = { over: '<circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/>', warn: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>', good: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>' };
+const NOTE_T = { over: 'Over budget', warn: 'Heads up', info: 'Good to know', good: 'You can buy it' };
+// Clearing a notification hides it from the panel and the dot until its wording changes (new amount, new pot)
+// or the next cycle starts. Nothing about the money changes. (Edd, 1 Nov 2026: no way to clear them after reading.)
+const alertKey = (a) => a[0] + ':' + String(a[1]).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160);
+const notesSeen = (key) => ((state.notesSeen || {})[key] || []);
+function clearNotes(key, list) {
+  const seen = new Set(notesSeen(key)); list.forEach((a) => seen.add(alertKey(a)));
+  state.notesSeen = { [key]: [...seen].slice(-60) }; save(); notifyDot();
+}
 function notifyDot() {
-  const on = view === 'app' && !!state.setup, items = on ? alertList(monthKey(cursor)).filter((a) => !a[2]) : [], k = items.length;
+  const on = view === 'app' && !!state.setup, nk = monthKey(cursor), seen = new Set(notesSeen(nk));
+  const items = on ? alertList(nk).filter((a) => !a[2] && !seen.has(alertKey(a))) : [], k = items.length;
   const red = items.some((a) => a[0] === 'over');
   document.querySelectorAll('#app .mark').forEach((m) => {
     m.querySelectorAll('.ndot').forEach((x) => x.remove()); // drawn again on every open and close: never more than one
@@ -3729,8 +3846,16 @@ function notifyDot() {
   p.hidden = !(on && notesOpen);
   p.classList.toggle('ndesk', isDesk());
   p.innerHTML = `<div class="scrim" data-notesclose="1"></div><div class="sheet nsheet" role="dialog" aria-modal="true" aria-labelledby="nTitle"><div class="sheet-in"><div class="grab"></div>
-    <div class="h2row"><h3 id="nTitle">Needs you${k ? ' · ' + k : ''}</h3><button class="linkbtn nclose" data-notesclose="1">Close</button></div>
-    <div class="nlist">${k ? alertHtml(items) : '<p class="hint">Nothing needs you right now.</p>'}</div></div></div>`;
+    <div class="nhd"><h3 id="nTitle">Notifications</h3><span class="nbtns">${k > 1 ? '<button class="nclrall" data-noteclearall="1">Clear all</button>' : ''}<button class="nround nclose" data-notesclose="1" aria-label="Close">${navIcon('<path d="M6 6l12 12M18 6L6 18"/>')}</button></span></div>
+    <div class="nlist">${k ? items.map((a, i) => `<div class="nwrap"><div class="ndel" aria-hidden="true">Clear</div><div class="ncard ${a[0]}" data-ni="${i}" role="status"><span class="nic">${navIcon(NOTE_IC[a[0]] || NOTE_IC.info)}</span><div class="nt"><b>${NOTE_T[a[0]] || 'Note'}</b><div>${a[1]}</div></div><button class="nclear" data-noteclear="${i}" aria-label="Clear this one">${navIcon('<path d="M6 6l12 12M18 6L6 18"/>')}</button></div></div>`).join('') + (k ? '<p class="nswipe">Swipe left to clear</p>' : '') : '<p class="nempty">You\'re all caught up</p>'}</div></div></div>`;
+  p._items = items; p._key = nk;
+  // swipe a card left to clear it, as on the iPhone (Edd: A's sheet with B's cards, 2 Nov 2026)
+  p.querySelectorAll('.ncard').forEach((c) => { let x0 = null, dx = 0;
+    c.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; x0 = e.clientX; dx = 0; c.style.transition = 'none'; try { c.setPointerCapture(e.pointerId); } catch (er) {} });
+    c.addEventListener('pointermove', (e) => { if (x0 == null) return; dx = Math.min(0, e.clientX - x0); c.style.transform = `translateX(${dx}px)`; });
+    const end = () => { if (x0 == null) return; x0 = null; c.style.transition = '';
+      if (dx < -90) { c.style.transform = 'translateX(-110%)'; setTimeout(() => { clearNotes(nk, [items[+c.dataset.ni]]); if (items.length <= 1) { notesOpen = false; notifyDot(); } }, 200); } else c.style.transform = ''; };
+    c.addEventListener('pointerup', end); c.addEventListener('pointercancel', end); });
 }
 // Numbers in tiles: shrink to fit, never below 18px. Measured on one line (the number, not its box); if even 18px
 // is too wide it wraps, and only after a thousands comma.
@@ -3882,6 +4007,7 @@ function renderGoals() {
       <p class="hint" style="margin:8px 0 0">Dates use what you really added recently, ${fmtN(Ld.gs.pace)} a month${Ld.depPace ? `, and ${fmtN(Ld.depPace)} a month into your brokerage` : ''}. Growth of ${(growthRate() * 100).toFixed(1)}% a year is applied only to money in your brokerage. This is an assumption you can change, not a forecast.</p>
       <form id="growthForm" class="row" style="margin-top:8px"><input id="growthPct" class="f1" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="${(growthRate() * 100).toFixed(1)}" aria-label="Yearly growth assumption in percent"><button class="btn plain sm" type="submit">Set growth %</button></form>
       ${(() => { const R = invReturns(invPerf(state)); return R.year != null ? `<p class="hint" style="margin:6px 0 0">Your measured yearly rate is ${pctTxt(R.year)} (time-weighted, ${R.days} days). <button class="linkbtn" data-usegrowth="${(R.year * 100).toFixed(1)}">Use it</button></p>` : '<p class="hint" style="margin:6px 0 0">Your own measured rate shows here once your portfolio values cover a year.</p>'; })()}</section>
+    ${thingsCard()}
     ${moneyCard(Ld.MP)}`; })()}
     <section class="card">
       <div class="h2row"><h2>Progress</h2><span class="lc-lab" id="goalLab">${keys.length ? monLong(keys[keys.length - 1]) : ''}</span></div>
@@ -4211,6 +4337,7 @@ function alertList(key) {
   const sb = billShort(key);
   if (sb.left > 0) out.unshift(['over', `Your bills are ${fmt(sb.short)} more than this cycle's money${sb.covered ? `, ${fmt(sb.covered)} covered so far` : ''}. Which pot should cover the other ${fmt(sb.left)}?
     <div class="abt">${coverPots().map((k) => { const have = Math.max(0, available(k)); return `<button class="btn ${have >= sb.left ? '' : 'plain '}sm" data-cover-bills="${k}" data-bk="${key}" ${have > 0 ? '' : 'disabled'}>${esc(SHORT[k] || potName(k))} · ${fmtS(have)}</button>`; }).join('')}</div>`]);
+  if (key === nowCycle()) { const sb2 = specialBalances(state); openSpecials().forEach((x) => { if (x.target > 0 && (sb2[x.id] || 0) >= x.target) out.push(['good', `${esc(x.name)} is fully saved (${fmtN(x.target)}). Mark it bought on Goals when you get it.`]); }); }
   if (r.sweep > 0) out.push(['info', `${fmt(r.sweep)} of last cycle's leftovers moved to savings on reset day.`, 1]);
   return out;
 }
@@ -4295,42 +4422,85 @@ document.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') d
 
 // ---------- special savings pots ----------
 let buyingSpecial = null, armedSpecial = null;
-function specialsCard() {
+// Things to buy (stored as settings.specials, the same money engine as before): each takes a share of Big purchases.
+// People are never asked for a %: the share is worked out from the price and date when the thing is added.
+let thingOpen = null, thingAdding = false;
+// Big purchases before any thing takes its share, from the latest cycle that had money in.
+function bigMonthly() {
+  const now = nowCycle();
+  for (let i = 0; i < 4; i++) {
+    const c = monthCalc(addMonths(now, -i)), sub = c.sub || {};
+    const g = (sub.big || 0) + Object.values(c.special || {}).reduce((a, b) => a + b, 0);
+    if (g > 0) return g;
+  }
+  return 0;
+}
+const freeShare = () => Math.max(0, 10000 - openSpecials().reduce((a, x) => a + x.share, 0));
+// The share a new thing would take: what its date needs, or half of what is free when there is no date.
+function thingPlan(target, by) {
+  const now = nowCycle(), big = bigMonthly(), free = freeShare();
+  const months = by ? Math.max(1, monthsBetween(now, by)) : 0, need = by ? Math.ceil(target / months) : 0;
+  const share = !free ? 0 : by && big ? Math.max(1, Math.min(free, Math.ceil((need * 10000) / big))) : Math.min(free, 5000);
+  const per = Math.floor((big * share) / 10000);
+  const ready = per > 0 ? addMonths(now, Math.ceil(target / per) - 1) : null;
+  return { big, free, need, share, per, ready };
+}
+function thingPreview(target, by) {
+  if (!(target > 0)) return 'Type a price to see when it could be ready.';
+  const P = thingPlan(target, by);
+  if (!P.free) return 'Your Big purchases pot is already shared out between your other things. Save more each month, or finish one first.';
+  if (!P.big) return 'Add this cycle’s income first, then the app can work out a date.';
+  const yrs = P.per ? Math.round(target / P.per / 12) : 0;
+  const far = yrs > 3 ? ` That’s about ${yrs} years. Money left that long could sit in Investing instead, just something to think about.` : '';
+  if (by && P.per >= P.need) return `Needs <b>${fmtN(P.need)} a month</b>. It takes that from your Big purchases pot, so it’s ready around <b>${monLong(P.ready)}</b>.`;
+  if (by) return `Needs <b>${fmtN(P.need)} a month</b>. Your Big purchases pot has about ${fmtN(P.per)} a month free for it, so at that pace it’s ready around <b>${monLong(P.ready)}</b>.${far}`;
+  return `It takes about <b>${fmtN(P.per)} a month</b> from your Big purchases pot, so it’s ready around <b>${monLong(P.ready)}</b>.${far}`;
+}
+function thingRing(p) {
+  const C = 113.1, off = (C * (1 - Math.max(0, Math.min(1, p)))).toFixed(1);
+  return `<svg class="tring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--line)" stroke-width="5"/>${p > 0 ? `<circle cx="22" cy="22" r="18" fill="none" stroke="var(--green)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 22 22)"/>` : ''}${p >= 1 ? '<path d="M15 22.5l4.5 4.5L29 17.5" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' : ''}</svg>`;
+}
+function thingsCard() {
   const sp = state.settings.specials || [], open = sp.filter((x) => !x.end), done = sp.filter((x) => x.end);
-  const sb = specialBalances(state), now = nowCycle(), cNow = monthCalc(now);
-  const prevC = monthCalc(addMonths(now, -1));
-  const usedShare = open.reduce((a, x) => a + x.share, 0);
+  const sb = specialBalances(state), now = nowCycle(), cNow = monthCalc(now), prevC = monthCalc(addMonths(now, -1));
+  const big = bigMonthly(), cheer = [];
   const one = (x) => {
-    const bal = sb[x.id] || 0, p = x.target ? Math.min(100, Math.round((bal / x.target) * 100)) : 0;
-    const monthsLeft = Math.max(1, monthsBetween(now, x.by));
-    const need = Math.max(0, Math.ceil((x.target - bal) / monthsLeft));
-    const getting = cNow.special[x.id] || prevC.special[x.id] || 0;
-    const status = bal >= x.target ? '<span class="st">Target reached</span>'
-      : getting >= need ? `<span class="st">On track · about ${fmtN(getting)} a month</span>`
-      : `<span class="st warn">Behind · needs ${fmtN(need)} a month, getting about ${fmtN(getting)}</span>`;
-    return `<div class="spx">
-      <div class="spx-top"><div><div class="n">${esc(x.name)}</div><div class="m num">${fmtN(bal)} of ${fmtN(x.target)} · by ${monLong(x.by)} · ${pct(x.share)} of Big purchases</div></div></div>
-      <div class="meter" style="margin-top:8px"><i style="width:${p}%"></i></div>
-      <div style="margin-top:6px">${status}</div>
-      ${buyingSpecial === x.id ? `<form id="buyForm" data-id="${x.id}" class="row" style="margin-top:10px">
-          <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(bal / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
+    const bal = sb[x.id] || 0, p = x.target ? bal / x.target : 0, left = Math.max(0, x.target - bal);
+    const getting = cNow.special[x.id] || prevC.special[x.id] || Math.floor((big * x.share) / 10000);
+    let line; const far = bal < x.target && getting > 0 && left / getting > 36;
+    if (bal >= x.target) { line = '<span class="ok">ready to buy</span>'; if (!(state.thingsCheered || []).includes(x.id)) cheer.push(x.id); }
+    else if (!getting) line = '<span class="slow">getting nothing yet</span>';
+    else if (x.by) {
+      const need = Math.ceil(left / Math.max(1, monthsBetween(now, x.by)));
+      line = getting >= need ? `<span class="ok">on track for ${monLong(x.by)}</span>` : `<span class="slow">needs ${fmtN(need)} a month for ${monLong(x.by)}</span>`;
+    } else { const n = Math.ceil(left / getting); line = n > 36 ? `<span class="slow">about ${Math.round(n / 12)} years at this pace</span>` : `<span class="ok">ready around ${monLong(addMonths(now, n - 1))}</span>`; }
+    const isOpen = thingOpen === x.id || buyingSpecial === x.id;
+    return `<div class="titem${isOpen ? ' on' : ''}"><button class="trow" data-thing="${x.id}" aria-expanded="${isOpen}">${thingRing(p)}<span class="tt"><b>${esc(x.name)}</b><span class="num">${fmtN(bal)} of ${fmtN(x.target)} · ${line}</span></span></button>
+      ${!isOpen ? '' : `<div class="tmore"><p class="hint" style="margin:0 0 10px">About ${fmtN(getting)} a month from your Big purchases pot${x.by ? ` · wanted by ${monLong(x.by)}` : ''}.${far ? ' Money left for years could sit in Investing instead. Just something to think about.' : ''}</p>
+      ${buyingSpecial === x.id ? `<form id="buyForm" data-id="${x.id}" class="row">
+          <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(Math.min(bal, x.target) / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
           <button class="btn" type="submit">Save</button><button class="btn plain" type="button" data-buycancel="1">Cancel</button></form>
           <p class="hint" style="margin:6px 0 0">What did it cost? It comes out of this pot, anything left goes back to Big purchases.</p>`
-        : `<div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-buy="${x.id}">Bought it</button>
-          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">Stop, return ${fmtN(bal)} to Big purchases</button>` : `<button class="ib del" data-specarm="${x.id}" aria-label="Stop ${esc(x.name)}">${TRASH}</button>`}</div>`}
+        : `<div class="ppbtns"><button class="btn sm" data-buy="${x.id}">Bought it</button>
+          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">Stop, return ${fmtN(bal)} to Big purchases</button>` : `<button class="btn plain sm" data-specarm="${x.id}">Stop saving</button>`}</div>`}</div>`}
     </div>`;
   };
-  return `<section class="card"><h2>Special pots</h2>
-    <p class="hint tip" style="margin:4px 0 0">Saving for one thing. Each takes a share of Big purchases from now until you mark it bought. Not counted in the 100k.</p>
-    ${open.map(one).join('')}
-    <form id="specForm" style="margin-top:14px">
-      <input id="spName" type="text" placeholder="What are you saving for?" aria-label="Name" required style="width:100%;margin-bottom:8px">
-      <div class="row"><input id="spTarget" class="f1" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Target" aria-label="Target in ${HOME}" required>
-        <input id="spBy" class="f1" type="month" min="${addMonths(now, 1)}" value="${addMonths(now, 6)}" aria-label="Target date" required></div>
-      <div class="row" style="margin-top:8px"><label class="hint" for="spShare" style="margin:0;align-self:center;flex:2">% of Big purchases</label>
-        <input id="spShare" class="f1" type="number" inputmode="decimal" min="1" max="${Math.max(1, 100 - usedShare / 100)}" step="1" value="${Math.min(25, Math.max(1, 100 - usedShare / 100))}" aria-label="Share of Big purchases in %" required><button class="btn" type="submit">Add</button></div>
-    </form>
-    ${done.length ? `<div class="label" style="margin-top:16px">Finished</div>${done.slice().reverse().map((x) => `<div class="kv"><div><div class="n">${esc(x.name)}</div><div class="m">${x.stopped ? 'stopped' : 'bought for ' + fmtN(x.cost || 0)} · ${esc(x.doneDate || '')}</div></div><div class="a"></div></div>`).join('')}` : ''}
+  const form = !thingAdding ? `<button class="btn plain tadd" data-act="thingAdd">Add something to save for</button>`
+    : `<form id="specForm" class="tform">
+      <label class="tl" for="spName">What is it?</label><input id="spName" type="text" placeholder="Headphones" required>
+      <label class="tl" for="spTarget">What does it cost?</label><input id="spTarget" type="number" inputmode="decimal" min="1" step="0.01" placeholder="0.00" required>
+      <label class="tl" for="spBy">When would you like it? (optional)</label><input id="spBy" type="month" min="${addMonths(now, 1)}">
+      <p class="tprev" id="spPrev">${thingPreview(0, '')}</p>
+      <div class="ppbtns"><button class="btn sm" type="submit">Save for it</button><button class="btn plain sm" type="button" data-act="thingCancel">Cancel</button></div>
+      <button class="linkbtn" type="button" data-act="thingMore" style="margin-top:10px">Save more each month</button>
+    </form>`;
+  const rows = open.map(one).join('');
+  if (cheer.length) { state.thingsCheered = (state.thingsCheered || []).concat(cheer); save(); }
+  return `<section class="card things">${cheer.length ? `<div class="chconf" aria-hidden="true">${'<i></i>'.repeat(14)}</div>` : ''}<h2>Things to buy</h2>
+    <p class="hint" style="margin:2px 0 4px">${big ? `From your Big purchases pot · about ${fmtN(big)} a month` : 'From your Big purchases pot'}</p>
+    ${rows}
+    ${form}
+    ${done.length ? `<div class="label" style="margin-top:16px">Done</div>${done.slice().reverse().slice(0, 5).map((x) => `<div class="kv"><div><div class="n">${esc(x.name)}</div><div class="m">${x.stopped ? 'stopped' : 'bought for ' + fmtN(x.cost || 0)} · ${esc(x.doneDate || '')}</div></div><div class="a"></div></div>`).join('')}` : ''}
   </section>`;
 }
 // Finish a special pot: it keeps what it has but gets nothing more after this cycle, the cost is spent from it,
@@ -4351,6 +4521,195 @@ function finishSpecial(id, cost, stopped) {
   else toast(cost > bal ? `${x.name} bought · it held ${fmtN(bal)}, log the other ${fmtN(cost - bal)} from another pot` : `${x.name} bought${bal - spent > 0 ? ` · ${fmtN(bal - spent)} back in Big purchases` : ''}`);
   render();
 }
+// ---------- the app's own pickers (2 Nov 2026: Edd picked "Made for WDMMG" in Picker Lab Two) ----------
+// Months: a ruler you swipe, with what that date means. Days: a calendar shaded by what you spent each day.
+// Lists: a sheet of choices (short ones as a row, no sliding animation). Amounts: the app's own number pad on phones,
+// with a + key to add up a receipt and, for expenses, your usual amounts. The real inputs stay in the form, hidden,
+// so every form reads them exactly as before; the pickers only set their value and fire input/change.
+const PK_TOUCH = () => typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+let pk = null;
+const pkFire = (el) => { el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); };
+function pkLabel(el) {
+  const v = el.value;
+  if (el.type === 'month') return okKey(v) ? monLong(v) : el.required ? 'Pick a month' : 'Any time';
+  if (!isIso(v)) return 'Pick a day';
+  const d = isoDay(v), t = new Date(), y = new Date(Date.now() - 864e5);
+  return isoOf(d) === isoOf(t) ? 'Today' : isoOf(d) === isoOf(y) ? 'Yesterday' : dShort(d) + (d.getFullYear() !== t.getFullYear() ? ' ' + d.getFullYear() : '');
+}
+function pkEnhance(root) {
+  if (!root.querySelectorAll) return;
+  root.querySelectorAll('input[type="month"]:not([data-pk]), input[type="date"]:not([data-pk])').forEach((el) => {
+    el.dataset.pk = el.type;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'pkf ' + el.className; b.dataset.pkf = '1'; b.pkIn = el;
+    b.setAttribute('aria-label', el.getAttribute('aria-label') || (el.type === 'month' ? 'Month' : 'Day'));
+    b.innerHTML = `<span>${esc(pkLabel(el))}</span>${CHEV_DOWN}`;
+    el.classList.add('pkn'); el.tabIndex = -1; el.after(b);
+  });
+  if (PK_TOUCH()) root.querySelectorAll('input[inputmode="decimal"]:not([data-pkpad]), input[inputmode="numeric"]:not([data-pkpad])').forEach((el) => {
+    el.dataset.pkpad = el.getAttribute('inputmode'); el.setAttribute('inputmode', 'none');
+    if (el.type === 'number') el.type = 'text'; // a number input throws away "12." while you are still typing
+  });
+}
+const CHEV_DOWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const pkSyncLabels = () => document.querySelectorAll('[data-pkf]').forEach((b) => { const s = b.querySelector('span'); if (s && b.pkIn) s.textContent = pkLabel(b.pkIn); });
+if (typeof MutationObserver !== 'undefined') {
+  let q = false;
+  new MutationObserver(() => { if (q) return; q = true; Promise.resolve().then(() => { q = false; try { pkEnhance(document); } catch (e) {} }); }).observe(document.documentElement, { childList: true, subtree: true });
+}
+// ---- sheets for months, days and lists ----
+function pkOpen(kind, el) {
+  pkPadClose();
+  pk = { kind, el, was: el.value };
+  if (kind === 'date') { const d = isIso(el.value) ? isoDay(el.value) : new Date(); pk.vm = [d.getFullYear(), d.getMonth()]; }
+  let host = document.getElementById('pkSheet');
+  if (!host) { host = document.createElement('div'); host.id = 'pkSheet'; document.body.appendChild(host); }
+  pkDraw(true);
+}
+function pkClose(keep) {
+  if (!pk) return;
+  if (!keep && pk.el.value !== pk.was) { pk.el.value = pk.was; pkFire(pk.el); }
+  const h = document.getElementById('pkSheet'); if (h) { h.classList.remove('on'); setTimeout(() => { if (!pk) h.innerHTML = ''; }, 260); }
+  pk = null; pkSyncLabels();
+}
+const pkTitle = (el) => { const id = el.id && document.querySelector(`label[for="${el.id}"]`); return (id && id.textContent.trim()) || el.getAttribute('aria-label') || ''; };
+function pkMonthLine(k) {
+  const el = pk.el;
+  if (el.id === 'spBy') { const t = document.getElementById('spTarget'); const g = t ? toG(t.value) : 0; if (g > 0) return thingPreview(g, k || ''); }
+  if (!k) return 'No date';
+  const n = monthsBetween(nowCycle(), k);
+  return n <= 0 ? 'This month' : `In ${n} month${n === 1 ? '' : 's'}`;
+}
+function pkSpentMap() {
+  const by = {};
+  Object.values(state.months || {}).forEach((m) => (m.expenses || []).forEach((e) => { if (e.iso && e.g > 0) by[e.iso] = (by[e.iso] || 0) + e.g; }));
+  return by;
+}
+function pkDraw(fresh) {
+  const host = document.getElementById('pkSheet'); if (!host || !pk) return;
+  const el = pk.el, title = pkTitle(el);
+  let body = '';
+  if (pk.kind === 'month') {
+    const min = okKey(el.min) ? el.min : addMonths(nowCycle(), 1), k = okKey(el.value) ? el.value : null;
+    pk.min = min;
+    const ticks = Array.from({ length: 121 }, (_, i) => { const kk = addMonths(min, i), m = +kk.slice(5); return `<div class="t${m === 1 ? ' y' : ''}"><span>${kk.slice(0, 4)}</span><i></i></div>`; }).join('');
+    const quick = [[6, 'In 6 months'], [12, 'In a year'], [24, 'In 2 years']].filter(([n]) => addMonths(nowCycle(), n) >= min);
+    body = `<div class="pkread"><b data-pkread>${k ? monLong(k) : 'Any time'}</b><span data-pkline>${pkMonthLine(k)}</span></div>
+      <div class="pkrul"><div class="pkneedle"></div><div class="pktrack" data-pkru>${ticks}</div></div>
+      <div class="pkqs">${el.required ? '' : `<button type="button" data-pkq="none" class="${k ? '' : 'on'}">Any time</button>`}${quick.map(([n, t]) => `<button type="button" data-pkq="${n}">${t}</button>`).join('')}</div>`;
+  } else if (pk.kind === 'date') {
+    const [y, m] = pk.vm, off = (new Date(y, m, 1).getDay() + 6) % 7, n = new Date(y, m + 1, 0).getDate(), by = pkSpentMap();
+    const max = isIso(el.max) ? el.max : '9999', min = isIso(el.min) ? el.min : '0000', sel = el.value;
+    const isos = Array.from({ length: n }, (_, i) => isoOf(new Date(y, m, i + 1))), top = Math.max(1, ...isos.map((d) => by[d] || 0));
+    let cells = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((w) => `<span class="wd">${w}</span>`).join('') + '<span></span>'.repeat(off);
+    isos.forEach((d, i) => { const h = by[d] ? Math.max(12, Math.round((by[d] / top) * 100)) : 0;
+      cells += `<button type="button" data-pkd="${d}" ${d > max || d < min ? 'disabled' : ''} style="--h:${h}" class="${h > 60 ? 'hi ' : ''}${d === sel ? 'on ' : ''}${d === isoOf(new Date()) ? 'now' : ''}">${i + 1}</button>`; });
+    const canNext = isoOf(new Date(y, m + 1, 1)) <= max;
+    const s = isIso(sel) ? by[sel] || 0 : 0;
+    body = `<div class="pkread"><b>${isIso(sel) ? pkLabel(el) : 'Pick a day'}</b><span>${isIso(sel) ? (s ? `You spent ${fmtN(s)} that day` : 'Nothing spent that day') : ''}</span></div>
+      <div class="pkhd"><button type="button" class="pkrb" data-pkm="-1" aria-label="Previous month">${navIcon('<path d="M15 6l-6 6 6 6"/>')}</button><b>${new Date(y, m, 1).toLocaleString('en-GB', { month: 'long', year: 'numeric' })}</b><button type="button" class="pkrb" data-pkm="1" aria-label="Next month" ${canNext ? '' : 'disabled'}>${navIcon('<path d="M9 6l6 6-6 6"/>')}</button></div>
+      <div class="pkcal">${cells}</div>
+      <div class="pkleg">Less <i style="--h:20"></i><i style="--h:55"></i><i style="--h:100"></i> more spent</div>`;
+  } else {
+    const opts = [...el.options], short = opts.length <= 5 && opts.every((o) => o.text.length <= 6);
+    body = short ? `<div class="pkseg">${opts.map((o) => `<button type="button" data-pko="${esc(o.value)}" class="${o.value === el.value ? 'on' : ''}">${esc(o.text)}</button>`).join('')}</div>`
+      : `<div class="pklist">${opts.map((o) => `<button type="button" data-pko="${esc(o.value)}" class="${o.value === el.value ? 'on' : ''}"><span>${esc(o.text)}</span>${navIcon('<path d="M5 12.5l4.5 4.5L19 7.5"/>')}</button>`).join('')}</div>`;
+  }
+  host.innerHTML = `<div class="pkscrim" data-pkx="1"></div><div class="pkpanel" role="dialog" aria-label="${esc(title)}"><div class="pkgrab"></div>${title ? `<p class="pkt">${esc(title)}</p>` : ''}${body}<button type="button" class="pkdone" data-pkok="1">Done</button></div>`;
+  if (fresh) requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('on'))); else host.classList.add('on');
+  const tr = host.querySelector('[data-pkru]');
+  if (tr) {
+    const w = tr.querySelector('.t').offsetWidth || 18, k0 = okKey(el.value) ? el.value : null;
+    tr.scrollLeft = k0 ? monthsBetween(pk.min, k0) * w : 0;
+    let t;
+    tr.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => {
+      if (!pk) return; const k = addMonths(pk.min, Math.max(0, Math.min(120, Math.round(tr.scrollLeft / w))));
+      if (k === pk.el.value || (pk.skip && pk.skip-- > 0)) return;
+      pk.el.value = k; pkFire(pk.el); pkMonthRead(k);
+    }, 60); });
+  }
+}
+function pkMonthRead(k) {
+  const host = document.getElementById('pkSheet'); if (!host) return;
+  const r = host.querySelector('[data-pkread]'), l = host.querySelector('[data-pkline]');
+  if (r) r.textContent = k ? monLong(k) : 'Any time'; if (l) l.innerHTML = pkMonthLine(k);
+  host.querySelectorAll('[data-pkq]').forEach((b) => b.classList.toggle('on', b.dataset.pkq === 'none' && !k));
+}
+document.addEventListener('click', (e) => {
+  const f = e.target.closest && e.target.closest('[data-pkf]');
+  if (f && f.pkIn) { e.preventDefault(); return pkOpen(f.pkIn.dataset.pk, f.pkIn); }
+  if (!pk || !e.target.closest || !e.target.closest('#pkSheet')) return;
+  e.stopPropagation();
+  const t = e.target.closest('button,[data-pkx]'); if (!t) return;
+  if (t.dataset.pkx) return pkClose(false);
+  if (t.dataset.pkok) return pkClose(true);
+  const el = pk.el;
+  if (t.dataset.pkq) {
+    if (t.dataset.pkq === 'none') { el.value = ''; pkFire(el); pkMonthRead(null); return; }
+    const k = addMonths(nowCycle(), +t.dataset.pkq); el.value = k; pkFire(el); pkMonthRead(k);
+    const tr = document.querySelector('[data-pkru]'); if (tr) { pk.skip = 1; tr.scrollTo({ left: monthsBetween(pk.min, k) * (tr.querySelector('.t').offsetWidth || 18), behavior: reduceMotion() ? 'auto' : 'smooth' }); }
+    return;
+  }
+  if (t.dataset.pkm) { let [y, m] = pk.vm; m += +t.dataset.pkm; if (m < 0) { m = 11; y--; } if (m > 11) { m = 0; y++; } pk.vm = [y, m]; return pkDraw(); }
+  if (t.dataset.pkd) { el.value = t.dataset.pkd; pkFire(el); return pkDraw(); }
+  if (t.dataset.pko != null) { el.value = t.dataset.pko; pkFire(el); if (t.closest('.pklist')) return pkClose(true); return pkDraw(); }
+}, true);
+// Lists: the phone's own drop-down never opens; the sheet does.
+['mousedown', 'pointerdown'].forEach((ev) => document.addEventListener(ev, (e) => {
+  const s = e.target.closest && e.target.closest('select');
+  if (!s || s.disabled || !s.closest('#app, .sheet, body')) return;
+  e.preventDefault(); if (ev === 'pointerdown' || !window.PointerEvent) { if (!pk) pkOpen('list', s); }
+}, true));
+// ---- the number pad (phones only; a computer keeps its keyboard) ----
+let pkPad = null;
+function pkUsual() {
+  const n = {}; Object.values(state.months || {}).forEach((m) => (m.expenses || []).forEach((e) => { if (e.g > 0 && !e.cover) n[e.g] = (n[e.g] || 0) + 1; }));
+  return Object.entries(n).filter(([, c]) => c > 1).sort((a, b) => b[1] - a[1] || a[0] - b[0]).slice(0, 3).map(([g]) => (g / 100).toFixed(2));
+}
+function pkPadDraw() {
+  let d = document.getElementById('pkPad');
+  if (!d) { d = document.createElement('div'); d.id = 'pkPad'; document.body.appendChild(d); }
+  const el = pkPad.el, dec = el.dataset.pkpad === 'decimal', sum = pkPad.sum, cur = el.value || '';
+  const total = sum.reduce((a, v) => a + (+v || 0), 0) + (+cur || 0);
+  const usual = el.id === 'expAmt' ? pkUsual() : [];
+  const keys = ['1', '2', '3', 'b', '4', '5', '6', dec ? '+' : '', '7', '8', '9', 'ok', dec ? '.' : '', '0', dec ? '00' : ''];
+  d.innerHTML = `<div class="pksum">${sum.length ? esc(sum.concat(cur || '0').join(' + ')) + ' = <b>' + total.toFixed(2) + '</b>' : dec ? 'Tap + to add up a receipt' : ''}</div>
+    ${usual.length ? `<div class="pkqs">${usual.map((v) => `<button type="button" data-pkv="${v}">${fmtN(Math.round(v * 100))}</button>`).join('')}<span>your usual</span></div>` : ''}
+    <div class="pkkeys">${keys.map((k) => k === 'ok' ? '<button type="button" class="ok" data-pkk="ok">Done</button>' : !k ? '<span></span>' : `<button type="button" data-pkk="${k}" class="${k === 'b' || k === '+' ? 'fn' : ''}" aria-label="${k === 'b' ? 'Delete' : k === '+' ? 'Add another amount' : k}">${k === 'b' ? navIcon('<path d="M9 5h11v14H9l-6-7z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>') : k}</button>`).join('')}</div>`;
+  document.documentElement.style.setProperty('--pkh', d.offsetHeight + 'px');
+}
+function pkPadOpen(el) {
+  if (pkPad && pkPad.el === el) return;
+  pkPad = { el, sum: [] }; pkPadDraw();
+  document.documentElement.classList.add('pkpadon');
+  requestAnimationFrame(() => { document.getElementById('pkPad').classList.add('on'); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
+}
+function pkPadCommit() {
+  if (!pkPad || !pkPad.sum.length) return;
+  const el = pkPad.el, t = pkPad.sum.reduce((a, v) => a + (+v || 0), 0) + (+el.value || 0);
+  pkPad.sum = []; el.value = t.toFixed(2); pkFire(el);
+}
+function pkPadClose() {
+  if (!pkPad) return;
+  pkPadCommit(); pkPad = null;
+  document.documentElement.classList.remove('pkpadon');
+  const d = document.getElementById('pkPad'); if (d) d.classList.remove('on');
+}
+document.addEventListener('focusin', (e) => { const el = e.target; if (el.dataset && el.dataset.pkpad) pkPadOpen(el); else if (pkPad && !(el.closest && el.closest('#pkPad'))) pkPadClose(); });
+document.addEventListener('focusout', () => setTimeout(() => { if (pkPad && document.activeElement !== pkPad.el) pkPadClose(); }, 0));
+document.addEventListener('pointerdown', (e) => { if (e.target.closest && e.target.closest('#pkPad')) e.preventDefault(); }, true);
+document.addEventListener('click', (e) => {
+  const b = e.target.closest && e.target.closest('#pkPad button'); if (!b || !pkPad) return;
+  const el = pkPad.el, k = b.dataset.pkk, dec = el.dataset.pkpad === 'decimal';
+  if (b.dataset.pkv) { el.value = b.dataset.pkv; pkFire(el); return pkPadDraw(); }
+  if (k === 'ok') { pkPadCommit(); el.blur(); return pkPadClose(); }
+  let v = el.value || '';
+  if (k === '+') { if (+v > 0) { pkPad.sum.push(v); v = ''; } }
+  else if (k === 'b') v = v.slice(0, -1);
+  else if (k === '.') { if (dec && !v.includes('.')) v = (v || '0') + '.'; }
+  else for (const ch of k) { if (dec ? !/\.\d\d$/.test(v) && v.replace('.', '').length < 9 : v.length < 4) v = (v === '0' ? '' : v) + ch; }
+  el.value = v; pkFire(el); pkPadDraw();
+});
 // ---------- money lent to others ----------
 // Lending is a move from one of your pots to 'lent', tagged with the person. Being paid back is a move from 'lent'
 // back into a pot. So the pot you lent from really goes down, and goes back up when the money comes home.
@@ -4762,6 +5121,7 @@ function splitPreview() {
     : `You pay ${fmtN(g - sh.their)} from ${potName(pot)}. ${who} ${n > 1 ? `owe you ${each} each` : `owes you ${fmtN(sh.their)}`}, kept in ${potName('lent')}.`;
 }
 document.addEventListener('input', (e) => { if (e.target.closest && e.target.closest('#expForm')) splitPreview(); });
+document.addEventListener('input', (e) => { if (e.target.closest && e.target.closest('#specForm')) { const o = document.getElementById('spPrev'); if (o) o.innerHTML = thingPreview(toG(document.getElementById('spTarget').value), document.getElementById('spBy').value || ''); } });
 document.addEventListener('change', (e) => { if (e.target.closest && e.target.closest('#expForm')) splitPreview(); });
 // What a payment would add to each pot if it is split like the salary: the cycle worked out with it, less the cycle without it.
 function incPreview(sh) {
@@ -5437,7 +5797,7 @@ function renderHome() {
     return `${fmtN(Math.max(0, ls.budget - ls.left))} spent so far · resets ${dShort(next)}`; // the dial already shows what is left
   })();
   if (homeMore) {
-    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="moreBack" aria-label="Back to home">‹ Home</button><h1 class="pmid">${monName(key)} in detail</h1><div></div></div></div>
+    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="moreBack" aria-label="Back to home">‹ Home</button><div class="pmid" aria-hidden="true">${monName(key)} in detail</div><div></div></div></div><h1 class="bigt">${monName(key)} in detail</h1>
       ${extraOn('places') ? placesCard(key) : ''}
       ${flowOnly(key)}
       ${compactCard('where', 'Where you stand', `Savings ${sgnN(SR.sav)} · Investing ${sgnN(MP.B.total)}`, SR.html, SR.neg)}
@@ -5530,7 +5890,7 @@ function potBody(key, inSheet) {
       ${tagChart(items, { select: false, label: 'Savings split across sub pots', cn: 'Total saved', cb: fmtN(totAll), cs: HOME })}
       <div class="tags">${SUB_ORDER.map((k, n) => `<div class="tag" style="grid-template-columns:12px minmax(0,1fr) auto"><span class="sw" style="background:${subColor[k]}"></span><span class="tn">${SUB_NAMES[k]}<span class="meta" style="display:block;font-weight:500;color:var(--muted);font-size:12px">${pct(s.sub[k])} of transfers · +${fmtN(c.sub[k])} this month</span></span><span class="ta num">${fmtN(bal[k])}</span></div>`).join('')}</div>
     </section>
-    ${specialsCard()}
+    ${openSpecials().length ? `<section class="card"><button class="smrow" data-act="thingsGo"><span class="cct"><b>Things to buy</b><span class="ccl">${openSpecials().length} saving on Goals</span></span>${CHEV}</button></section>` : ''}
     <section class="card"><h2>Use your savings</h2>
       <p class="hint tip" style="margin:4px 0 12px">Log something you paid for out of a savings pot, like a trip from Travel, or move money between pots.</p>
       <div class="ppbtns"><button class="btn sm" data-addexp="travel">Spend from savings</button><button class="btn plain sm" data-movefrom="travel">Move money</button></div>
@@ -5917,7 +6277,10 @@ function homeBar(key, now, days) {
   </div>`;
 }
 // Every other tab gets the same slim glass bar as Home: the logo, and the page's name in the middle (31 Oct 2026).
-const pageBar = (t) => `<div class="top pbar"><div class="hrow"><div class="mark">${MARK}</div><h1 class="pmid">${t}</h1><div></div></div></div>`;
+// iPhone-style large title (Edd's pick, 2 Nov 2026): a big page name under the bar, which hands over to the bar's
+// small title once you scroll past it.
+const pageBar = (t) => `<div class="top pbar"><div class="hrow"><div class="mark">${MARK}</div><div class="pmid" aria-hidden="true">${t}</div><div></div></div></div><h1 class="bigt">${t}</h1>`;
+addEventListener('scroll', () => document.documentElement.classList.toggle('scrolled', scrollY > 44), { passive: true });
 const bigTitle = (t, sub) => `<div class="ltop"><h1 class="ltitle">${t}</h1>${sub ? `<div class="lsub">${esc(sub)}</div>` : ''}</div>`;
 const navIcon = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const NAV_ICONS = { home: navIcon('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'), invest: navIcon('<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'),
@@ -6140,7 +6503,7 @@ function renderSetup() {
   const msg = setupMsg ? `<div class="note" role="status">${esc(setupMsg)}</div>` : '';
   if (showAll) { $app.innerHTML = `${pageBar('Settings')}${GLOBAL ? feedbackCard() : ''}${secs.map((x) => x.html()).join('')}${msg}${engraving()}`; return; }
   if (cur) {
-    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="setupBack" aria-label="Back to Settings">‹ Settings</button><h1 class="pmid">${cur.t}</h1><div></div></div></div>
+    $app.innerHTML = `<div class="top pbar"><div class="hrow"><button class="back" data-act="setupBack" aria-label="Back to Settings">‹ Settings</button><div class="pmid" aria-hidden="true">${cur.t}</div><div></div></div></div><h1 class="bigt">${cur.t}</h1>
       <div class="setpage">${cur.html()}</div>${msg}`;
     return;
   }
@@ -6166,6 +6529,11 @@ function engraveTap() {
 // ---------- the notification panel ----------
 document.addEventListener('click', (e) => {
   if (e.target.closest('[data-notes]')) { e.preventDefault(); e.stopPropagation(); notesOpen = true; notifyDot(); const c = document.querySelector('#notesPanel .nclose'); if (c) c.focus(); return; }
+  const nc = e.target.closest('[data-noteclear], [data-noteclearall]');
+  if (nc) { e.stopPropagation(); const p = document.getElementById('notesPanel'), its = (p && p._items) || [];
+    clearNotes(p._key, nc.dataset.noteclearall ? its : [its[+nc.dataset.noteclear]].filter(Boolean));
+    if (nc.dataset.noteclearall || its.length <= 1) { notesOpen = false; notifyDot(); }
+    return; }
   if (e.target.closest('[data-notesclose]')) { e.stopPropagation(); notesOpen = false; notifyDot(); const d = document.querySelector('#app .ndot'); if (d) d.focus(); return; }
   const cc = e.target.closest('[data-cc]');
   if (cc) { const id = cc.dataset.cc, b = document.getElementById('cc-' + id); homeOpen[id] = !homeOpen[id]; if (b) b.hidden = !homeOpen[id]; cc.setAttribute('aria-expanded', !!homeOpen[id]); if (homeOpen[id]) fitTiles(); }
@@ -6605,6 +6973,8 @@ document.addEventListener('click', (e) => {
   if (yre) return repeatYearly(yre.dataset.yrep);
   const ye = e.target.closest('[data-yend]');
   if (ye) return removeYearly(ye.dataset.yend, true);
+  const th = e.target.closest('[data-thing]');
+  if (th) { thingOpen = thingOpen === th.dataset.thing ? null : th.dataset.thing; buyingSpecial = null; armedSpecial = null; return render(); }
   const by = e.target.closest('[data-buy]');
   if (by) { buyingSpecial = by.dataset.buy; armedSpecial = null; return render(); }
   if (e.target.closest('[data-buycancel]')) { buyingSpecial = null; return render(); }
@@ -6694,6 +7064,10 @@ document.addEventListener('click', (e) => {
     case 'csvInv': return exportInvCsv();
     case 'restoreYes': return applyRestore();
     case 'restoreNo': pendingRestore = null; return render();
+    case 'thingAdd': thingAdding = true; render(); { const n = document.getElementById('spName'); if (n) n.focus(); } return;
+    case 'thingCancel': thingAdding = false; return render();
+    case 'thingMore': thingAdding = false; setupSec = 'savings'; return tabGo('setup');
+    case 'thingsGo': return tabGo('goals');
     case 'moreOpen': homeMore = true; window.scrollTo(0, 0); return render();
     case 'moreBack': homeMore = false; window.scrollTo(0, 0); return render();
     case 'setupBack': setupSec = null; window.scrollTo(0, 0); return render();
@@ -6835,13 +7209,16 @@ document.addEventListener('submit', (e) => {
     render();
   } else if (id === 'specForm') {
     const name = document.getElementById('spName').value.trim(), target = toG(document.getElementById('spTarget').value);
-    const by = document.getElementById('spBy').value, share = Math.round(Number(document.getElementById('spShare').value) * 100);
-    const used = openSpecials().reduce((a, x) => a + x.share, 0);
-    if (!name || !(target > 0) || !/^\d{4}-\d{2}$/.test(by) || !(share > 0)) return;
-    if (used + share > 10000) { toast(`Only ${pct(10000 - used)} of Big purchases is free`); return; }
+    const by = document.getElementById('spBy').value || '';
+    if (!name || !(target > 0) || (by && !/^\d{4}-\d{2}$/.test(by))) return;
+    if (by && by <= nowCycle()) { toast('Pick a month after this one'); return; }
+    const P = thingPlan(target, by);
+    if (!P.share) { toast('Your Big purchases pot is already shared out'); return; }
     state.settings.specials = state.settings.specials || [];
-    state.settings.specials.push({ id: 'x' + uid(), name, target, by, share, start: nowCycle() });
-    save(); toast(`${name} added · takes ${pct(share)} of Big purchases`); render();
+    const x = { id: 'x' + uid(), name, target, share: P.share, start: nowCycle() };
+    if (by) x.by = by;
+    state.settings.specials.push(x); thingAdding = false; thingOpen = null;
+    save(); toast(P.ready ? `${name} added · ready around ${monLong(P.ready)}` : `${name} added`); render();
   } else if (id === 'yForm') {
     const name = document.getElementById('yName').value.trim(), g = toG(document.getElementById('yAmt').value), due = document.getElementById('yDue').value, now = nowCycle();
     if (!name || !(g > 0) || !/^\d{4}-\d{2}$/.test(due)) return;
