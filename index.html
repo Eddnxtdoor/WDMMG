@@ -1338,7 +1338,7 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
 // Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
-const APP_VERSION = ["v76","2 Nov 2026","dd67d80"];
+const APP_VERSION = ["v77","2 Nov 2026","50c2a6b"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -4695,6 +4695,12 @@ function pkPadClose() {
   document.documentElement.classList.remove('pkpadon');
   const d = document.getElementById('pkPad'); if (d) d.classList.remove('on');
 }
+// Leaving the app mid-typing: Android brings its own keyboard back over the pad when you return to a focused box
+// (it ignores inputmode none on the way back). So the box lets go of focus as the app goes to the background, keeping
+// what was typed; tapping the box again brings the pad back. (Edd, 2 Nov 2026)
+const pkAway = () => { if (!pkPad) return; const el = pkPad.el; pkPadClose(); if (el && el.blur) el.blur(); };
+document.addEventListener('visibilitychange', () => { if (document.hidden) pkAway(); });
+addEventListener('pagehide', pkAway); addEventListener('blur', () => { if (document.hidden) pkAway(); });
 document.addEventListener('focusin', (e) => { const el = e.target; if (el.dataset && el.dataset.pkpad) pkPadOpen(el); else if (pkPad && !(el.closest && el.closest('#pkPad'))) pkPadClose(); });
 document.addEventListener('focusout', () => setTimeout(() => { if (pkPad && document.activeElement !== pkPad.el) pkPadClose(); }, 0));
 document.addEventListener('pointerdown', (e) => { if (e.target.closest && e.target.closest('#pkPad')) e.preventDefault(); }, true);
