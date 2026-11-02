@@ -1198,6 +1198,17 @@ html.notips .tip { display: none; }
 .trow .ok { color: var(--green); font-weight: 700; } .trow .slow { color: var(--amber); font-weight: 700; }
 .tmore { padding: 0 0 12px 56px; }
 .tadd { width: 100%; margin-top: 8px; border-radius: 999px; }
+.trw { display: flex; align-items: center; gap: 4px; } .trw .trow { flex: 1; min-width: 0; }
+.thdl { display: grid; place-items: center; width: 40px; height: 44px; color: var(--muted); cursor: grab; touch-action: none; flex: none; }
+.thdl svg { width: 20px; height: 20px; }
+.titem.drag { position: relative; z-index: 3; background: var(--surface); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.18); transition: none; }
+.titem.slide { transition: transform .2s ease; }
+.tpill { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font: 700 11px var(--font); vertical-align: 2px; background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--muted); }
+.tpill.now { background: color-mix(in srgb, var(--green) 16%, transparent); color: var(--green); }
+.tseg { margin: 10px 0 6px; } .tseg button { height: 36px; font-size: 13px; }
+.tpot { font-size: 13px; color: var(--muted); margin: 8px 0 2px; } .tpot b { color: var(--ink); }
+.task { background: color-mix(in srgb, var(--green) 9%, transparent); border-radius: 18px; padding: 12px 14px; margin: 4px 0 12px; font-size: 14px; line-height: 1.45; }
+.task .ppbtns { margin-top: 10px; }
 .tform { margin-top: 12px; display: grid; } .tform input { width: 100%; margin-bottom: 10px; }
 .tl { font-size: 13px; color: var(--muted); font-weight: 600; margin: 0 0 4px; }
 .tprev { background: var(--tint, #E3EEE8); border-radius: 16px; padding: 12px 14px; font-size: 14px; margin: 2px 0 12px; }
@@ -1338,7 +1349,7 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
 // Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
-const APP_VERSION = ["v77","2 Nov 2026","50c2a6b"];
+const APP_VERSION = ["v78","2 Nov 2026","40f0b5c"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -1362,6 +1373,12 @@ function defaultSettings() {
 // `yG` is what is set aside for yearly costs this cycle (from yearlyStep), taken off after debt.
 // An income entry with a `pot` (see ONE_POTS) goes all into that pot: nothing comes off the top of it, so bills, debt,
 // yearly costs and the buffer are worked out from the split income only. `total` is still all income.
+// A thing's share of Big purchases in a cycle. x.shares = [{ from: 'YYYY-MM', s }] keeps each change from the cycle it
+// was made, so a closed cycle never moves when the order or the mode changes later. s 0 = waiting its turn.
+function shareAt(x, key) {
+  if (!x.shares) return x.share || 0;
+  let v = 0; x.shares.forEach((p) => { if (p.from <= key) v = p.s; }); return v;
+}
 function computeMonth(income, s, bills, debtG = 0, key, bufG = 0, yG = 0) {
   const total = income.reduce((a, e) => a + e.g, 0);
   const splitTotal = income.filter((e) => !isOnePot(e)).reduce((a, e) => a + e.g, 0);
@@ -1382,9 +1399,14 @@ function computeMonth(income, s, bills, debtG = 0, key, bufG = 0, yG = 0) {
   // In the cycle a pot is finished, it keeps only what it had then (endAlloc); later income goes to Big purchases.
   // Together they can never take more than Big purchases has (a pot finished and a new one added in the same cycle).
   let bigLeft = sub.big;
-  if (key) (s.specials || []).forEach((x) => {
+  // Things that stop in this cycle (fully saved or finished) are served first, so a thing started in the same cycle
+  // only gets what they leave, whatever the order of the list.
+  const stopsNow = (x) => (x.full === key || x.end === key ? 0 : 1);
+  if (key) (s.specials || []).slice().sort((a, b) => stopsNow(a) - stopsNow(b)).forEach((x) => {
     if (!(x.start <= key && (!x.end || key <= x.end))) return;
-    let g = Math.floor((sub.big * x.share) / 10000);
+    let g = Math.floor((sub.big * shareAt(x, key)) / 10000);
+    // A thing that is fully saved stops taking money: in the cycle it filled it keeps only what it needed (fullAlloc).
+    if (x.full) { if (key > x.full) g = 0; else if (key === x.full) g = Math.min(g, x.fullAlloc || 0); }
     if (key === x.end && x.endAlloc != null) g = Math.min(g, x.endAlloc);
     g = Math.max(0, Math.min(g, bigLeft)); bigLeft -= g;
     special[x.id] = g;
@@ -4435,26 +4457,153 @@ function bigMonthly() {
   }
   return 0;
 }
-const freeShare = () => Math.max(0, 10000 - openSpecials().reduce((a, x) => a + x.share, 0));
-// The share a new thing would take: what its date needs, or half of what is free when there is no date.
+// 2 Nov 2026 (Edd): things are saved one at a time, in his order, and the next one only starts when he says yes.
+// "All together" shares Big purchases evenly instead. settings.thingsMode 'queue' | 'together'.
+const thingsQueue = () => (state.settings.thingsMode || 'queue') === 'queue';
+const thingActive = () => openSpecials().find((x) => !x.full && shareAt(x, nowCycle()) > 0);
+const thingWaiting = () => openSpecials().filter((x) => !x.full && !(shareAt(x, nowCycle()) > 0));
+// Change a thing's share from a cycle on (this one by default). Cycles before it keep what they had.
+function setShare(x, v, from) {
+  from = from || nowCycle();
+  x.shares = (x.shares || [{ from: x.start, s: x.share || 0 }]).filter((p) => p.from < from);
+  x.shares.push({ from, s: v }); x.share = v;
+}
+// Ready month of the thing being saved for and each one in line, if each starts as soon as the one before is done.
+function queueDates() {
+  const per = bigMonthly(), now = nowCycle(), sb = specialBalances(state), out = {};
+  if (!per) return out;
+  const a = thingActive(); let cur = null;
+  (a ? [a] : []).concat(thingWaiting()).forEach((x) => {
+    const n = Math.max(1, Math.ceil(Math.max(0, x.target - (sb[x.id] || 0)) / per));
+    cur = cur == null ? addMonths(now, n - 1) : addMonths(cur, n); out[x.id] = cur;
+  });
+  return out;
+}
+// Keeps things tidy before each draw: old things get a share history, and a thing that has just been fully saved
+// is marked (full, fullAlloc) so it stops taking money. In one-at-a-time mode the app then asks before starting the next.
+function thingsSync() {
+  if (!state || !state.settings || !state.setup) return;
+  const s = state.settings, sp = s.specials || [];
+  if (!sp.some((x) => !x.end)) return;
+  let ch = false;
+  if (!s.thingsMode) { s.thingsMode = sp.filter((x) => !x.end && x.share > 0).length > 1 ? 'together' : 'queue'; ch = true; }
+  sp.forEach((x) => { if (!x.end && !x.shares) { x.shares = [{ from: x.start, s: x.share || 0 }]; ch = true; } });
+  const now = nowCycle(), hit = {}, cum = {};
+  const open = sp.filter((x) => !x.end && x.target > 0);
+  withMemo(() => {
+    open.forEach((x) => (cum[x.id] = 0));
+    const DP = debtPlan(state), BP = bufferPlan(state, DP);
+    cycleKeys(state).forEach((k) => {
+      if (k > now) return;
+      const m = state.months[k] || { income: [] }, c = monthCalcOf(state, k, DP, BP);
+      open.forEach((x) => {
+        const got = c.special[x.id] || 0;
+        cum[x.id] += got + moveNet(m, x.id) - (m.expenses || []).filter((e) => e.pot === x.id).reduce((t, e) => t + e.g, 0);
+        if (!x.full && !hit[x.id] && cum[x.id] >= x.target) hit[x.id] = { k, alloc: Math.max(0, got - (cum[x.id] - x.target)) };
+      });
+    });
+  });
+  open.forEach((x) => {
+    if (hit[x.id]) {
+      x.full = hit[x.id].k; x.fullAlloc = hit[x.id].alloc; ch = true;
+      if (thingsQueue() && !state.thingAsk) { const nx = thingWaiting()[0]; if (nx) state.thingAsk = { to: nx.id, from: x.id }; }
+    } else if (x.full && x.full === now && cum[x.id] < x.target && !(thingsQueue() && thingActive())) {
+      // income was taken off again this cycle: it is not full any more, so it goes back to saving
+      delete x.full; delete x.fullAlloc; ch = true;
+      if (state.thingAsk && state.thingAsk.from === x.id) state.thingAsk = null;
+    }
+  });
+  if (state.thingAsk) { const t = specialOf(state.thingAsk.to); if (!t || t.end || t.full || shareAt(t, now) > 0) { state.thingAsk = null; ch = true; } }
+  if (ch) save();
+}
+// The share a new thing would take and when it could be ready.
 function thingPlan(target, by) {
-  const now = nowCycle(), big = bigMonthly(), free = freeShare();
+  const now = nowCycle(), big = bigMonthly(), live = openSpecials().filter((x) => !x.full);
   const months = by ? Math.max(1, monthsBetween(now, by)) : 0, need = by ? Math.ceil(target / months) : 0;
-  const share = !free ? 0 : by && big ? Math.max(1, Math.min(free, Math.ceil((need * 10000) / big))) : Math.min(free, 5000);
+  let share, ready = null, waits = false;
+  if (thingsQueue()) {
+    waits = !!(thingActive() || state.thingAsk || openSpecials().some((x) => x.full));
+    share = waits ? 0 : 10000;
+    if (waits && big) {
+      const last = Object.values(queueDates()).sort().pop(), n = Math.max(1, Math.ceil(target / big));
+      ready = last ? addMonths(last, n) : addMonths(now, n - 1);
+    }
+  } else share = Math.floor(10000 / (live.length + 1));
   const per = Math.floor((big * share) / 10000);
-  const ready = per > 0 ? addMonths(now, Math.ceil(target / per) - 1) : null;
-  return { big, free, need, share, per, ready };
+  if (!waits) ready = per > 0 ? addMonths(now, Math.ceil(target / per) - 1) : null;
+  return { big, need, share, per, ready, waits };
 }
 function thingPreview(target, by) {
   if (!(target > 0)) return 'Type a price to see when it could be ready.';
-  const P = thingPlan(target, by);
-  if (!P.free) return 'Your Big purchases pot is already shared out between your other things. Save more each month, or finish one first.';
-  if (!P.big) return 'Add this cycle’s income first, then the app can work out a date.';
-  const yrs = P.per ? Math.round(target / P.per / 12) : 0;
+  const P = thingPlan(target, by), now = nowCycle(), q = thingsQueue();
+  if (!P.big || !P.ready) return 'Add this cycle’s income first, then the app can work out a date.';
+  const yrs = Math.round((monthsBetween(now, P.ready) + 1) / 12);
   const far = yrs > 3 ? ` That’s about ${yrs} years. Money left that long could sit in Investing instead, just something to think about.` : '';
-  if (by && P.per >= P.need) return `Needs <b>${fmtN(P.need)} a month</b>. It takes that from your Big purchases pot, so it’s ready around <b>${monLong(P.ready)}</b>.`;
-  if (by) return `Needs <b>${fmtN(P.need)} a month</b>. Your Big purchases pot has about ${fmtN(P.per)} a month free for it, so at that pace it’s ready around <b>${monLong(P.ready)}</b>.${far}`;
-  return `It takes about <b>${fmtN(P.per)} a month</b> from your Big purchases pot, so it’s ready around <b>${monLong(P.ready)}</b>.${far}`;
+  const late = by && P.ready > by ? ` That’s after ${monLong(by)}. ${q ? 'Move it up the line, or save more each month.' : 'Save more each month to get there sooner.'}` : '';
+  const need = by ? `Needs <b>${fmtN(P.need)} a month</b> for ${monLong(by)}. ` : '';
+  if (P.waits) return `${need}It joins the line. If you start it as soon as the one before is done, it’s ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
+  if (q) return `${need}It’s first in line, so it takes all of your Big purchases pot, about <b>${fmtN(P.per)} a month</b>. Ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
+  return `${need}Shared evenly with your other things, it takes about <b>${fmtN(P.per)} a month</b>, so it’s ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
+}
+// Yes on "Start saving for …?": it takes all of Big purchases from this cycle, and what is waiting there moves to it.
+function thingStart(id) {
+  const x = specialOf(id); if (!x) return;
+  const now = nowCycle();
+  openSpecials().forEach((y) => { if (y !== x && !y.full && shareAt(y, now) > 0) setShare(y, 0); });
+  setShare(x, 10000);
+  const pot = Math.max(0, savingsBalances().big), bal = specialBalances(state)[id] || 0, g = Math.min(pot, Math.max(0, x.target - bal));
+  if (g > 0) { const t = new Date(), m = (state.months[now] = state.months[now] || { income: [] }); (m.moves = m.moves || []).push({ id: uid(), from: 'big', to: id, g, note: 'Start saving for ' + x.name, iso: isoOf(t), date: dShort(t) }); }
+  state.thingAsk = null; thingOpen = null; save();
+  toast(`Now saving for ${x.name}${g > 0 ? ` · ${fmtN(g)} moved from Big purchases` : ''}`); render();
+}
+function thingsSetMode(mode) {
+  const s = state.settings, now = nowCycle();
+  if ((s.thingsMode || 'queue') === mode) return;
+  s.thingsMode = mode; state.thingAsk = null;
+  const live = openSpecials().filter((x) => !x.full);
+  if (mode === 'together') { const each = live.length ? Math.floor(10000 / live.length) : 0; live.forEach((x) => setShare(x, each)); }
+  else { const first = live.find((x) => shareAt(x, now) > 0) || live[0]; live.forEach((x) => setShare(x, x === first ? 10000 : 0)); }
+  save(); render();
+}
+// Drag the handle to change the order of the things waiting in line (only the line moves: closed cycles don't).
+let thDrag = null;
+document.addEventListener('pointerdown', (e) => {
+  const h = e.target.closest && e.target.closest('[data-thdl]'); if (!h) return;
+  const el = h.closest('.titem'), rows = [...document.querySelectorAll('.things .titem')].filter((r) => r.querySelector('[data-thdl]'));
+  if (!el || rows.length < 2) return;
+  e.preventDefault();
+  thDrag = { el, rows, y0: e.clientY, from: rows.indexOf(el), to: rows.indexOf(el), mids: rows.map((r) => { const b = r.getBoundingClientRect(); return b.top + b.height / 2; }), h: el.getBoundingClientRect().height };
+  el.classList.add('drag'); rows.forEach((r) => { if (r !== el) r.classList.add('slide'); });
+  try { h.setPointerCapture(e.pointerId); } catch (_) {}
+});
+document.addEventListener('pointermove', (e) => {
+  const D = thDrag; if (!D) return;
+  const dy = e.clientY - D.y0, mid = D.mids[D.from] + dy;
+  D.el.style.transform = `translateY(${dy}px)`;
+  let to = 0; D.mids.forEach((m, i) => { if (i !== D.from && mid > m) to++; });
+  D.to = Math.max(0, Math.min(D.rows.length - 1, to));
+  D.rows.forEach((r, i) => { if (r === D.el) return; let s = 0; if (D.from < D.to && i > D.from && i <= D.to) s = -D.h; if (D.from > D.to && i < D.from && i >= D.to) s = D.h; r.style.transform = s ? `translateY(${s}px)` : ''; });
+});
+const thDrop = () => {
+  const D = thDrag; if (!D) return; thDrag = null;
+  D.rows.forEach((r) => { r.style.transform = ''; r.classList.remove('drag', 'slide'); });
+  if (D.to === D.from) return;
+  thingsReorder(D.rows.map((r) => r.dataset.tid), D.from, D.to);
+};
+document.addEventListener('pointerup', thDrop); document.addEventListener('pointercancel', thDrop);
+// Move one waiting thing from position a to b in the line. Everything else keeps its place in the list.
+function thingsReorder(ids, a, b) {
+  const order = ids.slice(); const [m] = order.splice(a, 1); order.splice(b, 0, m);
+  const sp = state.settings.specials, slots = sp.map((x, i) => (ids.includes(x.id) ? i : -1)).filter((i) => i >= 0);
+  const byId = Object.fromEntries(sp.map((x) => [x.id, x]));
+  slots.forEach((i, n) => (sp[i] = byId[order[n]]));
+  if (state.thingAsk && thingWaiting()[0] && state.thingAsk.to !== thingWaiting()[0].id) state.thingAsk.to = thingWaiting()[0].id;
+  save(); toast(`${byId[m].name} moved to number ${b + 1} in the line`); render();
+}
+// After a thing is bought or stopped in one-at-a-time mode, the next one waits for a yes.
+function thingsAfterDone(id) {
+  if (!thingsQueue() || thingActive() || state.thingAsk) return;
+  const nx = thingWaiting()[0]; if (nx) state.thingAsk = { to: nx.id, from: null };
 }
 function thingRing(p) {
   const C = 113.1, off = (C * (1 - Math.max(0, Math.min(1, p)))).toFixed(1);
@@ -4463,27 +4612,42 @@ function thingRing(p) {
 function thingsCard() {
   const sp = state.settings.specials || [], open = sp.filter((x) => !x.end), done = sp.filter((x) => x.end);
   const sb = specialBalances(state), now = nowCycle(), cNow = monthCalc(now), prevC = monthCalc(addMonths(now, -1));
-  const big = bigMonthly(), cheer = [];
+  const big = bigMonthly(), cheer = [], q = thingsQueue(), qd = q ? queueDates() : {}, act = q ? thingActive() : null;
+  const wait = q ? thingWaiting() : [], ask = q && state.thingAsk ? specialOf(state.thingAsk.to) : null;
+  const pot = q && open.length ? Math.max(0, savingsBalances().big) : 0;
+  const askHtml = !ask ? '' : `<div class="task">${state.thingAsk.from && specialOf(state.thingAsk.from) ? `${esc(specialOf(state.thingAsk.from).name)} is fully saved, so it has stopped taking money. ` : ''}Start saving for <b>${esc(ask.name)}</b>?${pot > 0 ? ` The ${fmtN(Math.min(pot, Math.max(0, ask.target - (sb[ask.id] || 0))))} waiting in Big purchases goes to it too.` : ''}
+    <div class="ppbtns"><button class="btn sm" data-thingyes="${ask.id}">Yes, start it</button><button class="btn plain sm" data-thingno="1">Not yet</button></div></div>`;
   const one = (x) => {
     const bal = sb[x.id] || 0, p = x.target ? bal / x.target : 0, left = Math.max(0, x.target - bal);
-    const getting = cNow.special[x.id] || prevC.special[x.id] || Math.floor((big * x.share) / 10000);
-    let line; const far = bal < x.target && getting > 0 && left / getting > 36;
+    const waiting = q && !x.full && bal < x.target && !(shareAt(x, now) > 0);
+    const getting = waiting || x.full ? 0 : Math.floor((big * shareAt(x, now)) / 10000) || cNow.special[x.id] || prevC.special[x.id] || 0;
+    let line, pill = ''; const far = bal < x.target && getting > 0 && left / getting > 36;
     if (bal >= x.target) { line = '<span class="ok">ready to buy</span>'; if (!(state.thingsCheered || []).includes(x.id)) cheer.push(x.id); }
-    else if (!getting) line = '<span class="slow">getting nothing yet</span>';
-    else if (x.by) {
-      const need = Math.ceil(left / Math.max(1, monthsBetween(now, x.by)));
-      line = getting >= need ? `<span class="ok">on track for ${monLong(x.by)}</span>` : `<span class="slow">needs ${fmtN(need)} a month for ${monLong(x.by)}</span>`;
-    } else { const n = Math.ceil(left / getting); line = n > 36 ? `<span class="slow">about ${Math.round(n / 12)} years at this pace</span>` : `<span class="ok">ready around ${monLong(addMonths(now, n - 1))}</span>`; }
+    else if (waiting) {
+      pill = wait[0] === x ? 'next' : 'in line';
+      const r = qd[x.id], yrs = r ? Math.round((monthsBetween(now, r) + 1) / 12) : 0;
+      line = !r ? '<span class="slow">waiting its turn</span>' : yrs > 3 ? `<span class="slow">about ${yrs} years away</span>` : `<span class="ok">ready around ${monLong(r)}</span>`;
+    } else if (!getting) line = '<span class="slow">getting nothing yet</span>';
+    else {
+      if (q && x === act) pill = 'saving now';
+      if (x.by) {
+        const need = Math.ceil(left / Math.max(1, monthsBetween(now, x.by)));
+        line = getting >= need ? `<span class="ok">on track for ${monLong(x.by)}</span>` : `<span class="slow">needs ${fmtN(need)} a month for ${monLong(x.by)}</span>`;
+      } else { const n = Math.ceil(left / getting); line = n > 36 ? `<span class="slow">about ${Math.round(n / 12)} years at this pace</span>` : `<span class="ok">ready around ${monLong(addMonths(now, n - 1))}</span>`; }
+    }
     const isOpen = thingOpen === x.id || buyingSpecial === x.id;
-    return `<div class="titem${isOpen ? ' on' : ''}"><button class="trow" data-thing="${x.id}" aria-expanded="${isOpen}">${thingRing(p)}<span class="tt"><b>${esc(x.name)}</b><span class="num">${fmtN(bal)} of ${fmtN(x.target)} · ${line}</span></span></button>
-      ${!isOpen ? '' : `<div class="tmore"><p class="hint" style="margin:0 0 10px">About ${fmtN(getting)} a month from your Big purchases pot${x.by ? ` · wanted by ${monLong(x.by)}` : ''}.${far ? ' Money left for years could sit in Investing instead. Just something to think about.' : ''}</p>
+    const hdl = waiting && wait.length > 1 ? `<span class="thdl" data-thdl="${x.id}" role="button" aria-label="Drag to change the order">${navIcon('<path d="M5 9h14M5 15h14"/>')}</span>` : '';
+    const about = waiting ? `Waiting its turn. It starts when you say yes${act ? ` after ${esc(act.name)} is saved` : ''}.${x.by ? ` Wanted by ${monLong(x.by)}.` : ''}`
+      : x.full ? 'Fully saved, so it has stopped taking money.' : `About ${fmtN(getting)} a month from your Big purchases pot${x.by ? ` · wanted by ${monLong(x.by)}` : ''}.${far ? ' Money left for years could sit in Investing instead. Just something to think about.' : ''}`;
+    return `<div class="titem${isOpen ? ' on' : ''}" data-tid="${x.id}"><div class="trw"><button class="trow" data-thing="${x.id}" aria-expanded="${isOpen}">${thingRing(p)}<span class="tt"><b>${esc(x.name)}${pill ? `<span class="tpill${pill === 'saving now' ? ' now' : ''}">${pill}</span>` : ''}</b><span class="num">${fmtN(bal)} of ${fmtN(x.target)} · ${line}</span></span></button>${hdl}</div>
+      ${!isOpen ? '' : `<div class="tmore"><p class="hint" style="margin:0 0 10px">${about}</p>
       ${buyingSpecial === x.id ? `<form id="buyForm" data-id="${x.id}" class="row">
           <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(Math.min(bal, x.target) / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
           <button class="btn" type="submit">Save</button><button class="btn plain" type="button" data-buycancel="1">Cancel</button></form>
           <p class="hint" style="margin:6px 0 0">What did it cost? It comes out of this pot, anything left goes back to Big purchases.</p>`
-        : `<div class="ppbtns"><button class="btn sm" data-buy="${x.id}">Bought it</button>
-          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">Stop, return ${fmtN(bal)} to Big purchases</button>` : `<button class="btn plain sm" data-specarm="${x.id}">Stop saving</button>`}</div>`}</div>`}
-    </div>`;
+        : `<div class="ppbtns">${waiting ? (!act && !ask ? `<button class="btn sm" data-thingyes="${x.id}">Start saving now</button>` : '') : `<button class="btn sm" data-buy="${x.id}">Bought it</button>`}
+          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">${bal > 0 ? `Stop, return ${fmtN(bal)} to Big purchases` : 'Yes, take it off the list'}</button>` : `<button class="btn plain sm" data-specarm="${x.id}">${waiting && !bal ? 'Take off the list' : 'Stop saving'}</button>`}</div>`}</div>`}
+    </div>${ask && state.thingAsk.from === x.id ? askHtml : ''}`;
   };
   const form = !thingAdding ? `<button class="btn plain tadd" data-act="thingAdd">Add something to save for</button>`
     : `<form id="specForm" class="tform">
@@ -4494,10 +4658,17 @@ function thingsCard() {
       <div class="ppbtns"><button class="btn sm" type="submit">Save for it</button><button class="btn plain sm" type="button" data-act="thingCancel">Cancel</button></div>
       <button class="linkbtn" type="button" data-act="thingMore" style="margin-top:10px">Save more each month</button>
     </form>`;
-  const rows = open.map(one).join('');
+  // one at a time: fully saved first, then the one being saved for, then the line in order
+  const grp = (x) => (x.full || (sb[x.id] || 0) >= x.target ? 0 : x === act ? 1 : 2);
+  const list = q ? open.slice().sort((a, b) => grp(a) - grp(b)) : open;
+  const rows = list.map(one).join('');
+  const askLoose = ask && !(state.thingAsk.from && open.some((x) => x.id === state.thingAsk.from)) ? askHtml : '';
   if (cheer.length) { state.thingsCheered = (state.thingsCheered || []).concat(cheer); save(); }
   return `<section class="card things">${cheer.length ? `<div class="chconf" aria-hidden="true">${'<i></i>'.repeat(14)}</div>` : ''}<h2>Things to buy</h2>
     <p class="hint" style="margin:2px 0 4px">${big ? `From your Big purchases pot · about ${fmtN(big)} a month` : 'From your Big purchases pot'}</p>
+    ${open.length > 1 ? `<div class="pkseg tseg" role="group" aria-label="How to save"><button class="${q ? 'on' : ''}" data-thingmode="queue" aria-pressed="${q}">One at a time</button><button class="${q ? '' : 'on'}" data-thingmode="together" aria-pressed="${!q}">All together</button></div>` : ''}
+    ${pot > 0 && !act && !ask ? `<p class="tpot num"><b>${fmtN(pot)}</b> waiting in Big purchases, not given to anything yet</p>` : ''}
+    ${askLoose}
     ${rows}
     ${form}
     ${done.length ? `<div class="label" style="margin-top:16px">Done</div>${done.slice().reverse().slice(0, 5).map((x) => `<div class="kv"><div><div class="n">${esc(x.name)}</div><div class="m">${x.stopped ? 'stopped' : 'bought for ' + fmtN(x.cost || 0)} · ${esc(x.doneDate || '')}</div></div><div class="a"></div></div>`).join('')}` : ''}
@@ -4516,7 +4687,7 @@ function finishSpecial(id, cost, stopped) {
   if (spent > 0) (m.expenses = m.expenses || []).push({ id: uid(), pot: id, g: spent, note: x.name, iso: isoOf(today), date: dShort(today) });
   if (bal - spent > 0) (m.moves = m.moves || []).push({ id: uid(), from: id, to: 'big', g: bal - spent, note: 'Left over from ' + x.name, iso: isoOf(today), date: dShort(today) });
   x.cost = stopped ? 0 : cost; x.stopped = !!stopped; x.doneDate = dShort(today) + ' ' + today.getFullYear();
-  buyingSpecial = null; armedSpecial = null; save();
+  buyingSpecial = null; armedSpecial = null; thingsAfterDone(id); save();
   if (stopped) toast(`${x.name} stopped · ${fmtN(bal)} back in Big purchases`);
   else toast(cost > bal ? `${x.name} bought · it held ${fmtN(bal)}, log the other ${fmtN(cost - bal)} from another pot` : `${x.name} bought${bal - spent > 0 ? ` · ${fmtN(bal - spent)} back in Big purchases` : ''}`);
   render();
@@ -6564,6 +6735,7 @@ function launchShortcut(a) {
   setTimeout(() => { const el = document.getElementById('inAmount'); if (el) { el.scrollIntoView({ block: 'center' }); el.focus(); } }, 60);
 }
 function render() {
+  if (view === 'app') thingsSync();
   const r = withMemo(renderNow);
   if (launchAdd && view === 'app' && state && state.setup && !unlocking) { const a = launchAdd; launchAdd = null; setTimeout(() => launchShortcut(a), 0); }
   return r;
@@ -6981,6 +7153,12 @@ document.addEventListener('click', (e) => {
   if (ye) return removeYearly(ye.dataset.yend, true);
   const th = e.target.closest('[data-thing]');
   if (th) { thingOpen = thingOpen === th.dataset.thing ? null : th.dataset.thing; buyingSpecial = null; armedSpecial = null; return render(); }
+  const ty = e.target.closest('[data-thingyes]');
+  if (ty) return thingStart(ty.dataset.thingyes);
+  if (e.target.closest('[data-thingno]')) { state.thingAsk = null; save(); toast('The money waits in Big purchases'); return render(); }
+  const tm = e.target.closest('[data-thingmode]');
+  if (tm) return thingsSetMode(tm.dataset.thingmode);
+  if (e.target.closest('[data-thdl]')) return;
   const by = e.target.closest('[data-buy]');
   if (by) { buyingSpecial = by.dataset.buy; armedSpecial = null; return render(); }
   if (e.target.closest('[data-buycancel]')) { buyingSpecial = null; return render(); }
@@ -7218,13 +7396,15 @@ document.addEventListener('submit', (e) => {
     const by = document.getElementById('spBy').value || '';
     if (!name || !(target > 0) || (by && !/^\d{4}-\d{2}$/.test(by))) return;
     if (by && by <= nowCycle()) { toast('Pick a month after this one'); return; }
-    const P = thingPlan(target, by);
-    if (!P.share) { toast('Your Big purchases pot is already shared out'); return; }
+    const P = thingPlan(target, by), q = thingsQueue();
     state.settings.specials = state.settings.specials || [];
-    const x = { id: 'x' + uid(), name, target, share: P.share, start: nowCycle() };
+    if (!state.settings.thingsMode) state.settings.thingsMode = 'queue';
+    // all together: everything still saving is shared evenly again, the new thing included
+    if (!q) openSpecials().filter((y) => !y.full).forEach((y) => setShare(y, P.share));
+    const x = { id: 'x' + uid(), name, target, share: P.share, start: nowCycle(), shares: [{ from: nowCycle(), s: P.share }] };
     if (by) x.by = by;
     state.settings.specials.push(x); thingAdding = false; thingOpen = null;
-    save(); toast(P.ready ? `${name} added · ready around ${monLong(P.ready)}` : `${name} added`); render();
+    save(); toast(P.waits ? `${name} added to the line` : P.ready ? `${name} added · ready around ${monLong(P.ready)}` : `${name} added`); render();
   } else if (id === 'yForm') {
     const name = document.getElementById('yName').value.trim(), g = toG(document.getElementById('yAmt').value), due = document.getElementById('yDue').value, now = nowCycle();
     if (!name || !(g > 0) || !/^\d{4}-\d{2}$/.test(due)) return;
