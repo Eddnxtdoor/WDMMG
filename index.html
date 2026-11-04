@@ -873,6 +873,11 @@ nav div.three .npill { width: calc((100% - 18px) / 3); }
 /* beta build only: a label so this copy is never mistaken for the live app */
 .mark { position: relative; }
 .mark::before { content: "BETA"; position: absolute; left: 0; top: 100%; margin-top: 1px; padding: 1px 5px; border-radius: 999px; background: var(--green); color: #fff; font: 700 9px/1.2 var(--font); letter-spacing: .06em; pointer-events: none; }
+/* 4 Nov 2026: every drop-down rounded like the other boxes (Edd: no sharp corners anywhere) */
+select { -webkit-appearance: none; appearance: none; height: 44px; border: 0; border-radius: 12px; padding: 0 34px 0 12px; color: var(--ink); font: inherit; background: color-mix(in srgb, var(--ink) 6%, var(--surface)) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23888' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center; }
+.bday select { height: 34px; padding: 0 26px 0 10px; background-position: right 8px center; }
+.utoast { display: flex; align-items: center; gap: 12px; padding-right: 8px; }
+.utoast button { border: 0; background: color-mix(in srgb, #fff 18%, transparent); color: #fff; font: 700 13px var(--font); height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer; flex: none; }
 /* Phase 2: Money in and out, and Due soon */
 .p2body { padding: 0 20px 16px; }
 .p2rows .kv:first-child { border-top: 0; }
@@ -1198,6 +1203,9 @@ html.notips .tip { display: none; }
 .trow .ok { color: var(--green); font-weight: 700; } .trow .slow { color: var(--amber); font-weight: 700; }
 .tmore { padding: 0 0 12px 56px; }
 .tadd { width: 100%; margin-top: 8px; border-radius: 999px; }
+.inchips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.inchip { height: 32px; padding: 0 12px; border-radius: 999px; border: 0; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--ink); font: 600 13px var(--font); cursor: pointer; }
+.inchip.on { background: var(--fill, var(--green)); color: var(--green-ink); }
 .trw { display: flex; align-items: center; gap: 4px; } .trw .trow { flex: 1; min-width: 0; }
 .thdl { display: grid; place-items: center; width: 40px; height: 44px; color: var(--muted); cursor: grab; touch-action: none; flex: none; }
 .thdl svg { width: 20px; height: 20px; }
@@ -1349,7 +1357,7 @@ const POT_ORDER = ['rent', 'groceries', 'savings', 'investing', 'everyday', 'fun
 // tools/build.js flips GLOBAL for the everyone version; everything it changes checks this flag.
 const GLOBAL = false;
 // Which build this is, e.g. ['v74', '31 Oct 2026', 'c50b925']: filled in by tools/build.js.
-const APP_VERSION = ["v78","2 Nov 2026","40f0b5c"];
+const APP_VERSION = ["v79","4 Nov 2026","0f24465"];
 const PLANET = '<svg class="planet" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="currentColor" stroke-width="1.7" transform="rotate(-22 12 12)"/></svg>';
 const MARK = GLOBAL ? 'WDMMG' + PLANET : 'WDMMG';
 const POT_NAMES = { subs: 'Bills', buffer: 'Income buffer', debt: 'Debt', yearly: 'Yearly costs', lent: GLOBAL ? 'Money lent' : 'nxtdoor Bank', rent: 'Rent practice', groceries: 'Groceries', savings: 'Savings', investing: 'Investing', everyday: 'Everyday spending', fun: 'Fun money' };
@@ -1401,12 +1409,14 @@ function computeMonth(income, s, bills, debtG = 0, key, bufG = 0, yG = 0) {
   let bigLeft = sub.big;
   // Things that stop in this cycle (fully saved or finished) are served first, so a thing started in the same cycle
   // only gets what they leave, whatever the order of the list.
-  const stopsNow = (x) => (x.full === key || x.end === key ? 0 : 1);
+  const stopsNow = (x) => (x.full === key || x.end === key || (x.caps || []).some((c) => c.k === key) ? 0 : 1);
   if (key) (s.specials || []).slice().sort((a, b) => stopsNow(a) - stopsNow(b)).forEach((x) => {
     if (!(x.start <= key && (!x.end || key <= x.end))) return;
     let g = Math.floor((sub.big * shareAt(x, key)) / 10000);
     // A thing that is fully saved stops taking money: in the cycle it filled it keeps only what it needed (fullAlloc).
     if (x.full) { if (key > x.full) g = 0; else if (key === x.full) g = Math.min(g, x.fullAlloc || 0); }
+    // a price raised after it was full keeps what that cycle gave it (caps), and gets nothing until it is started again
+    (x.caps || []).forEach((c) => { if (c.k === key) g = Math.min(g, c.g); });
     if (key === x.end && x.endAlloc != null) g = Math.min(g, x.endAlloc);
     g = Math.max(0, Math.min(g, bigLeft)); bigLeft -= g;
     special[x.id] = g;
@@ -4446,7 +4456,7 @@ document.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') d
 let buyingSpecial = null, armedSpecial = null;
 // Things to buy (stored as settings.specials, the same money engine as before): each takes a share of Big purchases.
 // People are never asked for a %: the share is worked out from the price and date when the thing is added.
-let thingOpen = null, thingAdding = false;
+let thingOpen = null, thingAdding = false, thingEditing = null;
 // Big purchases before any thing takes its share, from the latest cycle that had money in.
 function bigMonthly() {
   const now = nowCycle();
@@ -4460,11 +4470,14 @@ function bigMonthly() {
 // 2 Nov 2026 (Edd): things are saved one at a time, in his order, and the next one only starts when he says yes.
 // "All together" shares Big purchases evenly instead. settings.thingsMode 'queue' | 'together'.
 const thingsQueue = () => (state.settings.thingsMode || 'queue') === 'queue';
-const thingActive = () => openSpecials().find((x) => !x.full && shareAt(x, nowCycle()) > 0);
-const thingWaiting = () => openSpecials().filter((x) => !x.full && !(shareAt(x, nowCycle()) > 0));
-// Change a thing's share from a cycle on (this one by default). Cycles before it keep what they had.
+// 4 Nov 2026 (Edd): a thing starts, stops or changes its share from the NEXT pay day. This cycle's money is
+// already shared out, so nothing is taken back from other savings. What a thing will get from next cycle is its role.
+const nextC = () => nextMonthKey(nowCycle());
+const thingActive = () => openSpecials().find((x) => !x.full && shareAt(x, nextC()) > 0);
+const thingWaiting = () => openSpecials().filter((x) => !x.full && !(shareAt(x, nextC()) > 0));
+// Change a thing's share from a cycle on (the next one by default). Cycles before it keep what they had.
 function setShare(x, v, from) {
-  from = from || nowCycle();
+  from = from || nextC();
   x.shares = (x.shares || [{ from: x.start, s: x.share || 0 }]).filter((p) => p.from < from);
   x.shares.push({ from, s: v }); x.share = v;
 }
@@ -4475,7 +4488,8 @@ function queueDates() {
   const a = thingActive(); let cur = null;
   (a ? [a] : []).concat(thingWaiting()).forEach((x) => {
     const n = Math.max(1, Math.ceil(Math.max(0, x.target - (sb[x.id] || 0)) / per));
-    cur = cur == null ? addMonths(now, n - 1) : addMonths(cur, n); out[x.id] = cur;
+    // the one saving now finishes this cycle at the earliest; one starting next pay day a cycle later
+    cur = cur == null ? addMonths(now, x === a && shareAt(x, now) > 0 ? n - 1 : n) : addMonths(cur, n); out[x.id] = cur;
   });
   return out;
 }
@@ -4526,11 +4540,11 @@ function thingPlan(target, by) {
     share = waits ? 0 : 10000;
     if (waits && big) {
       const last = Object.values(queueDates()).sort().pop(), n = Math.max(1, Math.ceil(target / big));
-      ready = last ? addMonths(last, n) : addMonths(now, n - 1);
+      ready = last ? addMonths(last, n) : addMonths(now, n);
     }
   } else share = Math.floor(10000 / (live.length + 1));
   const per = Math.floor((big * share) / 10000);
-  if (!waits) ready = per > 0 ? addMonths(now, Math.ceil(target / per) - 1) : null;
+  if (!waits) ready = per > 0 ? addMonths(now, Math.ceil(target / per)) : null;
   return { big, need, share, per, ready, waits };
 }
 function thingPreview(target, by) {
@@ -4542,19 +4556,16 @@ function thingPreview(target, by) {
   const late = by && P.ready > by ? ` That’s after ${monLong(by)}. ${q ? 'Move it up the line, or save more each month.' : 'Save more each month to get there sooner.'}` : '';
   const need = by ? `Needs <b>${fmtN(P.need)} a month</b> for ${monLong(by)}. ` : '';
   if (P.waits) return `${need}It joins the line. If you start it as soon as the one before is done, it’s ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
-  if (q) return `${need}It’s first in line, so it takes all of your Big purchases pot, about <b>${fmtN(P.per)} a month</b>. Ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
-  return `${need}Shared evenly with your other things, it takes about <b>${fmtN(P.per)} a month</b>, so it’s ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
+  if (q) return `${need}It’s first in line, so from your next pay day it takes all of your Big purchases pot, about <b>${fmtN(P.per)} a month</b>. Ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
+  return `${need}From your next pay day, shared evenly with your other things, it takes about <b>${fmtN(P.per)} a month</b>, so it’s ready around <b>${monLong(P.ready)}</b>.${late}${far}`;
 }
-// Yes on "Start saving for …?": it takes all of Big purchases from this cycle, and what is waiting there moves to it.
+// Yes on "Start saving for …?": it gets all of Big purchases from the next pay day. Nothing is moved now.
 function thingStart(id) {
   const x = specialOf(id); if (!x) return;
-  const now = nowCycle();
-  openSpecials().forEach((y) => { if (y !== x && !y.full && shareAt(y, now) > 0) setShare(y, 0); });
+  openSpecials().forEach((y) => { if (y !== x && !y.full && shareAt(y, nextC()) > 0) setShare(y, 0); });
   setShare(x, 10000);
-  const pot = Math.max(0, savingsBalances().big), bal = specialBalances(state)[id] || 0, g = Math.min(pot, Math.max(0, x.target - bal));
-  if (g > 0) { const t = new Date(), m = (state.months[now] = state.months[now] || { income: [] }); (m.moves = m.moves || []).push({ id: uid(), from: 'big', to: id, g, note: 'Start saving for ' + x.name, iso: isoOf(t), date: dShort(t) }); }
   state.thingAsk = null; thingOpen = null; save();
-  toast(`Now saving for ${x.name}${g > 0 ? ` · ${fmtN(g)} moved from Big purchases` : ''}`); render();
+  toast(`${x.name} starts from your next pay day`); render();
 }
 function thingsSetMode(mode) {
   const s = state.settings, now = nowCycle();
@@ -4562,7 +4573,7 @@ function thingsSetMode(mode) {
   s.thingsMode = mode; state.thingAsk = null;
   const live = openSpecials().filter((x) => !x.full);
   if (mode === 'together') { const each = live.length ? Math.floor(10000 / live.length) : 0; live.forEach((x) => setShare(x, each)); }
-  else { const first = live.find((x) => shareAt(x, now) > 0) || live[0]; live.forEach((x) => setShare(x, x === first ? 10000 : 0)); }
+  else { const first = live.find((x) => shareAt(x, nextC()) > 0) || live[0]; live.forEach((x) => setShare(x, x === first ? 10000 : 0)); }
   save(); render();
 }
 // Drag the handle to change the order of the things waiting in line (only the line moves: closed cycles don't).
@@ -4600,6 +4611,28 @@ function thingsReorder(ids, a, b) {
   if (state.thingAsk && thingWaiting()[0] && state.thingAsk.to !== thingWaiting()[0].id) state.thingAsk.to = thingWaiting()[0].id;
   save(); toast(`${byId[m].name} moved to number ${b + 1} in the line`); render();
 }
+// A new price. Lower than what is saved: the next draw marks it fully saved. Higher, after it was already full:
+// the cycle it filled keeps what it gave (caps), and it goes back in line from the next pay day (one at a time) or
+// back to its even share (all together). Closed cycles never move.
+function thingEditPrice(x, target) {
+  if (target === x.target) return;
+  const was = x.full, bal = specialBalances(state)[x.id] || 0; x.target = target;
+  if (!was && target <= bal) {
+    // now fully saved: it stops from this cycle and anything over the new price goes back to Big purchases
+    const now = nowCycle(), t = new Date(), m = (state.months[now] = state.months[now] || { income: [] });
+    const got = monthCalc(now).special[x.id] || 0; x.full = now; x.fullAlloc = got;
+    if (bal > target) (m.moves = m.moves || []).push({ id: uid(), from: x.id, to: 'big', g: bal - target, note: x.name + ' cost less', iso: isoOf(t), date: dShort(t) });
+    if (thingsQueue() && !state.thingAsk) { const nx = thingWaiting()[0]; if (nx) state.thingAsk = { to: nx.id, from: x.id }; }
+    return;
+  }
+  if (was && target > bal) {
+    x.caps = (x.caps || []).concat([{ k: was, g: x.fullAlloc || 0 }]);
+    const after = nextMonthKey(was); if (after <= nowCycle()) setShare(x, 0, after);
+    delete x.full; delete x.fullAlloc;
+    if (thingsQueue()) { setShare(x, 0); if (state.thingAsk && state.thingAsk.from === x.id) state.thingAsk = null; thingsAfterDone(x.id); }
+    else { const live = openSpecials().filter((y) => !y.full), each = Math.floor(10000 / live.length); live.forEach((y) => setShare(y, each)); }
+  }
+}
 // After a thing is bought or stopped in one-at-a-time mode, the next one waits for a yes.
 function thingsAfterDone(id) {
   if (!thingsQueue() || thingActive() || state.thingAsk) return;
@@ -4615,38 +4648,47 @@ function thingsCard() {
   const big = bigMonthly(), cheer = [], q = thingsQueue(), qd = q ? queueDates() : {}, act = q ? thingActive() : null;
   const wait = q ? thingWaiting() : [], ask = q && state.thingAsk ? specialOf(state.thingAsk.to) : null;
   const pot = q && open.length ? Math.max(0, savingsBalances().big) : 0;
-  const askHtml = !ask ? '' : `<div class="task">${state.thingAsk.from && specialOf(state.thingAsk.from) ? `${esc(specialOf(state.thingAsk.from).name)} is fully saved, so it has stopped taking money. ` : ''}Start saving for <b>${esc(ask.name)}</b>?${pot > 0 ? ` The ${fmtN(Math.min(pot, Math.max(0, ask.target - (sb[ask.id] || 0))))} waiting in Big purchases goes to it too.` : ''}
+  const askHtml = !ask ? '' : `<div class="task">${state.thingAsk.from && specialOf(state.thingAsk.from) ? `${esc(specialOf(state.thingAsk.from).name)} is fully saved, so it has stopped taking money. ` : ''}Start saving for <b>${esc(ask.name)}</b>? It starts from your next pay day.
     <div class="ppbtns"><button class="btn sm" data-thingyes="${ask.id}">Yes, start it</button><button class="btn plain sm" data-thingno="1">Not yet</button></div></div>`;
   const one = (x) => {
     const bal = sb[x.id] || 0, p = x.target ? bal / x.target : 0, left = Math.max(0, x.target - bal);
-    const waiting = q && !x.full && bal < x.target && !(shareAt(x, now) > 0);
-    const getting = waiting || x.full ? 0 : Math.floor((big * shareAt(x, now)) / 10000) || cNow.special[x.id] || prevC.special[x.id] || 0;
+    const waiting = q && !x.full && bal < x.target && !(shareAt(x, nextC()) > 0);
+    const starts = !waiting && !x.full && !(shareAt(x, now) > 0) && shareAt(x, nextC()) > 0;
+    const getting = waiting || x.full ? 0 : Math.floor((big * shareAt(x, nextC())) / 10000) || cNow.special[x.id] || prevC.special[x.id] || 0;
     let line, pill = ''; const far = bal < x.target && getting > 0 && left / getting > 36;
     if (bal >= x.target) { line = '<span class="ok">ready to buy</span>'; if (!(state.thingsCheered || []).includes(x.id)) cheer.push(x.id); }
     else if (waiting) {
       pill = wait[0] === x ? 'next' : 'in line';
       const r = qd[x.id], yrs = r ? Math.round((monthsBetween(now, r) + 1) / 12) : 0;
-      line = !r ? '<span class="slow">waiting its turn</span>' : yrs > 3 ? `<span class="slow">about ${yrs} years away</span>` : `<span class="ok">ready around ${monLong(r)}</span>`;
+      line = !r ? '<span class="slow">waiting its turn</span>' : yrs > 3 ? `<span class="slow">about ${yrs} years away</span>` : x.by && r > x.by ? `<span class="slow">ready around ${monLong(r)}, after your ${monLong(x.by)} date</span>` : `<span class="ok">ready around ${monLong(r)}</span>`;
     } else if (!getting) line = '<span class="slow">getting nothing yet</span>';
     else {
-      if (q && x === act) pill = 'saving now';
+      if (q && x === act) pill = starts ? 'starts next pay day' : 'saving now';
       if (x.by) {
         const need = Math.ceil(left / Math.max(1, monthsBetween(now, x.by)));
         line = getting >= need ? `<span class="ok">on track for ${monLong(x.by)}</span>` : `<span class="slow">needs ${fmtN(need)} a month for ${monLong(x.by)}</span>`;
-      } else { const n = Math.ceil(left / getting); line = n > 36 ? `<span class="slow">about ${Math.round(n / 12)} years at this pace</span>` : `<span class="ok">ready around ${monLong(addMonths(now, n - 1))}</span>`; }
+      } else { const n = Math.ceil(left / getting); line = n > 36 ? `<span class="slow">about ${Math.round(n / 12)} years at this pace</span>` : `<span class="ok">ready around ${monLong(addMonths(now, starts ? n : n - 1))}</span>`; }
     }
     const isOpen = thingOpen === x.id || buyingSpecial === x.id;
     const hdl = waiting && wait.length > 1 ? `<span class="thdl" data-thdl="${x.id}" role="button" aria-label="Drag to change the order">${navIcon('<path d="M5 9h14M5 15h14"/>')}</span>` : '';
     const about = waiting ? `Waiting its turn. It starts when you say yes${act ? ` after ${esc(act.name)} is saved` : ''}.${x.by ? ` Wanted by ${monLong(x.by)}.` : ''}`
-      : x.full ? 'Fully saved, so it has stopped taking money.' : `About ${fmtN(getting)} a month from your Big purchases pot${x.by ? ` · wanted by ${monLong(x.by)}` : ''}.${far ? ' Money left for years could sit in Investing instead. Just something to think about.' : ''}`;
-    return `<div class="titem${isOpen ? ' on' : ''}" data-tid="${x.id}"><div class="trw"><button class="trow" data-thing="${x.id}" aria-expanded="${isOpen}">${thingRing(p)}<span class="tt"><b>${esc(x.name)}${pill ? `<span class="tpill${pill === 'saving now' ? ' now' : ''}">${pill}</span>` : ''}</b><span class="num">${fmtN(bal)} of ${fmtN(x.target)} · ${line}</span></span></button>${hdl}</div>
+      : x.full ? 'Fully saved, so it has stopped taking money.' : `${starts ? 'Starts from your next pay day. ' : ''}About ${fmtN(getting)} a month from your Big purchases pot${x.by ? ` · wanted by ${monLong(x.by)}` : ''}.${far ? ' Money left for years could sit in Investing instead. Just something to think about.' : ''}`;
+    return `<div class="titem${isOpen ? ' on' : ''}" data-tid="${x.id}"><div class="trw"><button class="trow" data-thing="${x.id}" aria-expanded="${isOpen}">${thingRing(p)}<span class="tt"><b>${esc(x.name)}${pill ? `<span class="tpill${pill === 'saving now' || pill === 'starts next pay day' ? ' now' : ''}">${pill}</span>` : ''}</b><span class="num">${fmtN(bal)} of ${fmtN(x.target)} · ${line}</span></span></button>${hdl}</div>
       ${!isOpen ? '' : `<div class="tmore"><p class="hint" style="margin:0 0 10px">${about}</p>
       ${buyingSpecial === x.id ? `<form id="buyForm" data-id="${x.id}" class="row">
           <input id="buyAmt" class="f1" type="number" inputmode="decimal" min="0" step="0.01" value="${(Math.min(bal, x.target) / 100).toFixed(2)}" aria-label="What it cost in ${HOME}" required>
           <button class="btn" type="submit">Save</button><button class="btn plain" type="button" data-buycancel="1">Cancel</button></form>
+          <label class="tl" for="buyRest" style="margin-top:10px">If it cost more than the ${fmtN(bal)} saved, take the rest from</label>
+            <select id="buyRest" class="f1" style="width:100%;margin-top:6px">${['everyday', 'fun', 'general', 'emergency', 'big'].map((k) => `<option value="${k}">${potName(k)}</option>`).join('')}</select>
           <p class="hint" style="margin:6px 0 0">What did it cost? It comes out of this pot, anything left goes back to Big purchases.</p>`
-        : `<div class="ppbtns">${waiting ? (!act && !ask ? `<button class="btn sm" data-thingyes="${x.id}">Start saving now</button>` : '') : `<button class="btn sm" data-buy="${x.id}">Bought it</button>`}
-          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">${bal > 0 ? `Stop, return ${fmtN(bal)} to Big purchases` : 'Yes, take it off the list'}</button>` : `<button class="btn plain sm" data-specarm="${x.id}">${waiting && !bal ? 'Take off the list' : 'Stop saving'}</button>`}</div>`}</div>`}
+        : thingEditing === x.id ? `<form id="thingEditForm" data-id="${x.id}" class="tform">
+          <label class="tl" for="teName">Name</label><input id="teName" type="text" value="${esc(x.name)}" required>
+          <label class="tl" for="teTarget">Price</label><input id="teTarget" type="number" inputmode="decimal" min="1" step="0.01" value="${(x.target / 100).toFixed(2)}" required>
+          <label class="tl" for="teBy">Wanted by (optional)</label><input id="teBy" type="month" min="${addMonths(now, 1)}" value="${esc(x.by || '')}">
+          <div class="ppbtns"><button class="btn sm" type="submit">Save changes</button><button class="btn plain sm" type="button" data-thingeditx="1">Cancel</button></div></form>`
+        : `<div class="ppbtns">${waiting ? (!act && !ask ? `<button class="btn sm" data-thingyes="${x.id}">Start saving for it</button>` : '') : `<button class="btn sm" data-buy="${x.id}">Bought it</button>`}
+          ${armedSpecial === x.id ? `<button class="btn plain sm warnbtn" data-specstop="${x.id}">${bal > 0 ? `Yes, cancel it · ${fmtN(bal)} back to savings` : 'Yes, take it off the list'}</button>` : `<button class="btn plain sm" data-thingedit="${x.id}">Edit</button><button class="btn plain sm" data-specarm="${x.id}">${!bal ? 'Take off the list' : 'Don’t want it any more'}</button>`}</div>
+          ${armedSpecial === x.id && bal > 0 ? `<p class="hint" style="margin:6px 0 0">Not bought, just cancelled. The ${fmtN(bal)} is shared across your savings pots the same way as your monthly savings split.</p>` : ''}`}</div>`}
     </div>${ask && state.thingAsk.from === x.id ? askHtml : ''}`;
   };
   const form = !thingAdding ? `<button class="btn plain tadd" data-act="thingAdd">Add something to save for</button>`
@@ -4671,25 +4713,38 @@ function thingsCard() {
     ${askLoose}
     ${rows}
     ${form}
-    ${done.length ? `<div class="label" style="margin-top:16px">Done</div>${done.slice().reverse().slice(0, 5).map((x) => `<div class="kv"><div><div class="n">${esc(x.name)}</div><div class="m">${x.stopped ? 'stopped' : 'bought for ' + fmtN(x.cost || 0)} · ${esc(x.doneDate || '')}</div></div><div class="a"></div></div>`).join('')}` : ''}
+    ${done.length ? `<div class="label" style="margin-top:16px">Done</div>${done.slice().reverse().slice(0, 5).map((x) => `<div class="kv"><div><div class="n">${esc(x.name)}</div><div class="m">${x.stopped ? 'cancelled, not bought' + (x.backG ? ' · ' + fmtN(x.backG) + ' back to savings' : '') : 'bought for ' + fmtN(x.cost || 0)} · ${esc(x.doneDate || '')}</div></div><div class="a"></div></div>`).join('')}` : ''}
   </section>`;
 }
 // Finish a special pot: it keeps what it has but gets nothing more after this cycle, the cost is spent from it,
 // and anything left over is moved back to Big purchases.
-function finishSpecial(id, cost, stopped) {
+function finishSpecial(id, cost, stopped, restPot) {
   const x = specialOf(id); if (!x) return;
   const now = nowCycle(), today = new Date();
+  // 4 Nov 2026: if it cost more than was saved, the rest comes from a pot picked in the form (like Yearly bills)
+  const have = specialBalances(state)[id] || 0, rest = stopped ? 0 : Math.max(0, cost - have);
+  if (rest > 0 && restPot && SUB_ORDER.includes(restPot) && available(restPot) < rest) { toast(`${potName(restPot)} only has ${fmt(Math.max(0, available(restPot)))}`); return; }
+  const snap = JSON.stringify(state);
   x.endAlloc = monthCalc(now).special[id] || 0;
   x.end = now;
   const bal = specialBalances(state)[id] || 0;
   const m = (state.months[now] = state.months[now] || { income: [] });
   const spent = stopped ? 0 : Math.min(cost, bal);
   if (spent > 0) (m.expenses = m.expenses || []).push({ id: uid(), pot: id, g: spent, note: x.name, iso: isoOf(today), date: dShort(today) });
-  if (bal - spent > 0) (m.moves = m.moves || []).push({ id: uid(), from: id, to: 'big', g: bal - spent, note: 'Left over from ' + x.name, iso: isoOf(today), date: dShort(today) });
+  if (rest > 0 && restPot) (m.expenses = m.expenses || []).push({ id: uid(), pot: restPot, g: rest, note: x.name + ' (more than saved)', iso: isoOf(today), date: dShort(today) });
+  // Bought: what is left goes back to Big purchases for the next thing. Cancelled (4 Nov 2026, Edd): not wanted any
+  // more, so the money is shared across the savings pots by the savings split weights.
+  if (bal - spent > 0) {
+    if (stopped) {
+      const ws = SUB_ORDER.map((k) => state.settings.sub[k] || 0), parts = ws.some((w) => w > 0) ? allocate(bal, ws) : SUB_ORDER.map((k) => (k === 'big' ? bal : 0));
+      SUB_ORDER.forEach((k, i) => { if (parts[i] > 0) (m.moves = m.moves || []).push({ id: uid(), from: id, to: k, g: parts[i], note: 'From ' + x.name + ' (cancelled)', iso: isoOf(today), date: dShort(today) }); });
+      x.backG = bal;
+    } else (m.moves = m.moves || []).push({ id: uid(), from: id, to: 'big', g: bal - spent, note: 'Left over from ' + x.name, iso: isoOf(today), date: dShort(today) });
+  }
   x.cost = stopped ? 0 : cost; x.stopped = !!stopped; x.doneDate = dShort(today) + ' ' + today.getFullYear();
   buyingSpecial = null; armedSpecial = null; thingsAfterDone(id); save();
-  if (stopped) toast(`${x.name} stopped · ${fmtN(bal)} back in Big purchases`);
-  else toast(cost > bal ? `${x.name} bought · it held ${fmtN(bal)}, log the other ${fmtN(cost - bal)} from another pot` : `${x.name} bought${bal - spent > 0 ? ` · ${fmtN(bal - spent)} back in Big purchases` : ''}`);
+  if (stopped) undoToast(bal > 0 ? `${x.name} cancelled · ${fmtN(bal)} shared back across your savings` : `${x.name} taken off the list`, snap);
+  else undoToast(cost > bal ? (restPot ? `${x.name} bought · ${fmtN(cost - bal)} more than saved came from ${potName(restPot)}` : `${x.name} bought · it held ${fmtN(bal)}, log the other ${fmtN(cost - bal)} from another pot`) : `${x.name} bought${bal - spent > 0 ? ` · ${fmtN(bal - spent)} back in Big purchases` : ''}`, snap);
   render();
 }
 // ---------- the app's own pickers (2 Nov 2026: Edd picked "Made for WDMMG" in Picker Lab Two) ----------
@@ -5379,6 +5434,24 @@ function toast(msg) {
   const el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); el.textContent = msg;
   document.body.appendChild(el); setTimeout(() => el.remove(), 3200);
 }
+// A message with Undo for a few seconds after a step that moves money (Bought it, cancel). Undo puts back the whole
+// saved state from just before, so nothing can be half undone.
+let undoSnap = null, undoTimer = null;
+function undoToast(msg, snap) {
+  document.querySelectorAll('.toast').forEach((x) => x.remove());
+  const el = document.createElement('div'); el.className = 'toast utoast'; el.setAttribute('role', 'status');
+  el.innerHTML = `<span>${esc(msg)}</span><button type="button" data-undo="1">Undo</button>`;
+  document.body.appendChild(el); undoSnap = snap; clearTimeout(undoTimer);
+  undoTimer = setTimeout(() => { el.remove(); undoSnap = null; }, 6000);
+}
+function undoNow() {
+  if (!undoSnap) return;
+  const st = JSON.parse(undoSnap); undoSnap = null; clearTimeout(undoTimer);
+  document.querySelectorAll('.toast').forEach((x) => x.remove());
+  Object.keys(state).forEach((k) => delete state[k]); Object.assign(state, st);
+  buyingSpecial = null; armedSpecial = null; thingOpen = null; save(); render(); toast('Undone');
+}
+document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-undo]')) { e.preventDefault(); e.stopPropagation(); undoNow(); } }, true);
 function moveSheetHtml() {
   const opt = (name, sel) => movePots().map((p) => `<label class="choice"><input type="radio" name="${name}" value="${p}" ${p === sel ? 'checked' : ''}><span>${esc(shortName(p))}<small class="num">${fmtS(available(p))}</small></span></label>`).join('');
   return `<div class="scrim" data-act="closeSheet"></div>
@@ -5951,6 +6024,7 @@ function renderHome() {
           <input id="inLabel" class="f2" type="text" placeholder="${GLOBAL ? 'From (optional)' : 'Label (optional)'}" aria-label="${GLOBAL ? 'Who paid you' : 'Label'}" value="${incDraft ? esc(incDraft.label) : ''}"${GLOBAL ? ' list="payerList" autocomplete="off"' : ''}>${GLOBAL ? `<datalist id="payerList">${payerLabels().map((t) => `<option value="${esc(t)}">`).join('')}</datalist>` : ''}
           <button class="btn" type="submit">Add payment</button>
         </div>
+        <div class="inchips" role="group" aria-label="Quick labels">${INC_LABELS.map((t) => `<button type="button" class="inchip" data-inlabel="${esc(t)}">${esc(t)}</button>`).join('')}</div>
       </form>
       <p class="hint tip" style="margin-top:10px">Payments in the same cycle are combined and split together, unless you put one all in one pot. For other currencies, type the rate you actually got.</p>
     </section>`;
@@ -6172,6 +6246,9 @@ function obRestoreCard() {
 // at all. "Now" makes rent a bill (like switching to paying your own rent in Setup); "none" moves the Rent practice
 // share to Savings. Going back and answering again undoes the earlier answer first.
 let obRent = null, obRentDone = null;
+// 4 Nov 2026 (Edd): quick labels for money in. Money from family for rent is "Financial support": it is income like
+// pay, goes through the split the same way, and rent is then paid as a normal bill.
+const INC_LABELS = ['Salary', 'Financial support', 'Bonus', 'Side job'];
 // Everyone version: the currency the whole app counts in. Changing it later only changes the label: amounts stay.
 const CURS = [['PLN', 'Polish złoty'], ['EUR', 'Euro'], ['GBP', 'British pound'], ['USD', 'US dollar'], ['CHF', 'Swiss franc'], ['CZK', 'Czech koruna'], ['SEK', 'Swedish krona'], ['NOK', 'Norwegian krone'], ['DKK', 'Danish krone'], ['HUF', 'Hungarian forint'], ['RON', 'Romanian leu'], ['UAH', 'Ukrainian hryvnia'], ['CAD', 'Canadian dollar'], ['AUD', 'Australian dollar'], ['ZAR', 'South African rand'], ['NGN', 'Nigerian naira'], ['KES', 'Kenyan shilling'], ['INR', 'Indian rupee']];
 // Everyone version: a colour (filled in by tools/build.js from tools/theme.js; the first is the default) and light,
@@ -6584,7 +6661,8 @@ function setupBillsHtml() {
       <div class="field"><label for="rentCush">Rent cushion (months of rent)</label><input id="rentCush" type="number" inputmode="numeric" min="0" max="12" step="1" value="${s.rentCushion == null ? 3 : s.rentCushion}"></div>
       <p class="hint tip" style="margin:6px 0 0">Rent practice fills this cushion first. Once it is full, new rent practice goes to your Emergency fund.</p>
       ${s.graduated ? `<p class="hint" style="margin:10px 0 0">Paying your own rent since ${monLong(s.graduated)}.</p>`
-        : armedGrad ? `<div class="note" style="margin-top:12px">This adds Rent (${fmt(s.rentTarget)}) as a monthly bill from this cycle, moves the ${pct(s.percents.rent)} rent practice share to Savings, and keeps what is in the pot as your rent cushion. Past months stay as they were.</div>
+        : armedGrad ? `<div class="task" style="margin-top:12px">This adds Rent as a monthly bill from this cycle, moves the ${pct(s.percents.rent)} rent practice share to Savings, and keeps what is in the pot as your rent cushion. Past months stay as they were. If family sends you money for rent, add it as money in labelled Financial support.</div>
+          <div class="field" style="margin-top:10px"><label for="gradRent">What you pay in rent (${HOME} a month)</label><input id="gradRent" type="number" inputmode="decimal" min="1" step="0.01" value="${s.rentTarget ? (s.rentTarget / 100).toFixed(2) : ''}"></div>
           <div class="ppbtns" style="margin-top:10px"><button class="btn sm" data-act="gradYes">Yes, I pay my own rent now</button><button class="btn plain sm" data-act="gradNo">Cancel</button></div>`
         : `<button class="btn plain sm" data-act="gradArm" style="margin-top:12px">I'm paying my own rent now</button>`}
     </section>
@@ -7153,9 +7231,14 @@ document.addEventListener('click', (e) => {
   if (ye) return removeYearly(ye.dataset.yend, true);
   const th = e.target.closest('[data-thing]');
   if (th) { thingOpen = thingOpen === th.dataset.thing ? null : th.dataset.thing; buyingSpecial = null; armedSpecial = null; return render(); }
+  const il = e.target.closest('[data-inlabel]');
+  if (il) { const f = document.getElementById('inLabel'); if (f) { f.value = il.dataset.inlabel; document.querySelectorAll('.inchip').forEach((c) => c.classList.toggle('on', c === il)); } return; }
   const ty = e.target.closest('[data-thingyes]');
   if (ty) return thingStart(ty.dataset.thingyes);
   if (e.target.closest('[data-thingno]')) { state.thingAsk = null; save(); toast('The money waits in Big purchases'); return render(); }
+  const te = e.target.closest('[data-thingedit]');
+  if (te) { thingEditing = te.dataset.thingedit; armedSpecial = null; return render(); }
+  if (e.target.closest('[data-thingeditx]')) { thingEditing = null; return render(); }
   const tm = e.target.closest('[data-thingmode]');
   if (tm) return thingsSetMode(tm.dataset.thingmode);
   if (e.target.closest('[data-thdl]')) return;
@@ -7230,8 +7313,11 @@ document.addEventListener('click', (e) => {
     case 'gradNo': armedGrad = false; return render();
     case 'gradYes': {
       const st = state.settings;
+      // the bill is what they really pay; the expected rent setting is left alone so closed cycles' cushion stays
+      const gr = document.getElementById('gradRent'), rg = gr ? toG(gr.value) : st.rentTarget;
+      if (!(rg > 0)) { toast('Type what you pay in rent'); return; }
       freezePastBills(); freezePastSplit();
-      st.fixed.push({ id: uid(), name: 'Rent', g: st.rentTarget });
+      st.fixed.push({ id: uid(), name: 'Rent', g: rg });
       st.percents.savings += st.percents.rent; st.percents.rent = 0; st.graduated = nowCycle();
       armedGrad = false; save(); toast('Rent is now a bill. Your rent practice pot is your cushion.'); return render();
     }
@@ -7401,10 +7487,10 @@ document.addEventListener('submit', (e) => {
     if (!state.settings.thingsMode) state.settings.thingsMode = 'queue';
     // all together: everything still saving is shared evenly again, the new thing included
     if (!q) openSpecials().filter((y) => !y.full).forEach((y) => setShare(y, P.share));
-    const x = { id: 'x' + uid(), name, target, share: P.share, start: nowCycle(), shares: [{ from: nowCycle(), s: P.share }] };
+    const x = { id: 'x' + uid(), name, target, share: P.share, start: nowCycle(), shares: [{ from: nowCycle(), s: 0 }, { from: nextC(), s: P.share }] };
     if (by) x.by = by;
     state.settings.specials.push(x); thingAdding = false; thingOpen = null;
-    save(); toast(P.waits ? `${name} added to the line` : P.ready ? `${name} added · ready around ${monLong(P.ready)}` : `${name} added`); render();
+    save(); toast(P.waits ? `${name} added to the line` : P.ready ? `${name} added · starts next pay day, ready around ${monLong(P.ready)}` : `${name} added · starts next pay day`); render();
   } else if (id === 'yForm') {
     const name = document.getElementById('yName').value.trim(), g = toG(document.getElementById('yAmt').value), due = document.getElementById('yDue').value, now = nowCycle();
     if (!name || !(g > 0) || !/^\d{4}-\d{2}$/.test(due)) return;
@@ -7417,10 +7503,18 @@ document.addEventListener('submit', (e) => {
     const g = toG(document.getElementById('yPayAmt').value);
     if (!(g > 0)) return;
     payYearly(e.target.dataset.id, g, document.getElementById('yRest').value);
+  } else if (id === 'thingEditForm') {
+    const x = specialOf(e.target.dataset.id); if (!x) return;
+    const name = document.getElementById('teName').value.trim(), target = toG(document.getElementById('teTarget').value), by = document.getElementById('teBy').value || '';
+    if (!name || !(target > 0) || (by && !/^\d{4}-\d{2}$/.test(by))) return;
+    if (by && by <= nowCycle()) { toast('Pick a month after this one'); return; }
+    thingEditPrice(x, target); x.name = name; if (by) x.by = by; else delete x.by;
+    thingEditing = null; save(); toast(`${name} updated`); render();
   } else if (id === 'buyForm') {
     const g = toG(document.getElementById('buyAmt').value);
     if (!(g >= 0)) return;
-    finishSpecial(e.target.dataset.id, g, false);
+    const rp = document.getElementById('buyRest');
+    finishSpecial(e.target.dataset.id, g, false, rp ? rp.value : null);
   } else if (id === 'moveForm') {
     const g = toG(document.getElementById('mvAmt').value);
     const from = (document.querySelector('input[name="mvFrom"]:checked') || {}).value, to = (document.querySelector('input[name="mvTo"]:checked') || {}).value;
